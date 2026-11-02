@@ -1,0 +1,111 @@
+{
+  "bolum": 3,
+  "cikti": "FİZ.9.2.3",
+  "giris": [
+    { "kim": "ARGE", "metin": "Tamir dronları… hazır. Ama iki dron birlikte itince… ne olur?" },
+    { "kim": "Elif", "metin": "Simülasyonda dene. Her seferinde önce sonucu tahmin et, sonra paneli it." }
+  ],
+  "kesif": {
+    "baslik": "KEŞİF · DRON DENEYLERİ",
+    "yonerge": "Panel durgun. Dronlar aynı doğrultu üzerinde itiyor: sağa ya da sola. Panel nasıl hareket eder?",
+    "soruIlk": "İki dron birlikte itince panel hangi yöne, ne kadarlık bir kuvvetle itilir?",
+    "soru": "Panele etki eden bileşke kuvvet ne olur?",
+    "deneyler": [
+      {
+        "dronlar": [3, 2],
+        "secenekler": [
+          { "metin": "5 N sağa", "dogru": true },
+          { "metin": "1 N sağa", "dogru": false, "yanilgi": "M_BILESKE_FARK" }
+        ],
+        "sonuc": "Aynı yöne iten iki dron: 3 N + 2 N = 5 N sağa. Birden çok kuvvetin birlikte yaptığı bu tek etkiye bileşke kuvvet denir (mavi ok)."
+      },
+      {
+        "dronlar": [5, -2],
+        "secenekler": [
+          { "metin": "7 N sağa", "dogru": false, "yanilgi": "M_BILESKE_TOPLAM" },
+          { "metin": "3 N sağa", "dogru": true },
+          { "metin": "Hareket etmez, zıt kuvvetler birbirini yok eder", "dogru": false, "yanilgi": "M_ZIT_HEP_SIFIR" }
+        ],
+        "sonuc": "Zıt yönlü kuvvetler birbirini tam yok etmedi: 5 N − 2 N = 3 N, büyük olanın yönünde."
+      },
+      {
+        "dronlar": [4, -4],
+        "secenekler": [
+          { "metin": "8 N", "dogru": false, "yanilgi": "M_BILESKE_TOPLAM" },
+          { "metin": "Hareket etmez (0 N)", "dogru": true }
+        ],
+        "sonuc": "Bu kez eşit ve zıt: 4 N − 4 N = 0. Panel kıpırdamadı."
+      },
+      {
+        "dronlar": [2, -6],
+        "secenekler": [
+          { "metin": "4 N sola", "dogru": true },
+          { "metin": "4 N sağa", "dogru": false, "yanilgi": "M_YON_ONEMSIZ" },
+          { "metin": "Hareket etmez, zıt kuvvetler birbirini yok eder", "dogru": false, "yanilgi": "M_ZIT_HEP_SIFIR" }
+        ],
+        "sonuc": "6 N − 2 N = 4 N. Bileşke, büyük kuvvetin yönünde: sola."
+      }
+    ],
+    "kapanis": "Tablona bak: aynı yönlü dronlar ile zıt yönlü dronlar farklı davranıyor.",
+    "ipuclari": [
+      "Dronlar aynı yöne mi itiyor, zıt yönlere mi?",
+      "İki kişi bir kutuyu aynı yöne iterse kuvvetleri birleşir; biri bir yana öbürü öbür yana iterse güçlü olan kazanır, ama zayıf olan da bir şey götürür.",
+      "Aynı yönlüyse topla; zıt yönlüyse büyükten küçüğü çıkar, yön büyük olanınki."
+    ]
+  },
+  "genelleme": {
+    "baslik": "GÖZLEM DEFTERİ · KURALINI YAZ",
+    "yonerge": "Tablona bak ve aynı doğrultudaki kuvvetlerin bileşkesi için bir kural yaz.",
+    "parcalar": ["Aynı yönlü kuvvetlerin bileşkesi", "büyüklüklerin toplamıdır;", "zıt yönlü kuvvetlerin bileşkesi", "büyüklüklerin farkıdır ve", "büyük olanın yönündedir."],
+    "celdiriciler": ["her zaman sıfırdır.", "küçük olanın yönündedir."],
+    "kabul": [
+      ["Aynı yönlü kuvvetlerin bileşkesi", "büyüklüklerin toplamıdır;", "zıt yönlü kuvvetlerin bileşkesi", "büyüklüklerin farkıdır ve", "büyük olanın yönündedir."]
+    ],
+    "serbestAnahtarlar": [["aynı"], ["zıt"], ["topla", "toplam"], ["fark", "çıkar"]],
+    "zitSifir": "Her zaman sıfır mı? Ama 2. deneyde 5 N ile 2 N zıttı ve panel 3 N ile sağa gitti.",
+    "kucukYon": "Küçük olanın yönü mü? Ama 4. deneyde panel 6 N'lik dronun yönüne, sola gitti.",
+    "eksik": "Kuralın yarım kalmış gibi… Hem aynı yönlüleri hem zıt yönlüleri anlatır mısın?",
+    "serbestEksik": "Kuralında aynı yönlü ve zıt yönlü kuvvetleri, toplamayı ve farkı anlat.",
+    "kabulMesaji": "\"{kural3}\" Anladım! Dronları bu kuralla yöneteceğim.",
+    "ipuclari": [
+      "Tabloda aynı yönlü dronların bileşkesi nasıl bulunuyordu? Zıt yönlülerin?",
+      "3 N ve 2 N aynı yönde 5 N; 5 N ve 2 N zıt yönde 3 N. Panel hep hangi dronun yönüne gitti?",
+      "Cümleye \"Aynı yönlü kuvvetlerin bileşkesi\" ile başla."
+    ]
+  },
+  "gorev": {
+    "baslik": "GÖREV · PANELİ YUVASINA TAŞI",
+    "yonerge": "Ayarlanabilir dronu kur, sonra test etmeden önce bileşkeyi tahmin et.",
+    "senaryolar": [
+      {
+        "ad": "1/3",
+        "aciklama": "Dron A 2 N ile sağa itiyor. Panel, 5 N sağa bileşkeyle yuvaya tam zamanında varır.",
+        "sabit": [2],
+        "gerekli": 5
+      },
+      {
+        "ad": "2/3",
+        "aciklama": "Dron A'nın iticisi takıldı: 6 N ile sağa itiyor. Panel yuvaya yalnızca 2 N sağa bileşkeyle yumuşakça varır.",
+        "sabit": [6],
+        "gerekli": 2
+      },
+      {
+        "ad": "3/3",
+        "aciklama": "Panel yuvasının önünde. Kilitler takılırken kıpırdamamalı: bileşke 0 olmalı. Üçüncü dron devrede: A 3 N sola, B 5 N sağa, C'yi sen ayarla.",
+        "sabit": [-3, 5],
+        "gerekli": 0
+      }
+    ],
+    "tahminUyumsuz": "Tahminin {tahmin} idi ama panel {sonuc} bileşkeyle hareket etti. Çıkarımın nerede şaştı?",
+    "fazla": "Bileşke {sonuc}: panel çok hızlandı, yuvayı geçip gövdeye çarptı!",
+    "az": "Bileşke {sonuc}: panel yetişemedi, kilit penceresi kapandı.",
+    "ters": "Bileşke {sonuc}: panel yuvadan uzaklaştı!",
+    "kaydi": "Bileşke {sonuc}: panel yuvanın önünden kaydı, kilitler tutmadı.",
+    "basari": "Tahmin ve sonuç uyumlu: {sonuc}. Panel yerinde!",
+    "ipuclari": [
+      "Gereken bileşke ne kadar ve hangi yönde? Dron A tek başına ne kadar sağlıyor?",
+      "Keşifteki 2. deneyi hatırla: 5 N sağa ve 2 N sola birlikte 3 N sağa ediyordu.",
+      "Bileşke = sağa itenlerin toplamı − sola itenlerin toplamı. Sonuç pozitifse sağa, negatifse sola."
+    ]
+  }
+}

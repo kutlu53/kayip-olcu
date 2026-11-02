@@ -206,6 +206,11 @@ Her bölüm aynı üç adımı izler:
 - **Keşif:** Dronlar aynı ve zıt yönde, farklı güçlerde konumlanır; modülün hareketi gözlenir. Kuvvetler ok olarak görünür.
 - **Görev:** Modülü yuvasına verilen hızda taşımak için kuvvetleri ayarlamadan önce bileşke tahmin edilir, sonra test edilir. Son aşamada üçüncü dron eklenir.
 - **Başarı:** 3 senaryonun üçünde de tahmin ile sonuç uyumlu.
+- **Uygulanan akış (`bolum3.json`):**
+  - *Keşif · Dron deneyleri:* 4 deney: aynı yönlü (3+2), zıt eşit değil (5 sağa, 2 sola), zıt eşit (4, 4), ters baskın (2 sağa, 6 sola). Önce tahmin kartı, sonra durgun panel bileşke yönünde sabit ivmeyle hızlanır (bileşke 0 ise kıpırdamaz). "Bileşke kuvvet" adı ilk deneyin sonunda verilir. Yanlış seçenekler: `M_BILESKE_FARK`, `M_BILESKE_TOPLAM`, `M_ZIT_HEP_SIFIR`, `M_YON_ONEMSIZ`. Sonuçlar veri tablosuna (oklarla) yazılır.
+  - *Genelleme:* "Aynı yönlülerde toplam; zıt yönlülerde fark, büyük olanın yönünde." Çeldiriciler: "her zaman sıfırdır." (`M_ZIT_HEP_SIFIR`), "küçük olanın yönündedir.".
+  - *Görev · Paneli yuvasına taşı (3 senaryo):* Ayarlanabilir dronun yönü ve büyüklüğü seçilir, sonra bileşke **tahmin edilir** (yön + büyüklük) ve TEST ET. Senaryolar: (1) A 2 N sağa, gereken 5 N sağa; (2) A 6 N sağa (takılı), gereken 2 N sağa; (3) A 3 N sola, B 5 N sağa, üçüncü dron C ile bileşke 0. Doğru sayılması için hem tahmin = sonuç hem sonuç = gereken. Sonuçlar: fazla kuvvet → panel yuvayı geçip gövdeye çarpar; az → yetişemez; ters → uzaklaşır; 3. senaryoda sıfır olmazsa kayar. Yanlış tahmin, kalıbına göre `M_BILESKE_TOPLAM` / `M_ZIT_HEP_SIFIR` / `M_YON_ONEMSIZ` ile kodlanır.
+  - *3A/3K:* Panel kopar, istasyonun ışıkları söner; kopan panel sabit hızla ve sabit dönüşle uzaklaşır (sürtünme yok). 3K'da iki dron paneli istasyondaki boş yuvaya iter (itici gazı ters yöne), panel kilitlenir, hücrelerde parıltı dalgası, ışıklar geri gelir.
 
 ### Bölüm 4 — Kenetlenme (FİZ.9.2.4) ★ ilk prototip bölümü
 - **Sahne:** Yaralı Komutan Elif'e ilaç ve tıbbi ekipman getiren insansız tıbbi kapsül istasyona yanaşmalı. (Elif sonraki bölümlerde ve finalde istasyonda olduğu için kapsül onu taşımaz, ona malzeme getirir.)
@@ -507,7 +512,10 @@ kayip-olcu/
 │  │  ├─ Tuval.js, Rastgele.js← çizim yardımcıları, tohumlu rastgele (her açılışta aynı görüntü)
 │  │  ├─ Starfield.js         ← yıldız katmanları, Samanyolu, Güneş + objektif parlaması
 │  │  ├─ Earth.js             ← Dünya ufku (gece), şehir ışıkları, atmosfer, şafak, kutup ışığı
-│  │  ├─ Station.js           ← Göktürk-7 dış görünüş (kenar ışığı, dönen halka), kurtarma kapsülleri
+│  │  ├─ Station.js           ← Göktürk-7 dış görünüş (kenar ışığı, dönen halka, eksik panel seçeneği), kurtarma kapsülleri
+│  │  ├─ Panel.js             ← kopan güneş paneli, tamir dronu
+│  │  ├─ Navigasyon.js        ← navigasyon köprüsü, radar ve pusula hologramları
+│  │  ├─ Port.js              ← tıbbi kapsül, kenetlenme portu
 │  │  ├─ Interiors.js         ← kontrol odası (karartma, acil ışık, süzülen nesneler), lomboz
 │  │  ├─ Characters.js        ← Elif (hologram), Kerem (video bağlantısı); ifadeler
 │  │  ├─ Arge.js              ← ışık halkası + dalga formu, 0–7 evrim durumu
@@ -527,6 +535,7 @@ kayip-olcu/
 │     ├─ characters.json      ← konuşan adı ve altyazı rengi
 │     ├─ bolum1.json          ← Bölüm 1 içeriği: sensörler, birim çözücü, kural parçaları, SI çekirdeği kartları
 │     ├─ bolum2.json          ← Bölüm 2 içeriği: Kerem araması, yön deneyleri, kural parçaları, rota nicelikleri
+│     ├─ bolum3.json          ← Bölüm 3 içeriği: dron deneyleri, kural parçaları, taşıma senaryoları
 │     ├─ bolum4.json          ← Bölüm 4 içeriği: örnekler, tahmin kartları, kural parçaları, ipuçları, ARGE replikleri
 │     ├─ misconceptions.json
 │     └─ quantities.json      ← SI nicelik listesi (ad, birim, temel/türetilmiş, skaler/vektörel)
@@ -658,7 +667,7 @@ kayip-olcu/
 ### Aşama 3 — Kalan bölümler (4–9. hafta)
 - [x] Bölüm 1 Uyanış (sürükle-bırak SI tablosu; bağımlılık kilidi) + 1A/1K ara sahneleri
 - [x] Bölüm 2 Kör Pusula (etiketleme + rota sapması) + 2A/2K ara sahneleri
-- [ ] Bölüm 3 Römorkör (aynı doğrultuda kuvvetler, tahmin → test)
+- [x] Bölüm 3 Römorkör (aynı doğrultuda kuvvetler, tahmin → test) + 3A/3K ara sahneleri
 - [ ] Bölüm 5 Dört Kuvvet (eşleştirme + menzil/şiddet panosu)
 - [ ] Bölüm 6 Kim Hareket Ediyor? (üç gözlemci görünümü, veri tablosu, tanım kurma, gizemin çözülmesi)
 - [ ] Bölüm 7 Son Onarım (hareket türü sınıflama + final manevrası)

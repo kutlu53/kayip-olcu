@@ -426,5 +426,94 @@
         ]
       }
     ]
+  },
+  {
+    "id": "3A",
+    "ad": "Römorkör · açılış",
+    "paneller": [
+      {
+        "sahne": "istasyonDis",
+        "sureMs": 9500,
+        "kamera": {"hareket": "zoom", "zoom": [1, 1.08]},
+        "basliklar": [{"metin": "BÖLÜM 3 · RÖMORKÖR", "ms": 500, "sureMs": 2600}],
+        "altyazilar": [
+          {"konusan": "Sistem", "metin": "[metal gerilmesi]", "ms": 3800, "sureMs": 2400},
+          {
+            "konusan": "ARGE",
+            "metin": "Panel bağlantısı… kuvvet… sınırın üzerinde…",
+            "ms": 6200,
+            "sureMs": 3200,
+            "bozuk": true
+          }
+        ],
+        "olaylar": [
+          {"ms": 4300, "fx": "sars", "sure": 700, "siddet": 0.008},
+          {"ms": 4300, "fx": "bozulma", "sure": 400, "guc": 0.4}
+        ]
+      },
+      {
+        "sahne": "istasyonDis",
+        "gecis": "kesme",
+        "sureMs": 13000,
+        "kamera": {"hareket": "zoom", "zoom": [1.08, 1.02]},
+        "katmanAyar": {"istasyon": {"eksikPanel": true}},
+        "ekKatmanlar": [
+          {
+            "id": "panel",
+            "tip": "kopukPanel",
+            "derinlik": 0.5,
+            "ayar": {"x": 358.8, "y": -114.1, "olcek": 0.82, "surukle": true}
+          }
+        ],
+        "altyazilar": [
+          {"konusan": "Elif", "metin": "Güneş paneli koptu! Enerji düşüyor.", "ms": 1400, "sureMs": 3200},
+          {"konusan": "Elif", "metin": "Tamir dronlarıyla paneli geri itmeliyiz.", "ms": 5000, "sureMs": 3400},
+          {
+            "konusan": "ARGE",
+            "metin": "Dronlar… iter… ama… kaç newton… hangi yöne…?",
+            "ms": 8800,
+            "sureMs": 3800,
+            "bozuk": true
+          }
+        ],
+        "olaylar": [{"ms": 2600, "hedef": "istasyon", "olay": "isiklariSondur"}]
+      }
+    ]
+  },
+  {
+    "id": "3K",
+    "ad": "Römorkör · kapanış",
+    "paneller": [
+      {
+        "sahne": "istasyonDis",
+        "sureMs": 16000,
+        "kamera": {"hareket": "zoom", "zoom": [1.02, 1.08]},
+        "katmanAyar": {"istasyon": {"eksikPanel": true, "karanlik": true}},
+        "ekKatmanlar": [
+          {
+            "id": "panel",
+            "tip": "kopukPanel",
+            "derinlik": 0.5,
+            "ayar": {"x": 358.8, "y": -114.1, "olcek": 0.82, "uzakta": [260, -150], "donuk": 1.1, "dronlar": true}
+          }
+        ],
+        "altyazilar": [
+          {"konusan": "Sistem", "metin": "[panel kilitlendi]", "ms": 6400, "sureMs": 2600},
+          {
+            "konusan": "ARGE",
+            "metin": "Enerji geri geliyor. Öğrendiğim kural: {kural3}",
+            "ms": 9200,
+            "sureMs": 6400
+          }
+        ],
+        "olaylar": [
+          {"ms": 300, "hedef": "panel", "olay": "yerlestir", "sure": 5600},
+          {"ms": 6000, "hedef": "panel", "olay": "kilitle"},
+          {"ms": 6000, "fx": "sars", "sure": 300, "siddet": 0.004},
+          {"ms": 7000, "hedef": "panel", "olay": "parilti"},
+          {"ms": 7400, "hedef": "istasyon", "olay": "isiklariYak"}
+        ]
+      }
+    ]
   }
 ]

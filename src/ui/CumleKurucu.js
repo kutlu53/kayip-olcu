@@ -47,14 +47,16 @@ export function cumleKurucu(sahne, { x, y, genislik, parcalar, kontrol, serbestM
   };
 
   const altY = py + 100;
+  const temizleG = Math.min(240, genislik * 0.36);
+  const yazG = Math.min(280, genislik * 0.5);
   kap.add(
-    dugme(sahne, x + 130, altY, 'Temizle', () => {
+    dugme(sahne, x + temizleG / 2 + 10, altY, 'Temizle', () => {
       secilen.length = 0;
       cipler.forEach((c) => c.setAlpha(1));
       yenile();
-    }, { genislik: 240, yukseklik: 52, boyut: 17 })
+    }, { genislik: temizleG, yukseklik: 52, boyut: 17 })
   );
-  kap.add(dugme(sahne, x + genislik - 150, altY, 'Deftere yaz  ▸', () => kontrol({ tur: 'parca', parcalar: [...secilen], metin: secilen.join(' ') }), { genislik: 280, yukseklik: 56, birincil: true, boyut: 19 }));
+  kap.add(dugme(sahne, x + genislik - yazG / 2 - 10, altY, 'Deftere yaz  ▸', () => kontrol({ tur: 'parca', parcalar: [...secilen], metin: secilen.join(' ') }), { genislik: yazG, yukseklik: 56, birincil: true, boyut: 19 }));
 
   if (serbestMetin) {
     const serbest = sahne.add

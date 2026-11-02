@@ -7,7 +7,10 @@ import { kivilcimYayici } from '../fx/Particles.js';
 const HALKA = { rx: 230, ry: 78 };
 const PANELLER = [85, 745].flatMap((x) => [[x, 148], [x, 280]]);
 
-function siluet(s) {
+const KOPAN_PANEL = 2;
+const panelleri = (eksik) => PANELLER.filter((_, i) => !(eksik && i === KOPAN_PANEL));
+
+function siluet(s, eksik) {
   s.fillStyle = s.strokeStyle = '#fff';
   s.lineWidth = 16;
   s.beginPath();
@@ -21,7 +24,7 @@ function siluet(s) {
     s.stroke();
   }
   s.fillRect(70, 252, 860, 16);
-  for (const [x, y] of PANELLER) s.fillRect(x, y, 170, 92);
+  for (const [x, y] of panelleri(eksik)) s.fillRect(x, y, 170, 92);
   for (const x of [85, 745]) s.fillRect(x + 81, 238, 8, 44);
   s.fillRect(330, 268, 44, 74);
   s.fillRect(626, 268, 44, 74);
@@ -37,9 +40,9 @@ function siluet(s) {
   s.fill();
 }
 
-function ayrintilar(c) {
+function ayrintilar(c, eksik) {
   // Gunes panelleri
-  for (const [x, y] of PANELLER) {
+  for (const [x, y] of panelleri(eksik)) {
     c.fillStyle = '#0b1a33';
     c.fillRect(x, y, 170, 92);
     c.strokeStyle = 'rgba(70,100,150,0.4)';
@@ -120,9 +123,10 @@ function ayrintilar(c) {
 // isik: istasyondan isik kaynagina dogru birim yon. Kenar isigi o taraftan duser
 export function istasyonDokusu(sahne, ayar = {}) {
   const isik = ayar.isik || [-0.95, 0.3];
-  return dokuCiz(sahne, `istasyon_${isik.join('_')}`, 1000, 520, (ctx, W, H) => {
+  const eksik = !!ayar.eksikPanel;
+  return dokuCiz(sahne, `istasyon_${isik.join('_')}${eksik ? '_eksik' : ''}`, 1000, 520, (ctx, W, H) => {
     const sil = tuval(W, H);
-    siluet(sil.getContext('2d'));
+    siluet(sil.getContext('2d'), eksik);
     ctx.drawImage(boya(sil, '#fff1d6'), isik[0] * 3, isik[1] * 3);
     ctx.drawImage(
       boya(sil, (x) => {
@@ -136,7 +140,7 @@ export function istasyonDokusu(sahne, ayar = {}) {
       0
     );
     ctx.globalCompositeOperation = 'source-atop';
-    ayrintilar(ctx);
+    ayrintilar(ctx, eksik);
     ctx.globalCompositeOperation = 'source-over';
   });
 }
@@ -185,6 +189,11 @@ export function istasyonOlustur(sahne, ayar = {}) {
   };
   kap.olay = (ad) => {
     if (ad === 'carpma') kivilcim.explode(36);
+    if (ad === 'isiklariYak') {
+      sahne.tweens.add({ targets: pencere, alpha: 1, duration: 1400, ease: titreme });
+      sahne.tweens.add({ targets: durum, isik: 1, duration: 1400, ease: titreme });
+      return;
+    }
     if (ad !== 'isiklariSondur') return;
     sahne.tweens.add({ targets: pencere, alpha: 0, duration: 1100, ease: titreme });
     sahne.tweens.add({ targets: durum, isik: 0, duration: 1100, ease: titreme });
