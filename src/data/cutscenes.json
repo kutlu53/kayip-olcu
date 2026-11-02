@@ -6,46 +6,23 @@
       {
         "sahne": "yorungeGece",
         "sureMs": 8000,
-        "kamera": {
-          "hareket": "pan",
-          "yon": "sag",
-          "mesafe": 400,
-          "zoom": [1, 1.05]
-        },
+        "kamera": {"hareket": "pan", "yon": "sag", "mesafe": 400, "zoom": [1, 1.05]},
         "basliklar": [
-          {
-            "metin": "2071 · ALÇAK DÜNYA YÖRÜNGESİ",
-            "ms": 1200,
-            "sureMs": 2400
-          },
-          {
-            "metin": "GÖKTÜRK-7 ARAŞTIRMA İSTASYONU",
-            "ms": 4800,
-            "sureMs": 2200
-          }
+          {"metin": "2071 · ALÇAK DÜNYA YÖRÜNGESİ", "ms": 1200, "sureMs": 2400},
+          {"metin": "GÖKTÜRK-7 ARAŞTIRMA İSTASYONU", "ms": 4800, "sureMs": 2200}
         ]
       },
       {
         "sahne": "istasyonDis",
         "gecis": "crossDissolve",
         "sureMs": 8000,
-        "kamera": {
-          "hareket": "dolly",
-          "yon": "sol",
-          "mesafe": 160,
-          "zoom": [1, 1.06]
-        },
+        "kamera": {"hareket": "dolly", "yon": "sol", "mesafe": 160, "zoom": [1, 1.06]},
         "ekKatmanlar": [
           {
             "id": "arge",
             "tip": "arge",
             "sabit": true,
-            "ayar": {
-              "x": -560,
-              "y": -210,
-              "yaricap": 30,
-              "durum": 7
-            }
+            "ayar": {"x": -560, "y": -210, "yaricap": 30, "durum": 7}
           }
         ],
         "altyazilar": [
@@ -56,29 +33,14 @@
             "sureMs": 4000
           }
         ],
-        "olaylar": [
-          {
-            "ms": 6200,
-            "hedef": "gunes",
-            "olay": "parla"
-          }
-        ]
+        "olaylar": [{"ms": 6200, "hedef": "gunes", "olay": "parla"}]
       },
       {
         "sahne": "istasyonDis",
         "gecis": "kesme",
         "sureMs": 8000,
-        "kamera": {
-          "hareket": "zoom",
-          "zoom": [1.06, 1.14]
-        },
-        "basliklar": [
-          {
-            "metin": "ERTESİ GÜN · 03.40",
-            "ms": 300,
-            "sureMs": 1800
-          }
-        ],
+        "kamera": {"hareket": "zoom", "zoom": [1.06, 1.14]},
+        "basliklar": [{"metin": "ERTESİ GÜN · 03.40", "ms": 300, "sureMs": 1800}],
         "altyazilar": [
           {
             "konusan": "ARGE",
@@ -89,64 +51,22 @@
           }
         ],
         "olaylar": [
-          {
-            "ms": 800,
-            "hedef": "akis",
-            "olay": "baslat"
-          },
-          {
-            "ms": 1600,
-            "hedef": "aurora",
-            "olay": "baslat"
-          },
-          {
-            "ms": 2600,
-            "fx": "sars",
-            "sure": 900,
-            "siddet": 0.006
-          },
-          {
-            "ms": 2600,
-            "fx": "bozulma",
-            "sure": 400,
-            "guc": 0.5
-          },
-          {
-            "ms": 3000,
-            "hedef": "istasyon",
-            "olay": "isiklariSondur"
-          },
-          {
-            "ms": 4400,
-            "fx": "sars",
-            "sure": 700,
-            "siddet": 0.01
-          },
-          {
-            "ms": 7600,
-            "fx": "flas",
-            "sure": 400
-          }
+          {"ms": 800, "hedef": "akis", "olay": "baslat"},
+          {"ms": 1600, "hedef": "aurora", "olay": "baslat"},
+          {"ms": 2600, "fx": "sars", "sure": 900, "siddet": 0.006},
+          {"ms": 2600, "fx": "bozulma", "sure": 400, "guc": 0.5},
+          {"ms": 3000, "hedef": "istasyon", "olay": "isiklariSondur"},
+          {"ms": 4400, "fx": "sars", "sure": 700, "siddet": 0.01},
+          {"ms": 7600, "fx": "flas", "sure": 400}
         ]
       },
       {
         "sahne": "kontrolOdasi",
         "gecis": "kesme",
         "sureMs": 12000,
-        "kamera": {
-          "hareket": "dolly",
-          "yon": "sag",
-          "mesafe": 80,
-          "zoom": [1, 1.06]
-        },
+        "kamera": {"hareket": "dolly", "yon": "sag", "mesafe": 80, "zoom": [1, 1.06]},
         "altyazilar": [
-          {
-            "konusan": "ARGE",
-            "metin": "Bir… bir-birim… tanımsız…",
-            "ms": 2600,
-            "sureMs": 3600,
-            "bozuk": true
-          },
+          {"konusan": "ARGE", "metin": "Bir… bir-birim… tanımsız…", "ms": 2600, "sureMs": 3600, "bozuk": true},
           {
             "konusan": "ARGE",
             "metin": "Yön… tanımsız… Kuvvet… tanım…",
@@ -156,54 +76,19 @@
           }
         ],
         "olaylar": [
-          {
-            "ms": 1400,
-            "hedef": "oda",
-            "olay": "karart"
-          },
-          {
-            "ms": 1400,
-            "fx": "sars",
-            "sure": 500,
-            "siddet": 0.008
-          },
-          {
-            "ms": 1400,
-            "hedef": "arge",
-            "olay": "durum",
-            "deger": 0.5,
-            "sure": 9000
-          },
-          {
-            "ms": 2600,
-            "fx": "bozulma",
-            "sure": 500,
-            "guc": 0.6
-          },
-          {
-            "ms": 6800,
-            "fx": "bozulma",
-            "sure": 600,
-            "guc": 0.8
-          },
-          {
-            "ms": 10600,
-            "fx": "bozulma",
-            "sure": 900,
-            "guc": 1
-          }
+          {"ms": 1400, "hedef": "oda", "olay": "karart"},
+          {"ms": 1400, "fx": "sars", "sure": 500, "siddet": 0.008},
+          {"ms": 1400, "hedef": "arge", "olay": "durum", "deger": 0.5, "sure": 9000},
+          {"ms": 2600, "fx": "bozulma", "sure": 500, "guc": 0.6},
+          {"ms": 6800, "fx": "bozulma", "sure": 600, "guc": 0.8},
+          {"ms": 10600, "fx": "bozulma", "sure": 900, "guc": 1}
         ]
       },
       {
         "sahne": "pencereTahliye",
         "gecis": "glitch",
         "sureMs": 10000,
-        "kamera": {
-          "hareket": "dolly",
-          "yon": "sol",
-          "mesafe": 120,
-          "zoom": [1, 1.04]
-        },
+        "kamera": {"hareket": "dolly", "yon": "sol", "mesafe": 120, "zoom": [1, 1.04]},
         "altyazilar": [
           {
             "konusan": "Kerem",
@@ -211,47 +96,18 @@
             "ms": 2000,
             "sureMs": 4800
           },
-          {
-            "konusan": "Sistem",
-            "metin": "[sinyal kesildi]",
-            "ms": 7800,
-            "sureMs": 2000
-          }
+          {"konusan": "Sistem", "metin": "[sinyal kesildi]", "ms": 7800, "sureMs": 2000}
         ],
-        "olaylar": [
-          {
-            "ms": 1400,
-            "hedef": "kerem",
-            "olay": "ac"
-          },
-          {
-            "ms": 7200,
-            "hedef": "kerem",
-            "olay": "sinyalKes"
-          }
-        ]
+        "olaylar": [{"ms": 1400, "hedef": "kerem", "olay": "ac"}, {"ms": 7200, "hedef": "kerem", "olay": "sinyalKes"}]
       },
       {
         "sahne": "karanlikEkran",
         "gecis": "fadeBlack",
         "sureMs": 14000,
-        "kamera": {
-          "hareket": "zoom",
-          "zoom": [1, 1.05]
-        },
+        "kamera": {"hareket": "zoom", "zoom": [1, 1.05]},
         "altyazilar": [
-          {
-            "konusan": "Elif",
-            "metin": "Beni duyuyor musun?",
-            "ms": 2000,
-            "sureMs": 2600
-          },
-          {
-            "konusan": "Elif",
-            "metin": "72 saatimiz var.",
-            "ms": 5000,
-            "sureMs": 2800
-          },
+          {"konusan": "Elif", "metin": "Beni duyuyor musun?", "ms": 2000, "sureMs": 2600},
+          {"konusan": "Elif", "metin": "72 saatimiz var.", "ms": 5000, "sureMs": 2800},
           {
             "konusan": "Elif",
             "metin": "ARGE'ye ihtiyacımız var… ARGE'nin de sana.",
@@ -259,18 +115,7 @@
             "sureMs": 5000
           }
         ],
-        "olaylar": [
-          {
-            "ms": 800,
-            "hedef": "ekran",
-            "olay": "ac"
-          },
-          {
-            "ms": 5600,
-            "hedef": "sayac",
-            "olay": "goster"
-          }
-        ]
+        "olaylar": [{"ms": 800, "hedef": "ekran", "olay": "ac"}, {"ms": 5600, "hedef": "sayac", "olay": "goster"}]
       }
     ]
   },
@@ -281,69 +126,23 @@
       {
         "sahne": "istasyonDis",
         "sureMs": 9000,
-        "kamera": {
-          "hareket": "zoom",
-          "zoom": [1, 1.1]
-        },
-        "katmanAyar": {
-          "istasyon": {
-            "karanlik": true
-          }
-        },
-        "basliklar": [
-          {
-            "metin": "BÖLÜM 4 · KENETLENME",
-            "ms": 500,
-            "sureMs": 2600
-          }
-        ],
-        "altyazilar": [
-          {
-            "konusan": "Sistem",
-            "metin": "[gövdeye mikro meteor çarptı]",
-            "ms": 4600,
-            "sureMs": 3000
-          }
-        ],
+        "kamera": {"hareket": "zoom", "zoom": [1, 1.1]},
+        "katmanAyar": {"istasyon": {"karanlik": true}},
+        "basliklar": [{"metin": "BÖLÜM 4 · KENETLENME", "ms": 500, "sureMs": 2600}],
+        "altyazilar": [{"konusan": "Sistem", "metin": "[gövdeye mikro meteor çarptı]", "ms": 4600, "sureMs": 3000}],
         "olaylar": [
-          {
-            "ms": 4200,
-            "hedef": "istasyon",
-            "olay": "carpma"
-          },
-          {
-            "ms": 4200,
-            "fx": "flas",
-            "sure": 250
-          },
-          {
-            "ms": 4200,
-            "fx": "sars",
-            "sure": 700,
-            "siddet": 0.012
-          },
-          {
-            "ms": 4400,
-            "fx": "bozulma",
-            "sure": 400,
-            "guc": 0.5
-          }
+          {"ms": 4200, "hedef": "istasyon", "olay": "carpma"},
+          {"ms": 4200, "fx": "flas", "sure": 250},
+          {"ms": 4200, "fx": "sars", "sure": 700, "siddet": 0.012},
+          {"ms": 4400, "fx": "bozulma", "sure": 400, "guc": 0.5}
         ]
       },
       {
         "sahne": "karanlikEkran",
         "gecis": "glitch",
         "sureMs": 13000,
-        "kamera": {
-          "hareket": "zoom",
-          "zoom": [1, 1.04]
-        },
-        "katmanAyar": {
-          "ekran": {
-            "gurultulu": true,
-            "ifade": "endiseli"
-          }
-        },
+        "kamera": {"hareket": "zoom", "zoom": [1, 1.04]},
+        "katmanAyar": {"ekran": {"gurultulu": true, "ifade": "endiseli"}},
         "altyazilar": [
           {
             "konusan": "Elif",
@@ -364,40 +163,20 @@
             "sureMs": 3300
           }
         ],
-        "olaylar": [
-          {
-            "ms": 400,
-            "hedef": "ekran",
-            "olay": "ac"
-          }
-        ]
+        "olaylar": [{"ms": 400, "hedef": "ekran", "olay": "ac"}]
       },
       {
         "sahne": "kenetlenmePortu",
         "gecis": "fadeBlack",
         "sureMs": 12000,
-        "kamera": {
-          "hareket": "pan",
-          "yon": "sag",
-          "mesafe": 120,
-          "zoom": [1, 1.05]
-        },
-        "katmanAyar": {
-          "kapsul": {
-            "etiket": "UYARI · SIZINTI: YAKIT HATTI"
-          }
-        },
+        "kamera": {"hareket": "pan", "yon": "sag", "mesafe": 120, "zoom": [1, 1.05]},
+        "katmanAyar": {"kapsul": {"etiket": "UYARI · SIZINTI: YAKIT HATTI"}},
         "ekKatmanlar": [
           {
             "id": "arge",
             "tip": "arge",
             "sabit": true,
-            "ayar": {
-              "x": -560,
-              "y": -210,
-              "yaricap": 30,
-              "durum": 0.4
-            }
+            "ayar": {"x": -560, "y": -210, "yaricap": 30, "durum": 0.4}
           }
         ],
         "altyazilar": [
@@ -425,11 +204,7 @@
       {
         "sahne": "kenetlenmePortu",
         "sureMs": 12000,
-        "katmanAyar": {
-          "kapsul": {
-            "yalpa": false
-          }
-        },
+        "katmanAyar": {"kapsul": {"yalpa": false}},
         "altyazilar": [
           {
             "konusan": "Sistem",
@@ -439,51 +214,23 @@
           }
         ],
         "olaylar": [
-          {
-            "ms": 300,
-            "hedef": "kapsul",
-            "olay": "sizintiDurdur"
-          },
-          {
-            "ms": 400,
-            "hedef": "kapsul",
-            "olay": "yanas",
-            "dx": 699,
-            "sure": 6500
-          },
-          {
-            "ms": 7000,
-            "hedef": "kapsul",
-            "olay": "kilitle"
-          },
-          {
-            "ms": 7000,
-            "fx": "sars",
-            "sure": 300,
-            "siddet": 0.004
-          }
+          {"ms": 300, "hedef": "kapsul", "olay": "sizintiDurdur"},
+          {"ms": 400, "hedef": "kapsul", "olay": "yanas", "dx": 699, "sure": 6500},
+          {"ms": 7000, "hedef": "kapsul", "olay": "kilitle"},
+          {"ms": 7000, "fx": "sars", "sure": 300, "siddet": 0.004}
         ]
       },
       {
         "sahne": "karanlikEkran",
         "gecis": "crossDissolve",
         "sureMs": 13000,
-        "katmanAyar": {
-          "ekran": {
-            "ifade": "gulumseme"
-          }
-        },
+        "katmanAyar": {"ekran": {"ifade": "gulumseme"}},
         "ekKatmanlar": [
           {
             "id": "arge",
             "tip": "arge",
             "sabit": true,
-            "ayar": {
-              "x": -560,
-              "y": -210,
-              "yaricap": 30,
-              "durum": 1.2
-            }
+            "ayar": {"x": -560, "y": -210, "yaricap": 30, "durum": 1.2}
           }
         ],
         "altyazilar": [
@@ -500,13 +247,7 @@
             "sureMs": 6200
           }
         ],
-        "olaylar": [
-          {
-            "ms": 300,
-            "hedef": "ekran",
-            "olay": "ac"
-          }
-        ]
+        "olaylar": [{"ms": 300, "hedef": "ekran", "olay": "ac"}]
       }
     ]
   },
@@ -517,12 +258,7 @@
       {
         "sahne": "kontrolOdasi",
         "sureMs": 16000,
-        "kamera": {
-          "hareket": "dolly",
-          "yon": "sag",
-          "mesafe": 80,
-          "zoom": [1, 1.06]
-        },
+        "kamera": {"hareket": "dolly", "yon": "sag", "mesafe": 80, "zoom": [1, 1.06]},
         "katmanAyar": {
           "oda": {
             "karanlik": true,
@@ -538,17 +274,9 @@
               ]
             }
           },
-          "arge": {
-            "durum": 0.4
-          }
+          "arge": {"durum": 0.4}
         },
-        "basliklar": [
-          {
-            "metin": "BÖLÜM 1 · UYANIŞ",
-            "ms": 600,
-            "sureMs": 2600
-          }
-        ],
+        "basliklar": [{"metin": "BÖLÜM 1 · UYANIŞ", "ms": 600, "sureMs": 2600}],
         "altyazilar": [
           {
             "konusan": "ARGE",
@@ -569,11 +297,7 @@
         "sahne": "karanlikEkran",
         "gecis": "fadeBlack",
         "sureMs": 11000,
-        "katmanAyar": {
-          "ekran": {
-            "ifade": "notr"
-          }
-        },
+        "katmanAyar": {"ekran": {"ifade": "notr"}},
         "altyazilar": [
           {
             "konusan": "Elif",
@@ -588,13 +312,7 @@
             "sureMs": 4200
           }
         ],
-        "olaylar": [
-          {
-            "ms": 300,
-            "hedef": "ekran",
-            "olay": "ac"
-          }
-        ]
+        "olaylar": [{"ms": 300, "hedef": "ekran", "olay": "ac"}]
       }
     ]
   },
@@ -605,10 +323,7 @@
       {
         "sahne": "kontrolOdasi",
         "sureMs": 15000,
-        "kamera": {
-          "hareket": "zoom",
-          "zoom": [1.04, 1]
-        },
+        "kamera": {"hareket": "zoom", "zoom": [1.04, 1]},
         "katmanAyar": {
           "oda": {
             "karanlik": true,
@@ -623,17 +338,10 @@
               ]
             }
           },
-          "arge": {
-            "durum": 0.6
-          }
+          "arge": {"durum": 0.6}
         },
         "altyazilar": [
-          {
-            "konusan": "ARGE",
-            "metin": "Metre. Kilogram. Saniye. Hatırlıyorum!",
-            "ms": 4400,
-            "sureMs": 3200
-          },
+          {"konusan": "ARGE", "metin": "Metre. Kilogram. Saniye. Hatırlıyorum!", "ms": 4400, "sureMs": 3200},
           {
             "konusan": "ARGE",
             "metin": "Newton… kilogram çarpı metre bölü saniye kare. Teşekkür ederim, {ad}.",
@@ -642,18 +350,79 @@
           }
         ],
         "olaylar": [
+          {"ms": 700, "hedef": "oda", "olay": "aydinlat"},
+          {"ms": 900, "hedef": "arge", "olay": "durum", "deger": 5, "sure": 3500}
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2A",
+    "ad": "Kör Pusula · açılış",
+    "paneller": [
+      {
+        "sahne": "navigasyonKoprusu",
+        "sureMs": 14000,
+        "kamera": {"hareket": "roll", "roll": [0, -8], "zoom": [1, 1.04]},
+        "basliklar": [{"metin": "BÖLÜM 2 · KÖR PUSULA", "ms": 600, "sureMs": 2600}],
+        "altyazilar": [
           {
-            "ms": 700,
-            "hedef": "oda",
-            "olay": "aydinlat"
+            "konusan": "ARGE",
+            "metin": "Kuzey… kuzey nerede? Pusula… her yönü gösteriyor…",
+            "ms": 3600,
+            "sureMs": 4400,
+            "bozuk": true
           },
           {
-            "ms": 900,
-            "hedef": "arge",
-            "olay": "durum",
-            "deger": 5,
-            "sure": 3500
+            "konusan": "Elif",
+            "metin": "İstasyon yavaşça sürükleniyor. Navigasyon da yönleri unutmuş.",
+            "ms": 8600,
+            "sureMs": 4800
           }
+        ]
+      },
+      {
+        "sahne": "navigasyonKoprusu",
+        "gecis": "kesme",
+        "sureMs": 14000,
+        "kamera": {"hareket": "roll", "roll": [-8, -14]},
+        "altyazilar": [
+          {
+            "konusan": "Kerem",
+            "metin": "Beni duyan var mı? Kapsülüm saatte 500 km ile gidiyor, beni bulun!",
+            "ms": 1400,
+            "sureMs": 5200
+          },
+          {"konusan": "Elif", "metin": "Kerem, nereye doğru gidiyorsun? Kerem?", "ms": 7200, "sureMs": 3000},
+          {"konusan": "Sistem", "metin": "[sinyal çok zayıf]", "ms": 10600, "sureMs": 2600}
+        ],
+        "olaylar": [{"ms": 500, "hedef": "kerem", "olay": "ac"}]
+      }
+    ]
+  },
+  {
+    "id": "2K",
+    "ad": "Kör Pusula · kapanış",
+    "paneller": [
+      {
+        "sahne": "navigasyonKoprusu",
+        "sureMs": 17000,
+        "kamera": {"hareket": "roll", "roll": [-6, 0]},
+        "altyazilar": [
+          {"konusan": "ARGE", "metin": "Kuzey burada. Yönler geri geldi.", "ms": 1600, "sureMs": 3200},
+          {"konusan": "Kerem", "metin": "Sizi görüyorum! Rota tam bana geliyor!", "ms": 5400, "sureMs": 3800},
+          {
+            "konusan": "ARGE",
+            "metin": "Navigasyon çevrimiçi. Öğrendiğim kural: {kural2}",
+            "ms": 9800,
+            "sureMs": 6400
+          }
+        ],
+        "olaylar": [
+          {"ms": 500, "hedef": "nav", "olay": "duzel"},
+          {"ms": 2600, "hedef": "nav", "olay": "bul"},
+          {"ms": 3000, "hedef": "kerem", "olay": "ac"},
+          {"ms": 3800, "hedef": "kerem", "olay": "netles"}
         ]
       }
     ]

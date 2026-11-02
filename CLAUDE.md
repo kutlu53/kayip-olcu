@@ -108,7 +108,7 @@ Her bölüm aynı üç adımı izler:
 | Bölüm | Öğrenme çıktısı | Beceri | Kavram yanılgısı kodları |
 |---|---|---|---|
 | 1. Uyanış | FİZ.9.2.1 | Sınıflandırma | `M_KUVVET_TEMEL`, `M_BIRIM_NICELIK` |
-| 2. Kör Pusula | FİZ.9.2.2 | Karşılaştırma | `M_SURAT_HIZ_AYNI`, `M_KUTLE_YONLU` |
+| 2. Kör Pusula | FİZ.9.2.2 | Karşılaştırma | `M_SURAT_HIZ_AYNI`, `M_KUTLE_YONLU`, `M_SKALER_YONLU`, `M_YON_ONEMSIZ` |
 | 3. Römorkör | FİZ.9.2.3 | Bilimsel çıkarım | `M_ZIT_HEP_SIFIR` |
 | 4. Kenetlenme | FİZ.9.2.4 | Tümevarımsal akıl yürütme | `M_BILESKE_TOPLAM`, `M_BILESKE_FARK`, `M_BUYUK_KUVVET_YONU` |
 | 5. Dört Kuvvet | FİZ.9.2.5 | Karşılaştırma | `M_UZAY_YERCEKIMI_YOK`, `M_SURTUNME_TEMEL` |
@@ -123,6 +123,8 @@ Her bölüm aynı üç adımı izler:
 | `M_BIRIM_NICELIK` | Birim ile nicelik aynı şeydir | Nicelik ölçülen özellik, birim ölçü standardıdır |
 | `M_SURAT_HIZ_AYNI` | Sürat ile hız aynıdır | Sürat skaler, hız vektöreldir |
 | `M_KUTLE_YONLU` | Kütlenin yönü vardır | Kütle skalerdir; ağırlık vektöreldir |
+| `M_SKALER_YONLU` | Sıcaklık, enerji gibi skaler niceliklerin de yönü vardır | Skaler nicelikler yalnızca büyüklükle (sayı ve birim) tam anlatılır |
+| `M_YON_ONEMSIZ` | Kuvvet, yer değiştirme gibi niceliklerde yön sonucu değiştirmez | Vektörel niceliklerde aynı büyüklük farklı yönde farklı sonuç verir |
 | `M_ZIT_HEP_SIFIR` | Zıt yönlü kuvvetler her zaman birbirini yok eder | Yalnızca büyüklükler eşitse bileşke sıfırdır |
 | `M_BILESKE_TOPLAM` | Bileşkenin büyüklüğü, büyüklüklerin toplamıdır | Yalnızca aynı yönlü vektörlerde böyledir |
 | `M_BILESKE_FARK` | Bileşkenin büyüklüğü, büyüklüklerin farkıdır | Yalnızca zıt yönlü vektörlerde böyledir; aradaki açı bileşkeyi belirler |
@@ -192,6 +194,12 @@ Her bölüm aynı üç adımı izler:
 - **Görev:** Tarayıcıyla 10 nicelik "yön gerekir / gerekmez" diye etiketlenir. Her yanlış etiket rota çiziminde sapma olarak geri döner.
 - **Başarı:** Etiketlemeyi tamamlamak + bir sürat–hız çiftini kendi cümlesiyle karşılaştırmak.
 - **Diyalog:** Kerem: "Sürat, hız, ne fark eder?" — Elif: "Sana 'beni 5 km ötede bul' desem, nereye giderdin?"
+- **Uygulanan akış (`bolum2.json`):**
+  - *Keşif 1 · Kerem'i bul:* "500 km/h, 30 dk" bilgisiyle tahmin kartı (`M_SURAT_HIZ_AYNI`). ARGE uzaklığı (250 km) hesaplar; radarda olası konumlar bir çember olarak çizilir. 3 arama dronu çemberde rastgele noktaları dener (şans eseri bulma da mümkün ve dürüstçe söylenir). Ardından Kerem yön verir (kuzeydoğu); turuncu hız oku çizilir, dron tek noktaya gönderilir. "Hız" adı bu anda verilir.
+  - *Keşif 2 · Yön ekle:* Kuvvet, kütle, yer değiştirme, sıcaklık için "kuzeye / güneye" karşılaştırması; tahmin (değişir/değişmez), sonra canlandırma. Kuvvet: durgun kapsül hızlanır; yer değiştirme: kapsül 3 km gider; kütle ve sıcaklık: iki kapsül aynı ("="). Yanlış tahminler: `M_YON_ONEMSIZ`, `M_KUTLE_YONLU`, `M_SKALER_YONLU`.
+  - *Genelleme:* "Skaler" ve "vektörel" adları burada verilir; "kütle gibi" çeldiricisi `M_KUTLE_YONLU`.
+  - *Görev · Rota tarayıcısı:* 10 nicelik (5 skaler, 5 vektörel) dokunarak YÖNLÜ/YÖNSÜZ etiketlenir (renk + desen: turuncu ok / gri nokta). ROTAYI ÇİZ: her nicelik rotanın bir parçası; yanlış etiketli parça 28° sapar ve kırmızı noktayla adı yazılır. Hatasız rota Kerem'e ulaşınca Kerem "Sürat, hız, ne fark eder?" diye sorar; öğrenci kendi cümlesiyle cevaplar (anahtar sözcük: yön + sürat/hız; deftere öğretmen onayı bekler).
+  - *2A/2K:* Navigasyon köprüsü; istasyon sürüklenirken ön camdan Dünya yatar (kamera `roll`, yalnızca `yuvarlan: true` katmanlar), pusula hologramı rastgele döner. 2K'da pusula durulur, radar Kerem'i gösterir, Kerem'in görüntüsü netleşir.
 
 ### Bölüm 3 — Römorkör (FİZ.9.2.3)
 - **Sahne:** Kopmuş bir güneş paneli modülü ve iki tamir dron'u.
@@ -518,6 +526,7 @@ kayip-olcu/
 │     ├─ scenes.json          ← sahne kompozisyonları (katmanlar, derinlik, konum)
 │     ├─ characters.json      ← konuşan adı ve altyazı rengi
 │     ├─ bolum1.json          ← Bölüm 1 içeriği: sensörler, birim çözücü, kural parçaları, SI çekirdeği kartları
+│     ├─ bolum2.json          ← Bölüm 2 içeriği: Kerem araması, yön deneyleri, kural parçaları, rota nicelikleri
 │     ├─ bolum4.json          ← Bölüm 4 içeriği: örnekler, tahmin kartları, kural parçaları, ipuçları, ARGE replikleri
 │     ├─ misconceptions.json
 │     └─ quantities.json      ← SI nicelik listesi (ad, birim, temel/türetilmiş, skaler/vektörel)
@@ -611,6 +620,8 @@ kayip-olcu/
 
 **Kayıt modeli (`SaveSystem.js`):** IndexedDB `kayipOlcu` veritabanı, `oyuncular` ve `olaylar` depoları; IndexedDB yoksa localStorage. Oyuncu kimliği `takmaad#SINIFKODU`; aynı takma ad + sınıf kodu girilince eski ilerleme yüklenir (paylaşılan okul bilgisayarları). Oyuncu kaydı: `girisIzlendi`, `sistemler` (tamamlanan bölüm numaraları; sayısı `guc` değeridir), `bolumler`, `defter`. Hub'da bir bölüm, kendinden önceki *hazır* (`hazir: true`) bölümlerin hepsi tamamlanınca açılır; henüz yapılmamış bölümler sırayı kilitlemez. Bölüm 1 de hazır olduğu için Bölüm 4, Bölüm 1 bitince açılır (doğrudan erişim: `?bolum=4`). `hazir: false` olan bölüm "hazırlanıyor" mesajı verir. Bölüm içeriği `src/data/bolumN.json` dosyasında, sahne sınıfı `levels.json`'daki `sahne` alanında.
 
+**İçerik JSON biçimi:** `scenes.json` ve `cutscenes.json` bir betikle yeniden yazılırsa `node scripts/json-bicimle.mjs <dosya>` ile biçimlendir (kısa nesneler tek satır; metinlere dokunmaz).
+
 **Bölüm yazma kuralları (BolumTemel):** Her adım `adimBaslat` ile başlar (eski nesneler ve konuşmalar temizlenir). Her cevap `cevap({ dogru, yanilgi, ayrinti })` ile telemetriye düşer; tahmin kartlarında her yanlış seçeneğin `yanilgi` kodu `misconceptions.json`'da olmalı. Sürekli (sürükle-bırak) görevlerde kodlanabilen hata `yanilgi` ile, diğerleri `ayrinti` ile kaydedilir. Metinlerde `{ad}` ve `{kuralN}` şablonları kullanılabilir.
 
 **Gizlilik:** Öğrenci adı yerine sınıf kodu + takma ad kullanılır, kişisel veri toplanmaz. Araştırma için veli onay formu gerekir.
@@ -646,7 +657,7 @@ kayip-olcu/
 
 ### Aşama 3 — Kalan bölümler (4–9. hafta)
 - [x] Bölüm 1 Uyanış (sürükle-bırak SI tablosu; bağımlılık kilidi) + 1A/1K ara sahneleri
-- [ ] Bölüm 2 Kör Pusula (etiketleme + rota sapması)
+- [x] Bölüm 2 Kör Pusula (etiketleme + rota sapması) + 2A/2K ara sahneleri
 - [ ] Bölüm 3 Römorkör (aynı doğrultuda kuvvetler, tahmin → test)
 - [ ] Bölüm 5 Dört Kuvvet (eşleştirme + menzil/şiddet panosu)
 - [ ] Bölüm 6 Kim Hareket Ediyor? (üç gözlemci görünümü, veri tablosu, tanım kurma, gizemin çözülmesi)

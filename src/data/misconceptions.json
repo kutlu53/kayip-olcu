@@ -3,6 +3,8 @@
   "M_BIRIM_NICELIK": { "yanilgi": "Birim ile nicelik aynı şeydir", "dogrusu": "Nicelik ölçülen özellik, birim ölçü standardıdır", "bolum": 1 },
   "M_SURAT_HIZ_AYNI": { "yanilgi": "Sürat ile hız aynıdır", "dogrusu": "Sürat skaler, hız vektöreldir", "bolum": 2 },
   "M_KUTLE_YONLU": { "yanilgi": "Kütlenin yönü vardır", "dogrusu": "Kütle skalerdir; ağırlık vektöreldir", "bolum": 2 },
+  "M_SKALER_YONLU": { "yanilgi": "Sıcaklık, enerji gibi skaler niceliklerin de yönü vardır", "dogrusu": "Skaler nicelikler yalnızca büyüklükle (sayı ve birim) tam anlatılır", "bolum": 2 },
+  "M_YON_ONEMSIZ": { "yanilgi": "Kuvvet, yer değiştirme gibi niceliklerde yön sonucu değiştirmez", "dogrusu": "Vektörel niceliklerde aynı büyüklük farklı yönde farklı sonuç verir", "bolum": 2 },
   "M_ZIT_HEP_SIFIR": { "yanilgi": "Zıt yönlü kuvvetler her zaman birbirini yok eder", "dogrusu": "Yalnızca büyüklükler eşitse bileşke sıfırdır", "bolum": 3 },
   "M_BILESKE_TOPLAM": { "yanilgi": "Bileşkenin büyüklüğü, büyüklüklerin toplamıdır", "dogrusu": "Yalnızca aynı yönlü vektörlerde böyledir", "bolum": 4 },
   "M_BILESKE_FARK": { "yanilgi": "Bileşkenin büyüklüğü, büyüklüklerin farkıdır", "dogrusu": "Yalnızca zıt yönlü vektörlerde böyledir; aradaki açı bileşkeyi belirler", "bolum": 4 },

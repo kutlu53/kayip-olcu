@@ -82,7 +82,7 @@ export default class CutsceneScene extends Phaser.Scene {
       }
       const a = k.ayar || {};
       const nesne = tur.olustur(this, a);
-      const L = { id: k.id, nesne, derinlik: k.derinlik || 0, sabit: !!k.sabit, x: CX + (a.x || 0), y: CY + (a.y || 0), olcek: a.olcek || 1 };
+      const L = { id: k.id, nesne, derinlik: k.derinlik || 0, sabit: !!k.sabit, yuvarlan: !!k.yuvarlan, x: CX + (a.x || 0), y: CY + (a.y || 0), olcek: a.olcek || 1 };
       nesne.setPosition(L.x, L.y).setScale(L.olcek);
       if (a.alfa !== undefined) nesne.setAlpha(a.alfa);
       kok.add(nesne);
@@ -127,7 +127,15 @@ export default class CutsceneScene extends Phaser.Scene {
       const ox = -yx * m * L.derinlik * (e - 0.5);
       const oy = -yy * m * L.derinlik * (e - 0.5);
       const s = 1 + (z - 1) * (0.35 + 0.65 * L.derinlik);
-      L.nesne.setPosition(CX + (L.x - CX + ox) * s, CY + (L.y - CY + oy) * s).setScale(L.olcek * s);
+      let px = (L.x - CX + ox) * s;
+      let py = (L.y - CY + oy) * s;
+      // Yatma (roll): kamera istasyona bagli, istasyon donunce dis manzara doner
+      if (k.roll && L.yuvarlan) {
+        const r = ((k.roll[0] + (k.roll[1] - k.roll[0]) * e) * Math.PI) / 180;
+        [px, py] = [px * Math.cos(r) - py * Math.sin(r), px * Math.sin(r) + py * Math.cos(r)];
+        L.nesne.rotation = r;
+      }
+      L.nesne.setPosition(CX + px, CY + py).setScale(L.olcek * s);
     }
   }
 

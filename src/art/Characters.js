@@ -349,13 +349,13 @@ export function keremDokusu(sahne) {
   });
 }
 
-export function keremVideoOlustur(sahne) {
+export function keremVideoOlustur(sahne, ayar = {}) {
   const G = 380, Y = 250;
   const kap = sahne.add.container(0, 0);
   const ic = sahne.add.container(0, 0);
   const zemin = sahne.add.rectangle(0, -14, G + 10, Y + 38, 0x02060b, 0.9).setStrokeStyle(2, 0x5fe3e8, 0.6);
   const goruntu = sahne.add.image(0, 4, keremDokusu(sahne));
-  const gurultu = sahne.add.tileSprite(0, 4, G, Y, 'gurultu').setAlpha(0.16);
+  const gurultu = sahne.add.tileSprite(0, 4, G, Y, 'gurultu').setAlpha(ayar.gurultulu ? 0.6 : 0.16);
   const stil = { fontFamily: YAZI, fontSize: '14px', fontStyle: 'bold', color: '#D8F6FF' };
   const baslik = sahne.add.text(-G / 2 + 2, -Y / 2 - 26, 'KAPSÜL-2 · KEREM', stil);
   const canli = sahne.add.text(G / 2 - 2, -Y / 2 - 26, '● CANLI', { ...stil, color: '#FF5A5A' }).setOrigin(1, 0);
@@ -376,6 +376,7 @@ export function keremVideoOlustur(sahne) {
   };
   kap.olay = (ad) => {
     if (ad === 'ac') ekranAc(sahne, ic, 500);
+    if (ad === 'netles') sahne.tweens.add({ targets: gurultu, alpha: 0.08, duration: 2200 });
     if (ad === 'sinyalKes') {
       sahne.tweens.add({
         targets: gurultu,

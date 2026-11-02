@@ -1,0 +1,130 @@
+{
+  "bolum": 2,
+  "cikti": "FİZ.9.2.2",
+  "giris": [
+    { "kim": "ARGE", "metin": "Kerem'in kapsülü… radarda yok. Yalnızca… sürati ve süresi var." },
+    { "kim": "Elif", "metin": "Önce tahmin et: bu bilgi Kerem'i bulmaya yeter mi?" }
+  ],
+  "kesif1": {
+    "baslik": "KEŞİF 1 · KEREM'İ BUL",
+    "yonerge": "Kerem'in kapsülü radarda görünmüyor. Telsizden gelen bilgiyle onu bulmaya çalış.",
+    "kerem": "Kapsülüm saatte 500 km sürat ile gidiyor, ayrılalı 30 dakika oldu. Beni bulun!",
+    "surat": 500,
+    "sureDk": 30,
+    "yonDerece": 45,
+    "yonAdi": "kuzeydoğu",
+    "tahmin": {
+      "soru": "Bu bilgiyle Kerem'in yerini bulabilir miyiz?",
+      "secenekler": [
+        { "metin": "Evet: 30 dakikada 250 km gitmiş, yeri belli", "dogru": false, "yanilgi": "M_SURAT_HIZ_AYNI" },
+        { "metin": "Hayır: hangi yöne gittiğini de bilmeliyiz", "dogru": true }
+      ]
+    },
+    "uzaklik": "500 km/h ile 30 dakika: Kerem 250 km uzakta. Ama hangi yönde? Kesikli çember, 250 km uzaktaki bütün noktalar.",
+    "yonergeArama": "Haritada bir noktaya dokun: arama dronu oraya gitsin. 3 dronun var.",
+    "bos": "Dron {no}: burada yok. Çemberin üzerinde daha çok nokta var…",
+    "sansli": "Bulduk! Ama şans eseri: aynı uzaklıkta sonsuz nokta vardı.",
+    "yonGeldi": "Pusulam düzeldi! Kuzeydoğuya gidiyorum!",
+    "yonergeYonlu": "Şimdi turuncu ok Kerem'in gidiş yönünü gösteriyor. Dronu nereye göndereceksin?",
+    "bulundu": "Bulduk! 500 km/h tek başına yetmedi. 500 km/h ve kuzeydoğu birlikte yetti. Sürate yön eklenince ona hız deniyor.",
+    "iska": "Burada yok. Turuncu okun gösterdiği yönde, 250 km uzakta olmalı.",
+    "ipuclari": [
+      "Kerem 250 km uzakta. Ama 250 km uzaktaki her nokta aynı uzaklıkta değil mi?",
+      "\"Beni 5 km ötede bul\" desem, nereye giderdin? Bir yön olmadan bilemezsin.",
+      "Kesikli çemberin, turuncu okla kesiştiği noktaya dokun."
+    ]
+  },
+  "kesif2": {
+    "baslik": "KEŞİF 2 · YÖN EKLE",
+    "yonerge": "ARGE her ölçüme bir yön eklemeyi deniyor: önce kuzeye, sonra güneye. Sonuç değişir mi?",
+    "deneyler": [
+      {
+        "ad": "Kuvvet", "deger": "400 N", "tur": "vektorel", "canlandirma": "it",
+        "secenekler": [
+          { "metin": "Değişir", "dogru": true },
+          { "metin": "Değişmez", "dogru": false, "yanilgi": "M_YON_ONEMSIZ" }
+        ],
+        "sonuc": "Kuzeye 400 N ile güneye 400 N bambaşka: kapsül ters yönlere gitti."
+      },
+      {
+        "ad": "Kütle", "deger": "7200 kg", "tur": "skaler", "canlandirma": "yok",
+        "secenekler": [
+          { "metin": "Değişir", "dogru": false, "yanilgi": "M_KUTLE_YONLU" },
+          { "metin": "Değişmez", "dogru": true }
+        ],
+        "sonuc": "\"Kuzeye 7200 kg\" mı? İki kapsül tıpatıp aynı. Kütleye yön eklemek bir şey anlatmıyor."
+      },
+      {
+        "ad": "Yer değiştirme", "deger": "3 km", "tur": "vektorel", "canlandirma": "git",
+        "secenekler": [
+          { "metin": "Değişir", "dogru": true },
+          { "metin": "Değişmez", "dogru": false, "yanilgi": "M_YON_ONEMSIZ" }
+        ],
+        "sonuc": "Kuzeye 3 km ile güneye 3 km: kapsüller 6 km arayla bambaşka yerlerde."
+      },
+      {
+        "ad": "Sıcaklık", "deger": "293 K", "tur": "skaler", "canlandirma": "yok",
+        "secenekler": [
+          { "metin": "Değişir", "dogru": false, "yanilgi": "M_SKALER_YONLU" },
+          { "metin": "Değişmez", "dogru": true }
+        ],
+        "sonuc": "\"Güneye doğru 293 K\" mı? Kabin aynı sıcaklıkta. Sıcaklığın yönü yok."
+      }
+    ],
+    "kapanis": "İki tür ölçüm var: bazılarına yön eklemek sonucu değiştiriyor, bazılarında yön anlamsız.",
+    "ipuclari": [
+      "Yön değiştiğinde kapsülde bir şey değişti mi? İki taraftaki kapsüllere bak.",
+      "Bir kapsülü kuzeye itmekle güneye itmek aynı mı? Peki bir kapsülün kütlesini kuzeye tartmak mümkün mü?",
+      "Kuvvet ve yer değiştirmede yön sonucu değiştirir; kütle ve sıcaklıkta değiştirmez."
+    ]
+  },
+  "genelleme": {
+    "baslik": "GÖZLEM DEFTERİ · KURALINI YAZ",
+    "yonerge": "Tablona bak: hangi ölçümlerde yön sonucu değiştirdi? Bir kural yaz. Bilim insanları yönsüz niceliklere \"skaler\", yönlü niceliklere \"vektörel\" der.",
+    "parcalar": ["Yalnızca büyüklükle", "tam anlatılan niceliklere skaler,", "büyüklüğün yanında yön de", "gerektiren niceliklere vektörel nicelik denir."],
+    "celdiriciler": ["kütle gibi", "değeri büyük olan"],
+    "kabul": [
+      ["Yalnızca büyüklükle", "tam anlatılan niceliklere skaler,", "büyüklüğün yanında yön de", "gerektiren niceliklere vektörel nicelik denir."]
+    ],
+    "serbestAnahtarlar": [["skaler"], ["vektör"], ["yön"]],
+    "kutleYonlu": "Kütle gibi mi? Ama \"kuzeye 7200 kg\" hiçbir şey anlatmıyordu. İki kapsül aynıydı!",
+    "degerBuyuk": "Değerin büyük olması mı? Ama 7200 kg büyük bir değerdi ve yine de yönü yoktu.",
+    "eksik": "Kuralın yarım kalmış gibi… İki türü de anlatır mısın?",
+    "serbestEksik": "Kuralında \"skaler\", \"vektörel\" ve \"yön\" sözcükleri geçsin. Hangi ölçümlerde yön sonucu değiştirdi?",
+    "kabulMesaji": "\"{kural2}\" Anladım! Navigasyon bu kuralla yön hesaplayacak.",
+    "ipuclari": [
+      "Tabloda yön sonucu değiştiren ölçümler hangileriydi?",
+      "Kuvvet ve yer değiştirmede yön önemliydi; kütle ve sıcaklıkta değildi.",
+      "Cümleye \"Yalnızca büyüklükle\" ile başla."
+    ]
+  },
+  "gorev": {
+    "baslik": "GÖREV · ROTA TARAYICISI",
+    "yonerge": "Navigasyon, Kerem'e rotayı bu 10 niceliği kullanarak çizecek. Her niceliğe dokunarak etiketle: YÖNLÜ (vektörel) ya da YÖNSÜZ (skaler). Sonra ROTAYI ÇİZ.",
+    "nicelikler": [
+      { "ad": "Kütle", "tur": "skaler", "yanilgi": "M_KUTLE_YONLU" },
+      { "ad": "Hız", "tur": "vektorel", "yanilgi": "M_SURAT_HIZ_AYNI" },
+      { "ad": "Sıcaklık", "tur": "skaler", "yanilgi": "M_SKALER_YONLU" },
+      { "ad": "Kuvvet", "tur": "vektorel", "yanilgi": "M_YON_ONEMSIZ" },
+      { "ad": "Sürat", "tur": "skaler", "yanilgi": "M_SURAT_HIZ_AYNI" },
+      { "ad": "Yer değiştirme", "tur": "vektorel", "yanilgi": "M_YON_ONEMSIZ" },
+      { "ad": "Enerji", "tur": "skaler", "yanilgi": "M_SKALER_YONLU" },
+      { "ad": "Ağırlık", "tur": "vektorel", "yanilgi": "M_YON_ONEMSIZ" },
+      { "ad": "Alınan yol", "tur": "skaler", "yanilgi": "M_SKALER_YONLU" },
+      { "ad": "İvme", "tur": "vektorel", "yanilgi": "M_YON_ONEMSIZ" }
+    ],
+    "eksik": "{sayi} nicelik etiketsiz. Navigasyon hepsine ihtiyaç duyuyor.",
+    "sapma": "Rota {sayi} yerde saptı ve Kerem'i ıskaladı. Kırmızı noktalardaki niceliklere bir daha bak.",
+    "basari": "Rota tam Kerem'in kapsülüne ulaştı!",
+    "kerem": "Sürat, hız, ne fark eder?",
+    "keremYonerge": "Kerem'e kendi cümlenle cevap ver: sürat ile hız arasındaki fark ne?",
+    "keremAnahtarlar": [["yön"], ["sürat", "hız"]],
+    "keremEksik": "Sana \"beni 5 km ötede bul\" desem, nereye giderdin? Cevabında yönden söz et.",
+    "keremKabul": "Haa, anladım! Sürate yön eklenince hız oluyor. Bu yüzden beni bulamıyordunuz!",
+    "ipuclari": [
+      "Bu niceliğe \"kuzeye doğru\" eklesen anlamı değişir mi?",
+      "Keşif 2'de kuvvet ve yer değiştirme yönlüydü; kütle ve sıcaklık yönsüzdü. Sürat ile hız arasındaki fark da yöndü.",
+      "Yönlü olanlar: hız, kuvvet, yer değiştirme, ağırlık, ivme."
+    ]
+  }
+}

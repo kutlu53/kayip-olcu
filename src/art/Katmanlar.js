@@ -5,6 +5,7 @@ import { kontrolOdasiDokusu, kontrolOdasiOlustur, pencereCercevesiDokusu } from 
 import { elifDokusu, ekranElifOlustur, keremDokusu, keremVideoOlustur } from './Characters.js';
 import { Arge } from './Arge.js';
 import { geriSayimOlustur, parcacikAkisiOlustur } from './Hud.js';
+import { navKoprusuDokusu, navKonsolOlustur } from './Navigasyon.js';
 import { tibbiKapsulDokusu, tibbiKapsulOlustur, istasyonPortuDokusu, istasyonPortuOlustur } from './Port.js';
 
 // scenes.json'daki "tip" degerleri. hazirla: dokulari onceden ciz; olustur: oyun nesnesini kur.
@@ -24,5 +25,6 @@ export const KATMANLAR = {
   geriSayim: { olustur: geriSayimOlustur },
   parcacikAkisi: { olustur: parcacikAkisiOlustur },
   tibbiKapsul: { hazirla: tibbiKapsulDokusu, olustur: tibbiKapsulOlustur },
-  istasyonPortu: { hazirla: istasyonPortuDokusu, olustur: istasyonPortuOlustur }
+  istasyonPortu: { hazirla: istasyonPortuDokusu, olustur: istasyonPortuOlustur },
+  navKonsol: { hazirla: navKoprusuDokusu, olustur: navKonsolOlustur }
 };
