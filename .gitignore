@@ -1,0 +1,6 @@
+node_modules/
+dist/
+
+# Depoya girmeyen belgeler (guncel tasarim belgesi: CLAUDE.md)
+*.docx
+KAYIP_OLCU_PROJE.md

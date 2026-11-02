@@ -1,0 +1,49 @@
+{
+  "yorungeGece": {
+    "aciklama": "Alçak yörüngeden Dünya'nın gece tarafı, Anadolu'nun şehir ışıkları, sağda şafak",
+    "katmanlar": [
+      { "id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": { "katman": "uzak" } },
+      { "id": "yildizYakin", "tip": "yildizlar", "derinlik": 0.05, "ayar": { "katman": "yakin" }, "min": "orta" },
+      { "id": "dunya", "tip": "dunyaUfku", "derinlik": 0.22, "ayar": { "ufukY": 410, "safak": "sag" } }
+    ]
+  },
+  "istasyonDis": {
+    "aciklama": "Göktürk-7 dışarıdan; Güneş ufkun hemen üstünde, istasyona soldan kenar ışığı",
+    "katmanlar": [
+      { "id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": { "katman": "uzak" } },
+      { "id": "yildizYakin", "tip": "yildizlar", "derinlik": 0.05, "ayar": { "katman": "yakin" }, "min": "orta" },
+      { "id": "gunes", "tip": "gunes", "derinlik": 0.03, "ayar": { "x": -470, "y": 110 } },
+      { "id": "dunya", "tip": "dunyaUfku", "derinlik": 0.15, "ayar": { "ufukY": 660, "safak": "sol" } },
+      { "id": "aurora", "tip": "aurora", "derinlik": 0.15, "ayar": { "x": 120, "y": 85, "alfa": 0 } },
+      { "id": "istasyon", "tip": "istasyon", "derinlik": 0.5, "ayar": { "x": 80, "y": -60, "olcek": 0.82, "isik": [-0.95, 0.3] } },
+      { "id": "akis", "tip": "parcacikAkisi", "sabit": true }
+    ]
+  },
+  "kontrolOdasi": {
+    "aciklama": "Kontrol odası; arka duvardaki pencereden Dünya, ortada ARGE hologramı",
+    "katmanlar": [
+      { "id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": { "katman": "uzak" } },
+      { "id": "manzara", "tip": "dunyaUfku", "derinlik": 0.08, "ayar": { "ufukY": 410, "safak": "sag", "olcek": 0.5, "y": -15 } },
+      { "id": "oda", "tip": "kontrolOdasi", "derinlik": 0.35 },
+      { "id": "arge", "tip": "arge", "derinlik": 0.4, "ayar": { "y": -30, "yaricap": 95, "durum": 6.5 } }
+    ]
+  },
+  "pencereTahliye": {
+    "aciklama": "Lombozdan dışarı: kurtarma kapsülleri Dünya'ya doğru uzaklaşıyor",
+    "katmanlar": [
+      { "id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": { "katman": "uzak" } },
+      { "id": "yildizYakin", "tip": "yildizlar", "derinlik": 0.05, "ayar": { "katman": "yakin" }, "min": "orta" },
+      { "id": "dunya", "tip": "dunyaUfku", "derinlik": 0.12, "ayar": { "ufukY": 410, "safak": "sag" } },
+      { "id": "kapsuller", "tip": "kapsuller", "derinlik": 0.15, "ayar": { "y": -30 } },
+      { "id": "pencere", "tip": "pencereCercevesi", "derinlik": 0.6 },
+      { "id": "kerem", "tip": "keremVideo", "sabit": true, "ayar": { "x": 400, "y": -110 } }
+    ]
+  },
+  "karanlikEkran": {
+    "aciklama": "Karanlıkta tek ekran: Elif'in hologramı ve geri sayım",
+    "katmanlar": [
+      { "id": "ekran", "tip": "ekranElif", "derinlik": 0.1, "ayar": { "y": -50, "ifade": "endiseli" } },
+      { "id": "sayac", "tip": "geriSayim", "sabit": true, "ayar": { "y": 222 } }
+    ]
+  }
+}

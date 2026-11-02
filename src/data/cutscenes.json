@@ -1,0 +1,100 @@
+[
+  {
+    "id": "G",
+    "ad": "Giriş",
+    "paneller": [
+      {
+        "sahne": "yorungeGece",
+        "sureMs": 8000,
+        "kamera": { "hareket": "pan", "yon": "sag", "mesafe": 400, "zoom": [1, 1.05] },
+        "basliklar": [
+          { "metin": "2071 · ALÇAK DÜNYA YÖRÜNGESİ", "ms": 1200, "sureMs": 2400 },
+          { "metin": "GÖKTÜRK-7 ARAŞTIRMA İSTASYONU", "ms": 4800, "sureMs": 2200 }
+        ]
+      },
+      {
+        "sahne": "istasyonDis",
+        "gecis": "crossDissolve",
+        "sureMs": 8000,
+        "kamera": { "hareket": "dolly", "yon": "sol", "mesafe": 160, "zoom": [1, 1.06] },
+        "ekKatmanlar": [
+          { "id": "arge", "tip": "arge", "sabit": true, "ayar": { "x": -560, "y": -210, "yaricap": 30, "durum": 7 } }
+        ],
+        "altyazilar": [
+          { "konusan": "ARGE", "metin": "Güneş etkinliği normal. Mürettebat uyku döngüsünde.", "ms": 2000, "sureMs": 4000 }
+        ],
+        "olaylar": [
+          { "ms": 6200, "hedef": "gunes", "olay": "parla" }
+        ]
+      },
+      {
+        "sahne": "istasyonDis",
+        "gecis": "kesme",
+        "sureMs": 8000,
+        "kamera": { "hareket": "zoom", "zoom": [1.06, 1.14] },
+        "basliklar": [
+          { "metin": "ERTESİ GÜN · 03.40", "ms": 300, "sureMs": 1800 }
+        ],
+        "altyazilar": [
+          { "konusan": "ARGE", "metin": "Uyarı… yüklü parçacık akısı… sınırın üzerinde…", "ms": 3600, "sureMs": 3400, "bozuk": true }
+        ],
+        "olaylar": [
+          { "ms": 800, "hedef": "akis", "olay": "baslat" },
+          { "ms": 1600, "hedef": "aurora", "olay": "baslat" },
+          { "ms": 2600, "fx": "sars", "sure": 900, "siddet": 0.006 },
+          { "ms": 2600, "fx": "bozulma", "sure": 400, "guc": 0.5 },
+          { "ms": 3000, "hedef": "istasyon", "olay": "isiklariSondur" },
+          { "ms": 4400, "fx": "sars", "sure": 700, "siddet": 0.01 },
+          { "ms": 7600, "fx": "flas", "sure": 400 }
+        ]
+      },
+      {
+        "sahne": "kontrolOdasi",
+        "gecis": "kesme",
+        "sureMs": 12000,
+        "kamera": { "hareket": "dolly", "yon": "sag", "mesafe": 80, "zoom": [1, 1.06] },
+        "altyazilar": [
+          { "konusan": "ARGE", "metin": "Bir… bir-birim… tanımsız…", "ms": 2600, "sureMs": 3600, "bozuk": true },
+          { "konusan": "ARGE", "metin": "Yön… tanımsız… Kuvvet… tanım…", "ms": 6800, "sureMs": 4200, "bozuk": true }
+        ],
+        "olaylar": [
+          { "ms": 1400, "hedef": "oda", "olay": "karart" },
+          { "ms": 1400, "fx": "sars", "sure": 500, "siddet": 0.008 },
+          { "ms": 1400, "hedef": "arge", "olay": "durum", "deger": 0.5, "sure": 9000 },
+          { "ms": 2600, "fx": "bozulma", "sure": 500, "guc": 0.6 },
+          { "ms": 6800, "fx": "bozulma", "sure": 600, "guc": 0.8 },
+          { "ms": 10600, "fx": "bozulma", "sure": 900, "guc": 1 }
+        ]
+      },
+      {
+        "sahne": "pencereTahliye",
+        "gecis": "glitch",
+        "sureMs": 10000,
+        "kamera": { "hareket": "dolly", "yon": "sol", "mesafe": 120, "zoom": [1, 1.04] },
+        "altyazilar": [
+          { "konusan": "Kerem", "metin": "Stajyer! Kapsülde yer kalmadı! Sen ve Komutan…", "ms": 2000, "sureMs": 4800 },
+          { "konusan": "Sistem", "metin": "[sinyal kesildi]", "ms": 7800, "sureMs": 2000 }
+        ],
+        "olaylar": [
+          { "ms": 1400, "hedef": "kerem", "olay": "ac" },
+          { "ms": 7200, "hedef": "kerem", "olay": "sinyalKes" }
+        ]
+      },
+      {
+        "sahne": "karanlikEkran",
+        "gecis": "fadeBlack",
+        "sureMs": 14000,
+        "kamera": { "hareket": "zoom", "zoom": [1, 1.05] },
+        "altyazilar": [
+          { "konusan": "Elif", "metin": "Beni duyuyor musun?", "ms": 2000, "sureMs": 2600 },
+          { "konusan": "Elif", "metin": "72 saatimiz var.", "ms": 5000, "sureMs": 2800 },
+          { "konusan": "Elif", "metin": "ARGE'ye ihtiyacımız var… ARGE'nin de sana.", "ms": 8200, "sureMs": 5000 }
+        ],
+        "olaylar": [
+          { "ms": 800, "hedef": "ekran", "olay": "ac" },
+          { "ms": 5600, "hedef": "sayac", "olay": "goster" }
+        ]
+      }
+    ]
+  }
+]
