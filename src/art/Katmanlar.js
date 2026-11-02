@@ -5,6 +5,7 @@ import { kontrolOdasiDokusu, kontrolOdasiOlustur, pencereCercevesiDokusu } from 
 import { elifDokusu, ekranElifOlustur, keremDokusu, keremVideoOlustur } from './Characters.js';
 import { Arge } from './Arge.js';
 import { geriSayimOlustur, parcacikAkisiOlustur } from './Hud.js';
+import { tibbiKapsulDokusu, tibbiKapsulOlustur, istasyonPortuDokusu, istasyonPortuOlustur } from './Port.js';
 
 // scenes.json'daki "tip" degerleri. hazirla: dokulari onceden ciz; olustur: oyun nesnesini kur.
 // Nesne istege bagli olarak guncelle(zaman, delta) ve olay(ad, veri) yontemleri tasir.
@@ -21,5 +22,7 @@ export const KATMANLAR = {
   keremVideo: { hazirla: keremDokusu, olustur: keremVideoOlustur },
   ekranElif: { hazirla: (s, a) => elifDokusu(s, a.ifade), olustur: ekranElifOlustur },
   geriSayim: { olustur: geriSayimOlustur },
-  parcacikAkisi: { olustur: parcacikAkisiOlustur }
+  parcacikAkisi: { olustur: parcacikAkisiOlustur },
+  tibbiKapsul: { hazirla: tibbiKapsulDokusu, olustur: tibbiKapsulOlustur },
+  istasyonPortu: { hazirla: istasyonPortuDokusu, olustur: istasyonPortuOlustur }
 };

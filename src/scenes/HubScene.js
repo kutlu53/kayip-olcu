@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import bolumler from '../data/levels.json';
+import araSahneler from '../data/cutscenes.json';
 import { yildizDokusu } from '../art/Starfield.js';
 import { dunyaDokusu } from '../art/Earth.js';
 import { ustCubuk, UST_YUKSEKLIK } from '../ui/UstCubuk.js';
@@ -64,11 +65,16 @@ export default class HubScene extends Phaser.Scene {
     this.cameras.main.fadeIn(700, 0, 0, 0);
   }
 
+  // Bolum, kendinden onceki HAZIR bolumlerin hepsi tamamlaninca acilir.
+  // Henuz yapilmamis bolumler sirayi kilitlemez (dikey dilim: Bolum 4 once oynanabilir)
   durum(b) {
     const s = this.oyuncu.sistemler;
     if (s.includes(b.bolum)) return 'tamam';
-    if (b.bolum === 1 || s.includes(b.bolum - 1)) return 'acik';
-    return 'kilitli';
+    return this.engel(b) ? 'kilitli' : 'acik';
+  }
+
+  engel(b) {
+    return bolumler.find((o) => o.bolum < b.bolum && o.hazir && !this.oyuncu.sistemler.includes(o.bolum)) || null;
   }
 
   bolmeleriKur() {
@@ -135,10 +141,10 @@ export default class HubScene extends Phaser.Scene {
       })
       .setOrigin(0.5, 0);
     const alt = this.add
-      .text(0, etiketY + 21, durum === 'tamam' ? `${b.ad} ✓` : durum === 'acik' ? 'SIRADAKİ GÖREV' : b.ad, {
+      .text(0, etiketY + 21, durum === 'tamam' ? `${b.ad} ${'★'.repeat(this.yildiz(b))}` : durum === 'acik' ? (b.hazir ? `SIRADAKİ GÖREV · ${b.ad}` : `${b.ad} · hazırlanıyor`) : b.ad, {
         fontFamily: YAZI,
         fontSize: '12px',
-        color: durum === 'acik' ? '#5FE3E8' : '#8A96A6',
+        color: durum === 'acik' && b.hazir ? '#5FE3E8' : durum === 'tamam' ? '#FFD79A' : '#8A96A6',
         backgroundColor: 'rgba(5,7,13,0.8)',
         padding: { x: 6, y: 1 }
       })
@@ -146,8 +152,8 @@ export default class HubScene extends Phaser.Scene {
     kap.add([ad, alt]);
     if (durum === 'kilitli') kap.add(this.kilitCiz(halka ? 0 : w / 2 - 14, halka ? 0 : -h / 2 + 14));
 
-    // Siradaki bolme nabiz gibi parlar
-    if (durum === 'acik') {
+    // Siradaki (oynanabilir) bolme nabiz gibi parlar
+    if (durum === 'acik' && b.hazir) {
       const nabiz = this.add.graphics();
       nabiz.lineStyle(3, 0x5fe3e8, 1);
       if (halka) nabiz.strokeEllipse(0, 0, w * 2 + 26, h * 2 + 26);
@@ -164,6 +170,11 @@ export default class HubScene extends Phaser.Scene {
     return kap;
   }
 
+  yildiz(b) {
+    const k = this.oyuncu.bolumler[b.bolum];
+    return k ? k.yildiz || 0 : 0;
+  }
+
   kilitCiz(x, y) {
     const g = this.add.graphics();
     g.lineStyle(2, 0x5d6878, 1).strokeCircle(x, y - 5, 5);
@@ -176,7 +187,7 @@ export default class HubScene extends Phaser.Scene {
     if (n === 0) {
       this.panel.argeSoyle('Ben… ARGE. Birim… tanımsız. Yön… tanımsız. Sen… kimsin?');
       this.karsilamaZamanlayici = this.time.delayedCall(2600, () =>
-        this.panel.elifSoyle(`Hoş geldin ${ad}. Bu, istasyonun haritası. Işığı sönük her bölme kapalı bir sistem. Kontrol odasından başla.`)
+        this.panel.elifSoyle(`Hoş geldin ${ad}. Bu, istasyonun haritası. Işığı sönük her bölme kapalı bir sistem. Nabız gibi parlayan bölme seni bekliyor.`)
       );
     } else if (n < 7) {
       this.panel.argeSoyle(`${ad}, ${n} sistem yeniden çalışıyor. Sıradaki bölmeye enerji gidiyor.`);
@@ -189,8 +200,7 @@ export default class HubScene extends Phaser.Scene {
     // Oyuncu dokunursa bekleyen karsilama mesaji yaniti ezmesin
     if (this.karsilamaZamanlayici) this.karsilamaZamanlayici.remove(false);
     if (durum === 'kilitli') {
-      const onceki = bolumler[b.bolum - 2];
-      this.panel.argeSoyle(`${b.mekan}… enerji yok. Önce ${onceki.mekan} sistemini aç.`);
+      this.panel.argeSoyle(`${b.mekan}… enerji yok. Önce ${this.engel(b).mekan} sistemini aç.`);
       return;
     }
     if (!b.hazir) {
@@ -198,7 +208,10 @@ export default class HubScene extends Phaser.Scene {
       this.panel.elifSoyle('Bu bölmenin onarımı henüz hazırlanıyor. Yakında buradan girebileceksin.');
       return;
     }
-    this.git(b.sahne || `Bolum${b.bolum}`, { bolum: b.bolum });
+    // Acilis ara sahnesi varsa once o oynar, sonra bolum baslar
+    const acilis = araSahneler.some((s) => s.id === b.acilisSahnesi);
+    if (acilis) this.git('CutsceneScene', { id: b.acilisSahnesi, donus: b.sahne });
+    else this.git(b.sahne);
   }
 
   git(sahne, veri) {

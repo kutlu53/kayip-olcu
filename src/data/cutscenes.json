@@ -96,5 +96,80 @@
         ]
       }
     ]
+  },
+  {
+    "id": "4A",
+    "ad": "Kenetlenme · açılış",
+    "paneller": [
+      {
+        "sahne": "istasyonDis",
+        "sureMs": 9000,
+        "kamera": { "hareket": "zoom", "zoom": [1, 1.1] },
+        "katmanAyar": { "istasyon": { "karanlik": true } },
+        "basliklar": [{ "metin": "BÖLÜM 4 · KENETLENME", "ms": 500, "sureMs": 2600 }],
+        "altyazilar": [{ "konusan": "Sistem", "metin": "[gövdeye mikro meteor çarptı]", "ms": 4600, "sureMs": 3000 }],
+        "olaylar": [
+          { "ms": 4200, "hedef": "istasyon", "olay": "carpma" },
+          { "ms": 4200, "fx": "flas", "sure": 250 },
+          { "ms": 4200, "fx": "sars", "sure": 700, "siddet": 0.012 },
+          { "ms": 4400, "fx": "bozulma", "sure": 400, "guc": 0.5 }
+        ]
+      },
+      {
+        "sahne": "karanlikEkran",
+        "gecis": "glitch",
+        "sureMs": 13000,
+        "kamera": { "hareket": "zoom", "zoom": [1, 1.04] },
+        "katmanAyar": { "ekran": { "gurultulu": true, "ifade": "endiseli" } },
+        "altyazilar": [
+          { "konusan": "Elif", "metin": "Bir şey bölmeme çarptı… Kolum… hiç iyi değil.", "ms": 1200, "sureMs": 3400 },
+          { "konusan": "Elif", "metin": "Yer kontrol bir tıbbi kapsül gönderdi. Ama kapsülün yakıt hattı delinmiş, gaz sızdırıyor.", "ms": 4900, "sureMs": 4300 },
+          { "konusan": "Elif", "metin": "Kapsülü kenetlenme portuna sen yanaştıracaksın, {ad}.", "ms": 9500, "sureMs": 3300 }
+        ],
+        "olaylar": [{ "ms": 400, "hedef": "ekran", "olay": "ac" }]
+      },
+      {
+        "sahne": "kenetlenmePortu",
+        "gecis": "fadeBlack",
+        "sureMs": 12000,
+        "kamera": { "hareket": "pan", "yon": "sag", "mesafe": 120, "zoom": [1, 1.05] },
+        "katmanAyar": { "kapsul": { "etiket": "UYARI · SIZINTI: YAKIT HATTI" } },
+        "ekKatmanlar": [{ "id": "arge", "tip": "arge", "sabit": true, "ayar": { "x": -560, "y": -210, "yaricap": 30, "durum": 0.4 } }],
+        "altyazilar": [
+          { "konusan": "ARGE", "metin": "Kapsül… sap… sapıyor… Kuvvet… yön… hesaplayamıyorum…", "ms": 1500, "sureMs": 4000, "bozuk": true },
+          { "konusan": "Elif", "metin": "ARGE'ye önce vektörleri yeniden öğretmeliyiz. Simülasyonu başlat.", "ms": 6200, "sureMs": 4800 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "4K",
+    "ad": "Kenetlenme · kapanış",
+    "paneller": [
+      {
+        "sahne": "kenetlenmePortu",
+        "sureMs": 12000,
+        "katmanAyar": { "kapsul": { "yalpa": false } },
+        "altyazilar": [{ "konusan": "Sistem", "metin": "[kenetlenme kilitleri: 1… 2… 3… 4… tamam]", "ms": 7400, "sureMs": 3600 }],
+        "olaylar": [
+          { "ms": 300, "hedef": "kapsul", "olay": "sizintiDurdur" },
+          { "ms": 400, "hedef": "kapsul", "olay": "yanas", "dx": 699, "sure": 6500 },
+          { "ms": 7000, "hedef": "kapsul", "olay": "kilitle" },
+          { "ms": 7000, "fx": "sars", "sure": 300, "siddet": 0.004 }
+        ]
+      },
+      {
+        "sahne": "karanlikEkran",
+        "gecis": "crossDissolve",
+        "sureMs": 13000,
+        "katmanAyar": { "ekran": { "ifade": "gulumseme" } },
+        "ekKatmanlar": [{ "id": "arge", "tip": "arge", "sabit": true, "ayar": { "x": -560, "y": -210, "yaricap": 30, "durum": 1.2 } }],
+        "altyazilar": [
+          { "konusan": "Elif", "metin": "Kapsül bağlandı. Teşekkürler {ad}. İlaçlar elimde.", "ms": 1400, "sureMs": 4200 },
+          { "konusan": "ARGE", "metin": "Kenetlenme sistemi çevrimiçi. Öğrendiğim kural: {kural4}", "ms": 6200, "sureMs": 6200 }
+        ],
+        "olaylar": [{ "ms": 300, "hedef": "ekran", "olay": "ac" }]
+      }
+    ]
   }
 ]

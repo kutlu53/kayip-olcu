@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import karakterler from '../data/characters.json';
 import { YAZI, aralikli } from '../ui/tipografi.js';
+import { sablonDoldur } from '../systems/DialogueSystem.js';
 
 const SERIT = 92; // 2.39:1 sinema seridi: 1280 / 2.39 = 536 px goruntu
 const BOZUK_HARFLER = '█▓▒░#%&?/<>01';
@@ -62,7 +63,8 @@ export default class CutsceneOverlay extends Phaser.Scene {
     this.sahne.overlayHazir(this);
   }
 
-  altyazi({ konusan, metin, sureMs = 3000, bozuk = false }) {
+  altyazi({ konusan, metin: hamMetin, sureMs = 3000, bozuk = false }) {
+    const metin = sablonDoldur(hamMetin);
     this.temizle();
     const k = karakterler[konusan] || { ad: konusan || '', renk: '#E6E8EB' };
     this.konusan.setText(k.ad ? aralikli(k.ad) : '').setColor(k.renk).setAlpha(1);

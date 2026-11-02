@@ -1,0 +1,204 @@
+{
+  "bolum": 4,
+  "cikti": "FİZ.9.2.4",
+  "giris": [
+    {
+      "kim": "ARGE",
+      "metin": "Simülasyon… açıldı. Rota… parçaları… Uzunluklar… toplanır mı?"
+    },
+    {
+      "kim": "Elif",
+      "metin": "Önce tahminini seç, sonra B rotasını sürükleyip dene. Sonuç sana doğruyu gösterecek."
+    }
+  ],
+  "kesif1": {
+    "baslik": "KEŞİF 1 · ROTA PARÇALARI",
+    "yonerge": "Tıbbi kapsül, enkazdan kaçmak için iki rota parçası izleyecek. B rotasını ortasındaki halkadan tutup sürükle: A rotası nerede bitiyorsa B oradan başlasın.",
+    "ornekler": [
+      {
+        "A": [3, 0],
+        "B": [0, 4],
+        "park": [7, 0],
+        "tahmin": {
+          "soru": "Kapsül iki rotayı bitirince başladığı noktadan kaç metre uzakta olur?",
+          "secenekler": [
+            {
+              "metin": "7 m",
+              "dogru": false,
+              "yanilgi": "M_BILESKE_TOPLAM"
+            },
+            {
+              "metin": "5 m",
+              "dogru": true
+            },
+            {
+              "metin": "1 m",
+              "dogru": false,
+              "yanilgi": "M_BILESKE_FARK"
+            }
+          ]
+        },
+        "sonuc": {
+          "dogru": "5 m! Rota 7 m sürdü ama kapsül başlangıçtan yalnızca 5 m uzakta.",
+          "yanlis": "Ben de öyle sanmıştım… Ama ölçüm 5 m diyor. Rota 7 m sürdüğü hâlde neden 5 m?"
+        }
+      },
+      {
+        "A": [2, 0],
+        "B": [3, 0],
+        "park": [3, 2],
+        "sonuc": {
+          "dogru": "Bu kez rota 5 m, uzaklık da 5 m. Demek ki bazen eşit oluyor… Ne zaman?"
+        }
+      },
+      {
+        "A": [4, 0],
+        "B": [-4, 3],
+        "park": [8, 0],
+        "tahmin": {
+          "soru": "Peki bu kez? A rotası 4 m, B rotası 5 m.",
+          "secenekler": [
+            {
+              "metin": "9 m",
+              "dogru": false,
+              "yanilgi": "M_BILESKE_TOPLAM"
+            },
+            {
+              "metin": "1 m",
+              "dogru": false,
+              "yanilgi": "M_BILESKE_FARK"
+            },
+            {
+              "metin": "3 m",
+              "dogru": true
+            }
+          ]
+        },
+        "sonuc": {
+          "dogru": "3 m! B rotası geri dönünce A'nın bir kısmını götürdü.",
+          "yanlis": "Ölçüm 3 m! Rota 9 m sürdü. B rotası A'nın bir kısmını geri mi aldı?"
+        }
+      }
+    ],
+    "kapanis": "Tabloya üç satır yazdık. Bir örüntü görüyor musun?",
+    "ipuclari": [
+      "B rotasının başlangıcı nereye gelmeli?",
+      "Bir yürüyüşte ikinci yola, birinci yolun bittiği yerden devam edersin.",
+      "B okunun ortasındaki halkadan tut ve okun kuyruğunu A okunun ucuna bırak."
+    ]
+  },
+  "kesif2": {
+    "baslik": "KEŞİF 2 · İKİ İTİCİ",
+    "yonergeTahmin": "Kapsülün iki iticisi var: F₁ ve F₂. İkisi aynı anda çalışırsa kapsül hangi yöne gider?",
+    "secenekler": [
+      {
+        "metin": "F₁ yönünde, çünkü F₁ daha büyük",
+        "dogru": false,
+        "yanilgi": "M_BUYUK_KUVVET_YONU"
+      },
+      {
+        "metin": "F₁ ile F₂ arasında bir yönde",
+        "dogru": true
+      }
+    ],
+    "sonuc": {
+      "dogru": "Arada bir yöne gitti! Kesikli çizgilere bak: bir paralelkenar oluştu, kapsül köşegen boyunca gitti.",
+      "yanlis": "F₁ yönünde gitmedi! İki kuvvet birlikte etki etti. Kesikli çizgilere bak: kapsül paralelkenarın köşegeni boyunca gitti."
+    },
+    "yonergeGorev": "Şimdi kapsülü HEDEF halkasına gönder. İticilerin uçlarındaki halkaları sürükleyerek güçlerini ayarla, sonra ATEŞLE.",
+    "iskaAlt": "Hedefin altından geçti. Hangi iticinin gücünü değiştirirsen yön değişir?",
+    "iskaUst": "Hedefin üstünden geçti. Hangi iticinin gücünü değiştirirsen yön değişir?",
+    "isabet": "Tam hedefte! F₂'nin kesikli kopyası F₁'in ucunda duruyor: uç uca ekleme ile paralelkenar aynı mavi oku veriyor.",
+    "ipuclari": [
+      "Kapsül iki kuvvetin ortak etkisinin yönünde gidiyor. O yön mavi okla gösteriliyor. Mavi ok hedefe bakıyor mu?",
+      "Keşif 1'de B rotasını A'nın ucuna eklemiştin. Kesikli F₂ kopyası da F₁'in ucunda duruyor.",
+      "Mavi ok hedefin altında kalıyorsa F₂'yi büyüt ya da F₁'i küçült."
+    ]
+  },
+  "genelleme": {
+    "baslik": "GÖZLEM DEFTERİ · KURALINI YAZ",
+    "yonerge": "Tablona bak: rota uzunluklarının toplamı ile başlangıçtan uzaklık ne zaman eşitti, ne zaman değildi? Bulduğun kuralı yaz.",
+    "parcalar": [
+      "Bileşke,",
+      "büyüklüklerin toplamı",
+      "değildir,",
+      "çünkü",
+      "vektörlerin yönü de",
+      "hesaba katılır."
+    ],
+    "celdiriciler": [
+      "her zaman",
+      "eşittir,"
+    ],
+    "kabul": [
+      [
+        "Bileşke,",
+        "büyüklüklerin toplamı",
+        "değildir,",
+        "çünkü",
+        "vektörlerin yönü de",
+        "hesaba katılır."
+      ],
+      [
+        "Bileşke,",
+        "her zaman",
+        "büyüklüklerin toplamı",
+        "değildir,",
+        "çünkü",
+        "vektörlerin yönü de",
+        "hesaba katılır."
+      ]
+    ],
+    "serbestAnahtarlar": [
+      [
+        "yön"
+      ],
+      [
+        "toplam",
+        "büyüklük"
+      ]
+    ],
+    "toplamYanilgisi": "Bu kurala göre Keşif 1'de 7 m bulmam gerekirdi ama ölçüm 5 m'ydi. Kural tabloya uymuyor.",
+    "eksik": "Kuralın yarım kalmış gibi… Neden böyle olduğunu da yazar mısın?",
+    "serbestEksik": "Kuralında yönden ya da büyüklüklerin toplamından söz etmiyorsun. Tablodaki 1. ve 2. örneği karşılaştır.",
+    "kabulMesaji": "\"{kural4}\" Anladım! Bunu belleğime yazıyorum.",
+    "ipuclari": [
+      "Tabloda |A| + |B| ile bileşke hangi örnekte eşitti?",
+      "2. örnekte iki rota aynı yöndeydi. 1. örnekte birbirine dik, 3. örnekte neredeyse zıttı.",
+      "Cümleye \"Bileşke,\" ile başla ve nedenini \"çünkü\" ile ekle."
+    ]
+  },
+  "gorev": {
+    "baslik": "GÖREV · KENETLENME",
+    "sizinti": [4, -3],
+    "zorMod": {
+      "buyukluk": 5,
+      "aci": 37
+    },
+    "yonergeBilesen": "Sızıntı kapsülü hem ileri hem aşağı itiyor. Önce sızıntı kuvvetini yatay (Fx) ve dikey (Fy) bileşenlerine ayır: yeşil okların uçlarını sürükle, sonra KONTROL ET.",
+    "yonergeBilesenZor": "Sızıntı kuvveti 5 N ve yatayla aşağı doğru 37° açı yapıyor. Fx ve Fy'yi hesapla, okları ayarla (sin 37° ≈ 0,6 · cos 37° ≈ 0,8).",
+    "bilesenDogru": "Fx ile Fy uç uca eklenince tam sızıntı kuvveti oluyor! Şimdi kapsülün iticilerini ayarla.",
+    "bilesenYanlis": "Bu iki bileşeni uç uca ekleyince sızıntı okunun ucuna varamıyorum (mavi ok). Neden?",
+    "yonergeItici": "Kapsülün yatay ve dikey iticilerini ayarla. Kapsül yanaşma ekseninde düz ve sabit hızla gitmeli. Hazır olunca KENETLEN.",
+    "sapmaUst": "Kapsül portun üstünden geçti! Dikey kuvvetler birbirini dengeledi mi?",
+    "sapmaAlt": "Kapsül portun altından geçti! Dikey kuvvetler birbirini dengeledi mi?",
+    "hizli": "Kapsül porta çok hızlı çarptı, kilitler tutmadı! Yatay kuvvetler neden dengelenmedi?",
+    "yavas": "Kapsül yavaşladı ve porta ulaşamadı. Yatay itici fazla mı güçlü?",
+    "basari": "Kenetlenme kilitleri kapandı! Komutan Elif'e tıbbi kapsül ulaştı.",
+    "ipuclariBilesen": [
+      "Sızıntı oku sağa doğru kaç kare, aşağı doğru kaç kare gidiyor?",
+      "Keşif 1'de 3 m doğu ve 4 m kuzey rotası, çapraz 5 m'lik rota ile aynı yere varıyordu. Burada tersini yapıyorsun: çapraz oku iki eksene ayırıyorsun.",
+      "Sızıntı okunun ucundan yatay eksene dik bir çizgi indir: Fx o noktada biter, 4 N."
+    ],
+    "ipuclariBilesenZor": [
+      "Bileşenler, sızıntı oku hipotenüs olan bir dik üçgenin dik kenarlarıdır.",
+      "Açıya komşu kenar cos ile, karşı kenar sin ile bulunur.",
+      "Fx = 5 · cos 37° = 5 · 0,8 = 4 N."
+    ],
+    "ipuclariItici": [
+      "Kapsülün düz ve sabit hızla gitmesi için her yöndeki kuvvetlerin toplamı ne olmalı?",
+      "Keşif 1'in 3. örneğinde zıt yönlü rotalar birbirinin bir kısmını götürmüştü.",
+      "Yatay itici Fx ile aynı büyüklükte ama zıt yönde olmalı: 4 N geriye (sola)."
+    ]
+  }
+}

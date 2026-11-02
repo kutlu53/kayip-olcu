@@ -5,7 +5,7 @@ export const UST_YUKSEKLIK = 64;
 const SISTEM_SAYISI = 7;
 
 // Ust cubuk (CLAUDE.md §6): yorunge geri sayimi (yalnizca hikaye gerilimi), istasyon sagligi, acilan sistemler
-export function ustCubuk(sahne, { menuye } = {}) {
+export function ustCubuk(sahne, { menuye, menuEtiketi = 'Menü' } = {}) {
   const kap = sahne.add.container(0, 0).setDepth(500);
   const zemin = sahne.add.graphics();
   zemin.fillStyle(0x05070d, 0.88).fillRect(0, 0, 1280, UST_YUKSEKLIK);
@@ -23,7 +23,7 @@ export function ustCubuk(sahne, { menuye } = {}) {
   const rozetler = sahne.add.graphics();
 
   kap.add([zemin, sayacEtiket, sayac, saglikEtiket, saglik, saglikYazi, sistemEtiket, rozetler]);
-  if (menuye) kap.add(dugme(sahne, 1210, 32, 'Menü', menuye, { genislik: 104, yukseklik: 48, boyut: 17 }));
+  if (menuye) kap.add(dugme(sahne, 1210, 32, menuEtiketi, menuye, { genislik: 104, yukseklik: 48, boyut: 17 }));
 
   kap.guncelle = (oyuncu) => {
     const n = oyuncu ? oyuncu.sistemler.length : 0;

@@ -110,7 +110,7 @@ Her bölüm aynı üç adımı izler:
 | 1. Uyanış | FİZ.9.2.1 | Sınıflandırma | `M_KUVVET_TEMEL`, `M_BIRIM_NICELIK` |
 | 2. Kör Pusula | FİZ.9.2.2 | Karşılaştırma | `M_SURAT_HIZ_AYNI`, `M_KUTLE_YONLU` |
 | 3. Römorkör | FİZ.9.2.3 | Bilimsel çıkarım | `M_ZIT_HEP_SIFIR` |
-| 4. Kenetlenme | FİZ.9.2.4 | Tümevarımsal akıl yürütme | `M_BILESKE_TOPLAM` |
+| 4. Kenetlenme | FİZ.9.2.4 | Tümevarımsal akıl yürütme | `M_BILESKE_TOPLAM`, `M_BILESKE_FARK`, `M_BUYUK_KUVVET_YONU` |
 | 5. Dört Kuvvet | FİZ.9.2.5 | Karşılaştırma | `M_UZAY_YERCEKIMI_YOK`, `M_SURTUNME_TEMEL` |
 | 6. Kim Hareket Ediyor? | FİZ.9.2.6 | Tümevarımsal akıl yürütme | `M_YOL_YERDEG_AYNI`, `M_HAREKET_MUTLAK` |
 | 7. Son Onarım | FİZ.9.2.7 | Sınıflandırma | `M_TEK_HAREKET_TURU` |
@@ -125,6 +125,8 @@ Her bölüm aynı üç adımı izler:
 | `M_KUTLE_YONLU` | Kütlenin yönü vardır | Kütle skalerdir; ağırlık vektöreldir |
 | `M_ZIT_HEP_SIFIR` | Zıt yönlü kuvvetler her zaman birbirini yok eder | Yalnızca büyüklükler eşitse bileşke sıfırdır |
 | `M_BILESKE_TOPLAM` | Bileşkenin büyüklüğü, büyüklüklerin toplamıdır | Yalnızca aynı yönlü vektörlerde böyledir |
+| `M_BILESKE_FARK` | Bileşkenin büyüklüğü, büyüklüklerin farkıdır | Yalnızca zıt yönlü vektörlerde böyledir; aradaki açı bileşkeyi belirler |
+| `M_BUYUK_KUVVET_YONU` | Cisim, büyük olan kuvvetin yönünde hareket eder | Cisim bileşke kuvvetin yönünde hareket eder |
 | `M_UZAY_YERCEKIMI_YOK` | Uzayda yerçekimi yoktur | Yörüngede kütle çekimi vardır; istasyon serbest düşmededir |
 | `M_SURTUNME_TEMEL` | Sürtünme temel bir kuvvettir | Sürtünme elektromanyetik kökenlidir |
 | `M_YOL_YERDEG_AYNI` | Alınan yol ile yer değiştirme aynıdır | Yol skaler ve rotaya bağlı, yer değiştirme vektörel ve yalnızca ilk/son konuma bağlı |
@@ -192,11 +194,15 @@ Her bölüm aynı üç adımı izler:
 - **Başarı:** 3 senaryonun üçünde de tahmin ile sonuç uyumlu.
 
 ### Bölüm 4 — Kenetlenme (FİZ.9.2.4) ★ ilk prototip bölümü
-- **Sahne:** Komutan Elif'i hastaneye taşıyacak tıbbi kapsül istasyona yanaşmalı.
-- **Keşif:** Rota parçaları uç uca eklenir; başlangıçtan sona çizilen ok ile parçaların uzunluk toplamı karşılaştırılır. İki itici aynı anda çalışınca paralelkenar ortaya çıkar.
-- **Görev:** Güneş rüzgârı kapsülü çapraz itiyor. Oyuncu rüzgârı yatay ve dikey bileşenlerine ayırır, karşı iticiyi ayarlar, kapsülü kenetler.
-- **Başarı:** Kenetlenme (hata payı ±5 px) + deftere genelleme: "Bileşke, büyüklüklerin toplamı değildir, çünkü…"
-- **Zor mod:** Açı değerleri ve sin/cos ile bileşen hesabı.
+- **Sahne:** Yaralı Komutan Elif'e ilaç ve tıbbi ekipman getiren insansız tıbbi kapsül istasyona yanaşmalı. (Elif sonraki bölümlerde ve finalde istasyonda olduğu için kapsül onu taşımaz, ona malzeme getirir.)
+- **Fizik notu:** Kapsülü çapraz iten kuvvet, delinmiş yakıt hattından sızan gazın tepkisidir. Gaz geriye-yukarı püskürür, kapsül ileri-aşağı itilir. Güneş rüzgârının bir kapsüle uyguladığı kuvvet nanonewton mertebesindedir; bu yüzden kuvvet kaynağı olarak kullanılmaz.
+- **Keşif 1 (uç uca ekleme):** 3 örnek: dik (3 m + 4 m → 5 m), aynı yönlü (2 m + 3 m → 5 m), neredeyse zıt (4 m + 5 m → 3 m). Önce tahmin kartı (yanlış seçenekler `M_BILESKE_TOPLAM` / `M_BILESKE_FARK`), sonra B okunun kuyruğu A'nın ucuna sürüklenir. Kapsül rotayı izler, mavi bileşke çizilir. "Bileşke" adı ilk kez bu anda verilir. Sonuçlar veri tablosuna yazılır.
+- **Keşif 2 (paralelkenar):** Doğrultuları sabit, güçleri ayarlanabilir iki itici. Önce yön tahmini (`M_BUYUK_KUVVET_YONU`), sonra kapsülü hedef halkasına gönderme. Paralelkenar ve bileşke canlı çizilir; durgun kapsül bileşke yönünde hızlanır.
+- **Genelleme:** Cümle parçalarından kural kurma (çeldiriciler: "her zaman", "eşittir,") ya da serbest metin (anahtar sözcük + öğretmen onayı). ARGE kuralı oyuncunun cümlesiyle tekrar eder; 4K'da da söyler.
+- **Görev:** (a) Sızıntı kuvvetini (4 N, −3 N) bileşenlerine ayır. Yanlışsa bileşenler uç uca eklenip ulaşılan nokta gösterilir. (b) Yatay ve dikey iticiyi ayarla, KENETLEN. Net kuvvet sabit ivme verir; sonuçlar: portun üstünden/altından geçme, hızlı çarpıp sekme, yavaşlayıp ulaşamama, kenetlenme.
+- **Başarı:** Kenetlenme (eksenden sapma ±5 px, hız farkı ±12 px/s) + deftere genelleme: "Bileşke, büyüklüklerin toplamı değildir, çünkü…"
+- **Yıldız:** Görevde (bileşen + kenetlenme) hiç hata yoksa 3, en fazla 2 hata 2, daha fazlası 1. Keşif tahminleri yıldızı etkilemez; keşifte yanılmak beklenen bir şeydir.
+- **Zor mod:** Izgara soluklaşır; sızıntı "5 N, 37°" ve sin/cos değerleriyle verilir.
 
 ### Bölüm 5 — Dört Kuvvet (FİZ.9.2.5)
 - **Sahne:** Reaktör bölmesi; dört arıza aynı anda alarm veriyor.
@@ -252,7 +258,7 @@ Toplam 15 ara sahne, yaklaşık 8,5 dakika.
 | `2K` | 20 sn | Navigasyon açılır, Kerem'in kapsülü bulunur | Navigasyon hologramı açılır, rota çizgisi kapsüle uzanır; Kerem'in görüntüsü gürültüden netleşir |
 | `3A` | 25 sn | Panel kopar | Metal gerilmesi, panel kopar ve sabit hızla dönerek uzaklaşır; enerji göstergesi düşer, ışıklar kararır |
 | `3K` | 20 sn | Panel yerine oturur | Kilitlenme kıvılcımı; panel hücreleri güneşi yakalar (parıltı dalgası), enerji çubuğu dolar |
-| `4A` | 40 sn | Elif yaralanır | Mikro meteor çarpması (`shake`), Elif'in bölmesinde duman, hologramı gürültülü; tıbbi kapsül güneş rüzgârında yalpalıyor |
+| `4A` | 40 sn | Elif yaralanır | Mikro meteor çarpması (`shake`), hologramı gürültülü; tıbbi kapsül yakıt sızıntısıyla yalpalıyor (sızıntı gazı görünür) |
 | `4K` | 30 sn | Tıbbi kapsül kenetlenir | Kenetlenme kilitleri sırayla yanar, basınç dengeleme buharı; Elif'in hologramı netleşir ve gülümser |
 | `5A` | 30 sn | Reaktör alarmı | Reaktör bölmesi mor-kırmızı, dört uyarı paneli aynı anda; pencerede kutup ışıkları, yörünge göstergesi düşüyor |
 | `5K` | 25 sn | Dr. Feza'nın konuşması | Yer kontrol video bağlantısı; dört kuvvet hologramda dört halka olarak döner, menzillerine göre büyüyüp küçülür |
@@ -351,7 +357,7 @@ Açılan sistem sayısı (0–7) global bir `guc` değeridir. Ortam ışığın�
 | 1 | Kontrol odası | El feneri + acil durum kırmızısı | Koyu lacivert / kırmızı | Süzülen toz, birimsiz yanıp sönen ekranlar |
 | 2 | Navigasyon köprüsü | Dünya'dan yansıyan ışık | Soluk petrol mavisi | Yavaş yatan manzara, radar taraması |
 | 3 | Dış gövde, panel kolu | Doğrudan Güneş, sert gölgeler | Siyah + gümüş | Dronların kısa itici püskürmeleri |
-| 4 | Kenetlenme portu | Kenetlenme projektörleri | Çelik grisi + beyaz kılavuz ışıkları | Çapraz akan güneş rüzgârı parçacıkları (görevdeki rüzgâr gözle görülür) |
+| 4 | Kenetlenme portu | Kenetlenme projektörleri | Çelik grisi + beyaz kılavuz ışıkları | Kapsülün sızıntı gazı: görevdeki çapraz kuvvetin kaynağı gözle görülür |
 | 5 | Reaktör bölmesi | Reaktör çekirdeğinin mor-beyaz ışığı | Mor / eflatun | Pencerede kutup ışıkları, uyarı panelleri |
 | 6 | Dönen halka + merkez modül | Halka boyunca sıralı lambalar | Sıcak beyaz | Halkanın dönüşü, üç gözlemci kadrajı |
 | 7 | Dış gövde (final) | Üst atmosferin kızıl parıltısı → gün doğumu | Kızıl → altın | Atmosfer parıltısı, finalde güneş doğuşu |
@@ -465,6 +471,7 @@ kayip-olcu/
 │  │  ├─ CutsceneScene.js     ← JSON'dan panel oynatıcı
 │  │  ├─ HubScene.js          ← istasyon haritası, bölüm seçimi
 │  │  ├─ levels/
+│  │  │  ├─ BolumTemel.js     ← ortak iskelet: üst çubuk, panel, ipucu, adım, telemetri, bitiş
 │  │  │  ├─ Level1Uyanis.js
 │  │  │  ├─ Level2KorPusula.js
 │  │  │  ├─ Level3Romorkor.js
@@ -504,6 +511,7 @@ kayip-olcu/
 │     ├─ cutscenes.json       ← ara sahneler: paneller, altyazılar, olay zamanlaması
 │     ├─ scenes.json          ← sahne kompozisyonları (katmanlar, derinlik, konum)
 │     ├─ characters.json      ← konuşan adı ve altyazı rengi
+│     ├─ bolum4.json          ← Bölüm 4 içeriği: örnekler, tahmin kartları, kural parçaları, ipuçları, ARGE replikleri
 │     ├─ misconceptions.json
 │     └─ quantities.json      ← SI nicelik listesi (ad, birim, temel/türetilmiş, skaler/vektörel)
 └─ tests/
@@ -592,9 +600,11 @@ kayip-olcu/
 - `konusan` değerleri `characters.json` içindeki anahtarlardır. `bozuk: true` ARGE'nin bozuk konuşmasıdır.
 - Ses alanı (`ses`) seslendirme eklendiğinde kullanılacak.
 
-**Geliştirme kısayolları:** `npm run dev` → `http://localhost:5173`. Bir ara sahneyi doğrudan açmak için `?sahne=G&panel=3`, kalite kademesini zorlamak için `?kalite=yuksek|orta|dusuk`, WebGL'siz (Canvas) çiziciyi denemek için `?cizici=canvas`. Canvas çizicide `setTint` çalışmaz: renkli katmanlar dokuya işlenerek çizilir.
+**Geliştirme kısayolları:** `npm run dev` → `http://localhost:5173`; `npm test` vektör matematiği testlerini çalıştırır. Bir bölümü doğrudan açmak için `?bolum=4` (adım: `&adim=kesif2|genelleme|gorev`; aktif oyuncu yoksa "Deneme#SUNUM" oluşturulur), bir ara sahneyi doğrudan açmak için `?sahne=G&panel=3`, kalite kademesini zorlamak için `?kalite=yuksek|orta|dusuk`, WebGL'siz (Canvas) çiziciyi denemek için `?cizici=canvas`. Canvas çizicide `setTint` çalışmaz: renkli katmanlar dokuya işlenerek çizilir.
 
-**Kayıt modeli (`SaveSystem.js`):** IndexedDB `kayipOlcu` veritabanı, `oyuncular` ve `olaylar` depoları; IndexedDB yoksa localStorage. Oyuncu kimliği `takmaad#SINIFKODU`; aynı takma ad + sınıf kodu girilince eski ilerleme yüklenir (paylaşılan okul bilgisayarları). Oyuncu kaydı: `girisIzlendi`, `sistemler` (tamamlanan bölüm numaraları; sayısı `guc` değeridir), `bolumler`, `defter`. Hub'da bölüm N, N−1 tamamlanınca açılır; `levels.json` içinde `hazir: false` olan bölüm "hazırlanıyor" mesajı verir.
+**Kayıt modeli (`SaveSystem.js`):** IndexedDB `kayipOlcu` veritabanı, `oyuncular` ve `olaylar` depoları; IndexedDB yoksa localStorage. Oyuncu kimliği `takmaad#SINIFKODU`; aynı takma ad + sınıf kodu girilince eski ilerleme yüklenir (paylaşılan okul bilgisayarları). Oyuncu kaydı: `girisIzlendi`, `sistemler` (tamamlanan bölüm numaraları; sayısı `guc` değeridir), `bolumler`, `defter`. Hub'da bir bölüm, kendinden önceki *hazır* (`hazir: true`) bölümlerin hepsi tamamlanınca açılır; henüz yapılmamış bölümler sırayı kilitlemez (bu yüzden dikey dilim Bölüm 4 doğrudan oynanabilir). `hazir: false` olan bölüm "hazırlanıyor" mesajı verir. Bölüm içeriği `src/data/bolumN.json` dosyasında, sahne sınıfı `levels.json`'daki `sahne` alanında.
+
+**Bölüm yazma kuralları (BolumTemel):** Her adım `adimBaslat` ile başlar (eski nesneler ve konuşmalar temizlenir). Her cevap `cevap({ dogru, yanilgi, ayrinti })` ile telemetriye düşer; tahmin kartlarında her yanlış seçeneğin `yanilgi` kodu `misconceptions.json`'da olmalı. Sürekli (sürükle-bırak) görevlerde kodlanabilen hata `yanilgi` ile, diğerleri `ayrinti` ile kaydedilir. Metinlerde `{ad}` ve `{kuralN}` şablonları kullanılabilir.
 
 **Gizlilik:** Öğrenci adı yerine sınıf kodu + takma ad kullanılır, kişisel veri toplanmaz. Araştırma için veli onay formu gerekir.
 
@@ -616,15 +626,15 @@ kayip-olcu/
 - [ ] Giriş sahnesine ses ve seslendirme
 
 ### Aşama 2 — Dikey dilim: Bölüm 4 Kenetlenme (2–3. hafta)
-- [ ] `VectorMath.js` (toplama, çıkarma, büyüklük, açı, bileşenlere ayırma) + Vitest testleri
-- [ ] `VectorDraw.js`: dokunma/fare ile sürükleyerek ok çizme, uç uca ekleme, paralelkenar gösterimi
-- [ ] Keşif 1: uç uca ekleme (parça uzunlukları toplamı ile bileşke karşılaştırması)
-- [ ] Keşif 2: iki itici → paralelkenar
-- [ ] Görev: rüzgârı bileşenlere ayır, karşı iticiyi ayarla, kenetlen (±5 px)
-- [ ] Yanlış cevabın hikâyedeki sonucu: kapsül sapma animasyonu + ARGE'nin "neden?" sorusu
-- [ ] `HintSystem` 3 kademe + `DialogueSystem`
-- [ ] Gözlem Defteri: cümle parçalarından genelleme kurma
-- [ ] Kenetlenme portu kompozisyonu, Elif hologramı, 4A ve 4K ara sahneleri
+- [x] `VectorMath.js` (toplama, çıkarma, büyüklük, açı, bileşenlere ayırma) + Vitest testleri (`npm test`)
+- [x] `VectorDraw.js`: dokunma/fare ile sürükleyerek ok çizme, uç uca ekleme, paralelkenar gösterimi
+- [x] Keşif 1: uç uca ekleme (parça uzunlukları toplamı ile bileşke karşılaştırması)
+- [x] Keşif 2: iki itici → paralelkenar
+- [x] Görev: sızıntı kuvvetini bileşenlere ayır, karşı iticileri ayarla, kenetlen (±5 px)
+- [x] Yanlış cevabın hikâyedeki sonucu: kapsül sapma animasyonu + ARGE'nin "neden?" sorusu
+- [x] `HintSystem` 3 kademe + `DialogueSystem`
+- [x] Gözlem Defteri: cümle parçalarından genelleme kurma (+ serbest metin, öğretmen onayı bekler)
+- [x] Kenetlenme portu kompozisyonu, Elif hologramı, 4A ve 4K ara sahneleri
 - [ ] 5–10 öğrenciyle deneme; geri bildirimleri kaydet
 
 ### Aşama 3 — Kalan bölümler (4–9. hafta)

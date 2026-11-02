@@ -4,6 +4,7 @@ import MenuScene from './scenes/MenuScene.js';
 import HubScene from './scenes/HubScene.js';
 import CutsceneScene from './scenes/CutsceneScene.js';
 import CutsceneOverlay from './scenes/CutsceneOverlay.js';
+import Level4Kenetlenme from './scenes/levels/Level4Kenetlenme.js';
 
 // Test icin cizici secimi: ?cizici=canvas (WebGL olmayan eski akilli tahtalari taklit eder)
 const cizici = new URLSearchParams(location.search).get('cizici') === 'canvas' ? Phaser.CANVAS : Phaser.AUTO;
@@ -21,5 +22,5 @@ new Phaser.Game({
     height: 720
   },
   render: { antialias: true, powerPreference: 'high-performance' },
-  scene: [BootScene, MenuScene, HubScene, CutsceneScene, CutsceneOverlay]
+  scene: [BootScene, MenuScene, HubScene, CutsceneScene, CutsceneOverlay, Level4Kenetlenme]
 });

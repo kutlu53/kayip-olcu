@@ -1,0 +1,15 @@
+{
+  "M_KUVVET_TEMEL": { "yanilgi": "Kuvvet temel bir niceliktir", "dogrusu": "Kuvvet türetilmiştir (kg·m/s²)", "bolum": 1 },
+  "M_BIRIM_NICELIK": { "yanilgi": "Birim ile nicelik aynı şeydir", "dogrusu": "Nicelik ölçülen özellik, birim ölçü standardıdır", "bolum": 1 },
+  "M_SURAT_HIZ_AYNI": { "yanilgi": "Sürat ile hız aynıdır", "dogrusu": "Sürat skaler, hız vektöreldir", "bolum": 2 },
+  "M_KUTLE_YONLU": { "yanilgi": "Kütlenin yönü vardır", "dogrusu": "Kütle skalerdir; ağırlık vektöreldir", "bolum": 2 },
+  "M_ZIT_HEP_SIFIR": { "yanilgi": "Zıt yönlü kuvvetler her zaman birbirini yok eder", "dogrusu": "Yalnızca büyüklükler eşitse bileşke sıfırdır", "bolum": 3 },
+  "M_BILESKE_TOPLAM": { "yanilgi": "Bileşkenin büyüklüğü, büyüklüklerin toplamıdır", "dogrusu": "Yalnızca aynı yönlü vektörlerde böyledir", "bolum": 4 },
+  "M_BILESKE_FARK": { "yanilgi": "Bileşkenin büyüklüğü, büyüklüklerin farkıdır", "dogrusu": "Yalnızca zıt yönlü vektörlerde böyledir; aradaki açı bileşkeyi belirler", "bolum": 4 },
+  "M_BUYUK_KUVVET_YONU": { "yanilgi": "Cisim, büyük olan kuvvetin yönünde hareket eder", "dogrusu": "Cisim bileşke kuvvetin yönünde hareket eder", "bolum": 4 },
+  "M_UZAY_YERCEKIMI_YOK": { "yanilgi": "Uzayda yerçekimi yoktur", "dogrusu": "Yörüngede kütle çekimi vardır; istasyon serbest düşmededir", "bolum": 5 },
+  "M_SURTUNME_TEMEL": { "yanilgi": "Sürtünme temel bir kuvvettir", "dogrusu": "Sürtünme elektromanyetik kökenlidir", "bolum": 5 },
+  "M_YOL_YERDEG_AYNI": { "yanilgi": "Alınan yol ile yer değiştirme aynıdır", "dogrusu": "Yol skaler ve rotaya bağlı, yer değiştirme vektörel ve yalnızca ilk/son konuma bağlı", "bolum": 6 },
+  "M_HAREKET_MUTLAK": { "yanilgi": "Hareket mutlaktır", "dogrusu": "Hareket referans noktasına göre tanımlanır", "bolum": 6 },
+  "M_TEK_HAREKET_TURU": { "yanilgi": "Bir cisim aynı anda tek tür hareket yapar", "dogrusu": "Hareketler birleşik olabilir (öteleme + dönme)", "bolum": 7 }
+}

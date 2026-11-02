@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { dokuCiz, tuval, boya, yumusakDaire, yuvarlakDikdortgen } from './Tuval.js';
 import { titreme } from '../fx/Transitions.js';
+import { kivilcimYayici } from '../fx/Particles.js';
 
 // Goktürk-7 dis gorunusu. Doku merkezi (500, 260) = donen halkanin merkezi
 const HALKA = { rx: 230, ry: 78 };
@@ -160,8 +161,11 @@ export function istasyonOlustur(sahne, ayar = {}) {
   const govde = sahne.add.image(0, 0, istasyonDokusu(sahne, ayar));
   const pencere = sahne.add.image(0, 0, pencereDokusu(sahne)).setBlendMode(ADD);
   const halkaIsik = sahne.add.graphics().setBlendMode(ADD);
-  kap.add([govde, pencere, halkaIsik]);
-  const durum = { isik: 1 };
+  // Carpma noktasi: ust modulun yani. Kivilcimlar mikro yercekiminde duz gider
+  const kivilcim = kivilcimYayici(sahne, 30, -70);
+  kap.add([govde, pencere, halkaIsik, kivilcim]);
+  const durum = { isik: ayar.karanlik ? 0 : 1 };
+  if (ayar.karanlik) pencere.setAlpha(0);
 
   // Halka doner (eylemsizlik: guc kesilse de donmeye devam eder)
   kap.guncelle = (zaman) => {
@@ -180,6 +184,7 @@ export function istasyonOlustur(sahne, ayar = {}) {
     }
   };
   kap.olay = (ad) => {
+    if (ad === 'carpma') kivilcim.explode(36);
     if (ad !== 'isiklariSondur') return;
     sahne.tweens.add({ targets: pencere, alpha: 0, duration: 1100, ease: titreme });
     sahne.tweens.add({ targets: durum, isik: 0, duration: 1100, ease: titreme });

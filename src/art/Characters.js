@@ -217,6 +217,9 @@ export function ekranElifOlustur(sahne, ayar = {}) {
   const holo = sahne.add.image(0, 22, elifDokusu(sahne, ayar.ifade || 'endiseli')).setScale(0.8).setBlendMode(ADD);
   const tarama = sahne.add.rectangle(0, -Y / 2, G - 4, 26, 0x5fe3e8, 0.07).setBlendMode(ADD);
   ekran.add([cerceve, holo, tarama, etiket, ses]);
+  // Hasarli baglanti: hologramin ustunde sinyal gurultusu
+  const gurultu = ayar.gurultulu ? sahne.add.tileSprite(0, 10, G - 8, Y - 40, 'gurultu').setAlpha(0.2) : null;
+  if (gurultu) ekran.add(gurultu);
   ekran.setVisible(false);
   kap.add(ekran);
 
@@ -225,6 +228,10 @@ export function ekranElifOlustur(sahne, ayar = {}) {
   };
   kap.guncelle = (zaman) => {
     const t = zaman / 1000;
+    if (gurultu) {
+      gurultu.tilePositionX = Math.random() * 256;
+      gurultu.tilePositionY = Math.random() * 256;
+    }
     tarama.y = -Y / 2 + 13 + ((t * 90) % (Y - 26));
     holo.alpha = 0.85 + 0.08 * Math.sin(t * 3.1);
     if (!ayarlar.hareketiAzalt && Math.random() < 0.02) holo.x = (Math.random() - 0.5) * 8;

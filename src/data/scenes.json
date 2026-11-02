@@ -39,6 +39,16 @@
       { "id": "kerem", "tip": "keremVideo", "sabit": true, "ayar": { "x": 400, "y": -110 } }
     ]
   },
+  "kenetlenmePortu": {
+    "aciklama": "Kenetlenme portu; sızıntı yapan tıbbi kapsül yaklaşıyor. Çelik grisi, beyaz kılavuz ışıkları",
+    "katmanlar": [
+      { "id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": { "katman": "uzak" } },
+      { "id": "yildizYakin", "tip": "yildizlar", "derinlik": 0.05, "ayar": { "katman": "yakin" }, "min": "orta" },
+      { "id": "dunya", "tip": "dunyaUfku", "derinlik": 0.12, "ayar": { "ufukY": 660, "safak": "sol" } },
+      { "id": "kapsul", "tip": "tibbiKapsul", "derinlik": 0.45, "ayar": { "x": -300, "y": 10, "olcek": 0.9, "sizinti": true, "yalpa": true } },
+      { "id": "port", "tip": "istasyonPortu", "derinlik": 0.6, "ayar": { "x": 510, "y": 10 } }
+    ]
+  },
   "karanlikEkran": {
     "aciklama": "Karanlıkta tek ekran: Elif'in hologramı ve geri sayım",
     "katmanlar": [
