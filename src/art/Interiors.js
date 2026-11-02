@@ -167,13 +167,17 @@ function odaIsikDokusu(sahne) {
   });
 }
 
-// Pencere disinda kalan oda yuzeyi: karartma ve kirmizi isik yalnizca odaya uygulanir
+// Pencere disinda kalan oda yuzeyi: karartma ve kirmizi isik yalnizca odaya uygulanir.
+// Renkler dokuya islenir: Canvas cizicide setTint calismaz
 function odaMaskeDokusu(sahne) {
-  return dokuCiz(sahne, 'oda_maske', W, H, (ctx) => {
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(0, 0, W, H);
-    pencereyiDel(ctx);
-  });
+  for (const [ad, renk] of [['siyah', '#000'], ['kirmizi', '#d64545']]) {
+    dokuCiz(sahne, `oda_maske_${ad}`, W, H, (ctx) => {
+      ctx.fillStyle = renk;
+      ctx.fillRect(0, 0, W, H);
+      pencereyiDel(ctx);
+    });
+  }
+  dokuCiz(sahne, 'lamba_kirmizi', 32, 32, (c) => yumusakDaire(c, 16, 16, 16, '255,80,64', 1));
 }
 
 function isikKonisiDokusu(sahne) {
@@ -249,11 +253,11 @@ export function kontrolOdasiOlustur(sahne) {
   ].map(([anahtar, x, y, vx, vy, w]) => ({ img: sahne.add.image(x, y, anahtar).setRotation(w), vx, vy, w }));
 
   const isik = sahne.add.image(0, 0, 'oda_isik').setBlendMode(ADD);
-  const karanlik = sahne.add.image(0, 0, 'oda_maske').setTint(0x000000).setAlpha(0);
-  const kirmizi = sahne.add.image(0, 0, 'oda_maske').setTint(0xd64545).setBlendMode(ADD).setAlpha(0);
+  const karanlik = sahne.add.image(0, 0, 'oda_maske_siyah').setAlpha(0);
+  const kirmizi = sahne.add.image(0, 0, 'oda_maske_kirmizi').setBlendMode(ADD).setAlpha(0);
   const [fx, fy] = yerel(...FENER);
   const fener = sahne.add.image(fx, fy, 'isik_konisi').setOrigin(0, 0.5).setBlendMode(ADD).setAlpha(0);
-  const lamba = sahne.add.image(fx, fy, 'p_nokta').setTint(0xff5040).setBlendMode(ADD).setScale(1.6).setAlpha(0);
+  const lamba = sahne.add.image(fx, fy, 'lamba_kirmizi').setBlendMode(ADD).setScale(1.6).setAlpha(0);
   const yaziStili = { fontFamily: MONO, fontSize: '15px', color: '#5FE3E8', lineSpacing: 6 };
   const ekranlar = [yerel(182, 480), yerel(1052, 480)].map(([x, y], i) => sahne.add.text(x, y, EKRAN_NORMAL[i], yaziStili));
   const [kx, ky] = yerel(300, 300);

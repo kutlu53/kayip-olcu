@@ -497,7 +497,7 @@ kayip-olcu/
 │  │  ├─ Particles.js         ← kıvılcım (mikro yerçekimi), parçacık akısı
 │  │  ├─ Shaders.js           ← SinemaFX: film greni, vinyet, bozulma (kromatik sapma)
 │  │  └─ Quality.js           ← FPS ölçümü, kalite kademesi
-│  ├─ ui/                     ← düğme, yazı tipleri
+│  ├─ ui/                     ← Dugme, Panel (cam zemin, açılır pencere), UstCubuk, DiyalogPaneli, Defter, tipografi
 │  └─ data/
 │     ├─ levels.json
 │     ├─ dialogues.json
@@ -558,7 +558,7 @@ kayip-olcu/
   "sureSn": 74
 }
 ```
-`olay` değerleri: `bolumBasla`, `cevap`, `ipucu`, `defterKayit`, `bolumBitir`, `sahneAtla`.
+`olay` değerleri: `bolumBasla`, `cevap`, `ipucu`, `defterKayit`, `bolumBitir`, `sahneAtla`. Ek alan `ayrinti`: serbest açıklama (ör. `sahneAtla` için `G panel 3/6`). CSV dışa aktarım `;` ayırıcılı ve UTF-8 BOM'ludur (Türkçe Excel'de doğrudan açılır); menüdeki "Öğretmen: verileri indir" düğmesiyle o cihazdaki tüm olaylar indirilir.
 
 **Ara sahne şeması (`cutscenes.json`)**
 
@@ -592,7 +592,9 @@ kayip-olcu/
 - `konusan` değerleri `characters.json` içindeki anahtarlardır. `bozuk: true` ARGE'nin bozuk konuşmasıdır.
 - Ses alanı (`ses`) seslendirme eklendiğinde kullanılacak.
 
-**Geliştirme kısayolları:** `npm run dev` → `http://localhost:5173`. Bir ara sahneyi doğrudan açmak için `?sahne=G&panel=3`, kalite kademesini zorlamak için `?kalite=yuksek|orta|dusuk`.
+**Geliştirme kısayolları:** `npm run dev` → `http://localhost:5173`. Bir ara sahneyi doğrudan açmak için `?sahne=G&panel=3`, kalite kademesini zorlamak için `?kalite=yuksek|orta|dusuk`, WebGL'siz (Canvas) çiziciyi denemek için `?cizici=canvas`. Canvas çizicide `setTint` çalışmaz: renkli katmanlar dokuya işlenerek çizilir.
+
+**Kayıt modeli (`SaveSystem.js`):** IndexedDB `kayipOlcu` veritabanı, `oyuncular` ve `olaylar` depoları; IndexedDB yoksa localStorage. Oyuncu kimliği `takmaad#SINIFKODU`; aynı takma ad + sınıf kodu girilince eski ilerleme yüklenir (paylaşılan okul bilgisayarları). Oyuncu kaydı: `girisIzlendi`, `sistemler` (tamamlanan bölüm numaraları; sayısı `guc` değeridir), `bolumler`, `defter`. Hub'da bölüm N, N−1 tamamlanınca açılır; `levels.json` içinde `hazir: false` olan bölüm "hazırlanıyor" mesajı verir.
 
 **Gizlilik:** Öğrenci adı yerine sınıf kodu + takma ad kullanılır, kişisel veri toplanmaz. Araştırma için veli onay formu gerekir.
 
@@ -602,13 +604,14 @@ kayip-olcu/
 
 ### Aşama 1 — İskelet (1. hafta)
 - [x] Vite + Phaser 3 projesini kur; `npm run dev` ile boş sahne açılsın
-- [ ] PWA: manifest + service worker; uçak modunda açılabildiğini doğrula
-- [ ] `BootScene` → `MenuScene` (takma ad + sınıf kodu) → `HubScene` akışı
-- [ ] `SaveSystem` (IndexedDB) ve `Telemetry` (olayları kaydet, CSV dışa aktar)
-- [ ] `colors.js` ve temel UI bileşenleri (üst çubuk, sağ diyalog paneli, defter simgesi)
+- [x] PWA: manifest + service worker; uçak modunda açılabildiğini doğrula
+- [x] `BootScene` → `MenuScene` (takma ad + sınıf kodu) → Giriş sahnesi (ilk girişte) → `HubScene` akışı
+- [x] `SaveSystem` (IndexedDB) ve `Telemetry` (olayları kaydet, CSV dışa aktar)
+- [x] `colors.js` ve temel UI bileşenleri (üst çubuk, sağ diyalog paneli, defter simgesi)
 - [x] Görsel temel: `Starfield`, `Earth`, `Arge` (0–7 durumları), `Quality` (kalite kademesi + hareketi azalt)
 - [x] `fx/`: kamera hareketleri, geçişler, temel parçacıklar
-- [ ] Canvas modunda (WebGL'siz) efektsiz çalıştığını doğrula; akıllı tahtada FPS ölç
+- [x] Canvas modunda (WebGL'siz) efektsiz çalıştığını doğrula (`?cizici=canvas`)
+- [ ] Gerçek akıllı tahtada FPS ve ilk açılış süresini ölç
 - [x] `CutsceneScene` + `scenes.json`: Giriş (`G`) sahnesini kodla çizilmiş panellerle oynat (görsel stilin ilk kanıtı)
 - [ ] Giriş sahnesine ses ve seslendirme
 

@@ -43,7 +43,7 @@ export default class CutsceneOverlay extends Phaser.Scene {
     zemin.lineStyle(2, 0x5fe3e8, 0.7).strokeRoundedRect(-70, -26, 140, 52, 10);
     atla.add([zemin, this.add.text(0, 0, 'ATLA  ▸▸', { fontFamily: YAZI, fontSize: '19px', color: '#D8F6FF' }).setOrigin(0.5)]);
     atla.setSize(140, 52).setInteractive({ useHandCursor: true });
-    atla.on('pointerup', () => this.sahne.bitir());
+    atla.on('pointerup', () => this.sahne.bitir(true));
     const ipucu = this.add
       .text(28, 46, 'Dokun ▸ sonraki sahne', { fontFamily: YAZI, fontSize: '15px', color: '#8A96A6' })
       .setOrigin(0, 0.5)
@@ -57,7 +57,7 @@ export default class CutsceneOverlay extends Phaser.Scene {
     });
     if (this.input.keyboard) {
       for (const tus of ['SPACE', 'ENTER', 'RIGHT']) this.input.keyboard.on(`keydown-${tus}`, () => this.sahne.sonraki());
-      this.input.keyboard.on('keydown-ESC', () => this.sahne.bitir());
+      this.input.keyboard.on('keydown-ESC', () => this.sahne.bitir(true));
     }
     this.sahne.overlayHazir(this);
   }

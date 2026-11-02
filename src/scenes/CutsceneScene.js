@@ -5,6 +5,8 @@ import { KATMANLAR } from '../art/Katmanlar.js';
 import { kademe, kaliteYeterli } from '../fx/Quality.js';
 import { SinemaFX } from '../fx/Shaders.js';
 import { sars, flas, bozulma } from '../fx/CameraFX.js';
+import { aktifOyuncu, aktifiKaydet } from '../systems/SaveSystem.js';
+import { olayKaydet } from '../systems/Telemetry.js';
 
 const CX = 640;
 const CY = 360;
@@ -199,9 +201,16 @@ export default class CutsceneScene extends Phaser.Scene {
     }
   }
 
-  bitir() {
+  bitir(atlandi = false) {
     if (this.bitiyor) return;
     this.bitiyor = true;
+    if (atlandi) olayKaydet('sahneAtla', { ayrinti: `${this.tanim.id} panel ${this.panelNo + 1}/${this.tanim.paneller.length}` });
+    // Atlanan sahne de izlenmis sayilir; istasyon haritasindan tekrar izlenebilir
+    const oyuncu = aktifOyuncu();
+    if (oyuncu && this.tanim.id === 'G' && !oyuncu.girisIzlendi) {
+      oyuncu.girisIzlendi = true;
+      aktifiKaydet();
+    }
     if (this.panel) for (const z of this.panel.zamanlayicilar) z.remove(false);
     if (this.overlay) this.overlay.kapat(900);
     this.cameras.main.fadeOut(1000, 0, 0, 0);

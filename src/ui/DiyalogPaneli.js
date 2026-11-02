@@ -1,0 +1,55 @@
+import Phaser from 'phaser';
+import { Arge } from '../art/Arge.js';
+import { elifDokusu } from '../art/Characters.js';
+import { camZemin } from './Panel.js';
+import { dugme } from './Dugme.js';
+import { YAZI, aralikli } from './tipografi.js';
+
+// Sag panel (CLAUDE.md §6): ustte ARGE konusma balonu, altta Komutan Elif'in telsizi + ipucu dugmesi
+export function diyalogPaneli(sahne, { x = 948, y = 80, genislik = 320, yukseklik = 620, argeDurum = 7 } = {}) {
+  const kap = sahne.add.container(0, 0).setDepth(400);
+  const ic = genislik - 36;
+  const argeYukseklik = Math.round(yukseklik * 0.52);
+
+  const argeZemin = camZemin(sahne, x, y, genislik, argeYukseklik - 10);
+  const argeAd = sahne.add.text(x + 18, y + 16, aralikli('ARGE'), { fontFamily: YAZI, fontSize: '15px', fontStyle: 'bold', color: '#5FE3E8' });
+  const arge = new Arge(sahne, x + genislik / 2, y + 92, { yaricap: 44, durum: argeDurum });
+  const argeYazi = sahne.add.text(x + 18, y + 160, '', { fontFamily: YAZI, fontSize: '19px', color: '#EEF3F7', wordWrap: { width: ic }, lineSpacing: 4 });
+
+  const ey = y + argeYukseklik;
+  const elifZemin = camZemin(sahne, x, ey, genislik, yukseklik - argeYukseklik);
+  const elifAd = sahne.add.text(x + 82, ey + 18, aralikli('TELSİZ · K. ELİF'), { fontFamily: YAZI, fontSize: '14px', fontStyle: 'bold', color: '#D8F6FF' });
+  const elifResim = sahne.add.image(x + 42, ey + 46, elifDokusu(sahne, 'notr')).setScale(0.16).setBlendMode(Phaser.BlendModes.ADD);
+  const elifYazi = sahne.add.text(x + 18, ey + 84, '', { fontFamily: YAZI, fontSize: '17px', color: '#D8F6FF', wordWrap: { width: ic }, lineSpacing: 4 });
+  const ipucu = dugme(sahne, x + genislik / 2, ey + yukseklik - argeYukseklik - 40, 'İpucu iste', () => kap.ipucuIstegi && kap.ipucuIstegi(), {
+    genislik: ic,
+    yukseklik: 52,
+    boyut: 18
+  }).setVisible(false);
+
+  kap.add([argeZemin, argeAd, arge, argeYazi, elifZemin, elifAd, elifResim, elifYazi, ipucu]);
+
+  const daktilo = (yazi, metin, sure = 26) => {
+    if (yazi.daktilo) yazi.daktilo.remove(false);
+    let i = 0;
+    yazi.setText('');
+    yazi.daktilo = sahne.time.addEvent({ delay: sure, repeat: metin.length - 1, callback: () => yazi.setText(metin.slice(0, ++i)) });
+  };
+
+  kap.arge = arge;
+  kap.argeSoyle = (metin) => {
+    daktilo(argeYazi, metin);
+    arge.konus(metin.length * 26 + 400);
+  };
+  kap.elifSoyle = (metin) => {
+    daktilo(elifYazi, metin, 22);
+    sahne.tweens.add({ targets: elifResim, alpha: { from: 0.4, to: 1 }, duration: 300 });
+  };
+  // fn verilirse ipucu dugmesi gorunur (Elif'in 3 kademeli ipucu sistemi bolumlerde baglanacak)
+  kap.ipucuAyarla = (fn) => {
+    kap.ipucuIstegi = fn;
+    ipucu.setVisible(!!fn);
+  };
+  kap.guncelle = (zaman) => arge.guncelle(zaman);
+  return kap;
+}

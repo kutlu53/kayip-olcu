@@ -4,10 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#05070D">
+  <meta name="description" content="9. sınıf fizik Kuvvet ve Hareket ünitesi için hikâye odaklı oyun">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>Kayıp Ölçü</title>
   <style>
     html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
     #oyun { width: 100%; height: 100%; }
+
+    /* Menudeki giris formu (Phaser DOM ogesi; oyunla birlikte olceklenir) */
+    .giris { width: 460px; font-family: "Segoe UI", "Noto Sans", Arial, sans-serif; color: #D8F6FF; }
+    .giris label { display: block; font-size: 15px; letter-spacing: 1px; margin: 12px 0 6px; opacity: 0.85; }
+    .giris input {
+      box-sizing: border-box; width: 100%; height: 54px; padding: 0 16px;
+      font-size: 22px; color: #EEF3F7; background: rgba(11, 20, 38, 0.85);
+      border: 2px solid rgba(95, 227, 232, 0.55); border-radius: 10px; outline: none;
+    }
+    .giris input:focus { border-color: #5FE3E8; }
+    .giris .not { font-size: 14px; color: #8A96A6; margin-top: 10px; }
+    .giris .hata { min-height: 22px; font-size: 15px; color: #FF7A7A; margin-top: 6px; }
+    .giris button {
+      width: 100%; height: 60px; margin-top: 8px; font-size: 21px; font-weight: bold; letter-spacing: 1px;
+      color: #E6F7FA; background: rgba(95, 227, 232, 0.2); border: 2px solid #5FE3E8; border-radius: 10px; cursor: pointer;
+    }
+    .giris button:hover { background: rgba(95, 227, 232, 0.32); }
   </style>
 </head>
 <body>

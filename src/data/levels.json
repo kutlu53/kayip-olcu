@@ -1,0 +1,9 @@
+[
+  { "bolum": 1, "id": "uyanis", "ad": "Uyanış", "ciktilar": ["FİZ.9.2.1"], "mekan": "Kontrol Odası", "acilisSahnesi": "1A", "kapanisSahnesi": "1K", "hazir": false },
+  { "bolum": 2, "id": "korPusula", "ad": "Kör Pusula", "ciktilar": ["FİZ.9.2.2"], "mekan": "Navigasyon Köprüsü", "acilisSahnesi": "2A", "kapanisSahnesi": "2K", "hazir": false },
+  { "bolum": 3, "id": "romorkor", "ad": "Römorkör", "ciktilar": ["FİZ.9.2.3"], "mekan": "Güneş Paneli Kolu", "acilisSahnesi": "3A", "kapanisSahnesi": "3K", "hazir": false },
+  { "bolum": 4, "id": "kenetlenme", "ad": "Kenetlenme", "ciktilar": ["FİZ.9.2.4"], "mekan": "Kenetlenme Portu", "acilisSahnesi": "4A", "kapanisSahnesi": "4K", "hazir": false },
+  { "bolum": 5, "id": "dortKuvvet", "ad": "Dört Kuvvet", "ciktilar": ["FİZ.9.2.5"], "mekan": "Reaktör Bölmesi", "acilisSahnesi": "5A", "kapanisSahnesi": "5K", "hazir": false },
+  { "bolum": 6, "id": "kimHareketEdiyor", "ad": "Kim Hareket Ediyor?", "ciktilar": ["FİZ.9.2.6"], "mekan": "Dönen Halka", "acilisSahnesi": "6A", "kapanisSahnesi": "6K", "hazir": false },
+  { "bolum": 7, "id": "sonOnarim", "ad": "Son Onarım", "ciktilar": ["FİZ.9.2.7"], "mekan": "Dış Gövde", "acilisSahnesi": "7A", "kapanisSahnesi": null, "hazir": false }
+]

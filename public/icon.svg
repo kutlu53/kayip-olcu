@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="zemin" cx="50%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#0B1426"/>
+      <stop offset="1" stop-color="#05070D"/>
+    </radialGradient>
+    <filter id="parlama" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#zemin)"/>
+  <g filter="url(#parlama)" fill="none" stroke="#5FE3E8" stroke-linecap="round">
+    <circle cx="256" cy="256" r="150" stroke-width="16"/>
+    <path d="M150 256 C 190 256, 200 196, 230 226 S 270 320, 296 270 S 336 236, 362 256" stroke-width="12" stroke="#D8F6FF"/>
+  </g>
+  <g fill="#5FE3E8">
+    <circle cx="256" cy="186" r="7"/><circle cx="317" cy="221" r="7"/><circle cx="317" cy="291" r="7"/>
+    <circle cx="256" cy="326" r="7"/><circle cx="195" cy="291" r="7"/><circle cx="195" cy="221" r="7"/>
+  </g>
+</svg>
