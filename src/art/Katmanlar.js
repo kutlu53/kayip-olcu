@@ -6,6 +6,8 @@ import { elifDokusu, ekranElifOlustur, keremDokusu, keremVideoOlustur } from './
 import { Arge } from './Arge.js';
 import { geriSayimOlustur, parcacikAkisiOlustur } from './Hud.js';
 import { navKoprusuDokusu, navKonsolOlustur } from './Navigasyon.js';
+import { reaktorDokusu, reaktorOlustur } from './Reaktor.js';
+import { fezaDokusu, fezaVideoOlustur, kuvvetHalkalariOlustur } from './YerKontrol.js';
 import { gunesPaneliDokusu, dronDokusu, kopukPanelOlustur } from './Panel.js';
 import { tibbiKapsulDokusu, tibbiKapsulOlustur, istasyonPortuDokusu, istasyonPortuOlustur } from './Port.js';
 
@@ -28,5 +30,8 @@ export const KATMANLAR = {
   tibbiKapsul: { hazirla: tibbiKapsulDokusu, olustur: tibbiKapsulOlustur },
   istasyonPortu: { hazirla: istasyonPortuDokusu, olustur: istasyonPortuOlustur },
   navKonsol: { hazirla: navKoprusuDokusu, olustur: navKonsolOlustur },
+  reaktor: { hazirla: reaktorDokusu, olustur: reaktorOlustur },
+  fezaVideo: { hazirla: fezaDokusu, olustur: fezaVideoOlustur },
+  kuvvetHalkalari: { olustur: kuvvetHalkalariOlustur },
   kopukPanel: { hazirla: (s) => { gunesPaneliDokusu(s); dronDokusu(s); }, olustur: kopukPanelOlustur }
 };

@@ -1,0 +1,147 @@
+{
+  "bolum": 5,
+  "cikti": "FİZ.9.2.5",
+  "giris": [
+    { "kim": "ARGE", "metin": "Dört alarm… dört farklı itme ve çekme… Hangisi hangisi?" },
+    { "kim": "Elif", "metin": "Her alarmın verilerini oku. Sonra arkasındaki kuvveti bul: önce alarma, sonra kuvvet kartına dokun." }
+  ],
+  "kuvvetler": {
+    "kutle": { "ad": "Kütle çekimi", "kisa": "Kütle çekimi", "ablatif": "kütle çekiminden", "menzilUs": 99, "menzil": "sonsuz", "sira": 4, "siddet": "10⁻³⁸", "renk": "#E6E8EB" },
+    "em": { "ad": "Elektromanyetik kuvvet", "kisa": "Elektromanyetik", "ablatif": "elektromanyetik kuvvetten", "menzilUs": 99, "menzil": "sonsuz", "sira": 2, "siddet": "10⁻²", "renk": "#5FE3E8" },
+    "guclu": { "ad": "Güçlü nükleer kuvvet", "kisa": "Güçlü nükleer", "ablatif": "güçlü nükleer kuvvetten", "menzilUs": -15, "menzil": "≈10⁻¹⁵ m", "sira": 1, "siddet": "1", "renk": "#A88CFF" },
+    "zayif": { "ad": "Zayıf nükleer kuvvet", "kisa": "Zayıf nükleer", "ablatif": "zayıf nükleer kuvvetten", "menzilUs": -18, "menzil": "≈10⁻¹⁸ m", "sira": 3, "siddet": "10⁻⁶", "renk": "#E3B341" }
+  },
+  "kesif1": {
+    "baslik": "KEŞİF 1 · DÖRT ALARM",
+    "yonerge": "Dört alarmın verilerini oku. Bir alarma, sonra arkasındaki kuvvetin kartına dokun.",
+    "olaylar": [
+      {
+        "id": "yorunge", "ikon": "yorunge", "ad": "YÖRÜNGE",
+        "veriler": ["İstasyon Dünya'nın çevresinde dolanıyor.", "İticiler susunca irtifa düşüyor: 412 → 398 km.", "Etkileşenler: Dünya ve istasyon."],
+        "dogru": "kutle",
+        "ipucu": "Dünya ve istasyon bütün olarak yüksüz, ama ikisinin de kütlesi var.",
+        "dogruMesaj": "Kütle çekimi! Dünya istasyonu kendine doğru çekiyor.",
+        "ozel": {
+          "surtunme": "Seyrek atmosfer kalıntısı istasyonu biraz yavaşlatıyor, doğru. Ama bizi Dünya'ya çeken o değil. Üstelik sürtünme temel bir kuvvet değil: yüzeylerdeki atomlar arasındaki elektromanyetik etkileşimden doğuyor.",
+          "em": "Dünya ve istasyon bütün olarak yüksüz. Elektromanyetik kuvvet yüklü cisimler arasında belirginleşir."
+        }
+      },
+      {
+        "id": "isik", "ikon": "isik", "ad": "KUTUP IŞIĞI",
+        "veriler": ["Güneş'ten gelen yüklü parçacıklar kutuplara yöneliyor.", "Dünya'nın manyetik alanı yollarını büküyor.", "Atmosferdeki atomlara çarpınca ışık çıkıyor."],
+        "dogru": "em",
+        "ipucu": "Yüklü parçacıklar, manyetik alan ve ışık: üçü de aynı kuvvetin işi.",
+        "dogruMesaj": "Elektromanyetik kuvvet! Yüklü parçacıkları manyetik alan yönlendiriyor, ışık da elektromanyetik.",
+        "ozel": {
+          "kutle": "Bu parçacıkların kütlesi çok küçük. Yollarını büken şey Dünya'nın manyetik alanı."
+        }
+      },
+      {
+        "id": "fisyon", "ikon": "fisyon", "ad": "FİSYON",
+        "veriler": ["Reaktör yakıtında uranyum çekirdekleri bölünüyor.", "Çekirdekteki protonların hepsi pozitif yüklü ve birbirini itiyor.", "Yine de çekirdeklerin çoğu dağılmıyor. Onları ne tutuyor?"],
+        "dogru": "guclu",
+        "ipucu": "Protonları birbirine bağlayan kuvvet, aralarındaki elektrik itmesinden daha güçlü olmalı ve yalnızca çekirdeğin içinde etkili.",
+        "dogruMesaj": "Güçlü nükleer kuvvet! Protonların elektrik itmesini yeniyor, ama yalnızca çekirdeğin içinde.",
+        "ozel": {
+          "em": "Elektromanyetik kuvvet protonları birbirinden İTİYOR. Çekirdeği bir arada tutan, bu itmeyi yenen başka bir kuvvet olmalı.",
+          "kutle": "Protonların kütlesi çok küçük. Aralarındaki kütle çekimi, elektrik itmesinin yanında yok denecek kadar zayıf."
+        }
+      },
+      {
+        "id": "bozunma", "ikon": "bozunma", "ad": "BOZUNMA",
+        "veriler": ["Beta sayacı artıyor.", "Bir çekirdekteki nötron protona dönüşüyor.", "Çekirdekten bir elektron fırlıyor."],
+        "dogru": "zayif",
+        "ipucu": "Burada bir şey bir arada tutulmuyor; bir parçacık başka bir parçacığa dönüşüyor.",
+        "dogruMesaj": "Zayıf nükleer kuvvet! Bir parçacığın türünü değiştirebilen tek kuvvet.",
+        "ozel": {
+          "guclu": "Bozunmada bir şey bir arada tutulmuyor, bir nötron protona DÖNÜŞÜYOR. Parçacık türünü değiştiren kuvvet hangisi?"
+        }
+      }
+    ],
+    "kartlar": ["kutle", "em", "guclu", "zayif", "surtunme"],
+    "surtunme": { "ad": "Sürtünme", "mesaj": "Sürtünme temel bir kuvvet değil; yüzeylerdeki atomlar arasındaki elektromanyetik etkileşimden doğar. Dört temel kuvvetten birini seç." },
+    "yanlisSablon": "{kuvvet} mi? Verilere bir daha bak: {ipucu}",
+    "kerem": {
+      "soru": "Kerem telsizden: \"Uzayda yerçekimi yok ki! Yörünge neden alçalsın?\" Kerem haklı mı?",
+      "secenekler": [
+        { "metin": "Haklı: uzayda kütle çekimi yoktur, alarm hatalı", "dogru": false, "yanilgi": "M_UZAY_YERCEKIMI_YOK" },
+        { "metin": "Haksız: 400 km'de kütle çekimi yerdekinin yaklaşık %90'ı", "dogru": true }
+      ],
+      "dogru": "Evet! İstasyon sürekli Dünya'ya düşüyor ama yanlamasına çok hızlı gittiği için Dünya'yı hep ıskalıyor. Kendimizi ağırlıksız hissetmemizin nedeni bu: serbest düşmedeyiz.",
+      "yanlis": "Öyle olsaydı istasyon dümdüz uzaya giderdi! 400 km yükseklikte kütle çekimi yerdekinin yaklaşık %90'ı. İstasyon sürekli Dünya'ya düşüyor ama yanlamasına çok hızlı gittiği için Dünya'yı hep ıskalıyor."
+    },
+    "ipuclari": [
+      "Bu olayda etkileşen şeyler ne: kütleli cisimler mi, yüklü parçacıklar mı, çekirdeğin içi mi?",
+      "Gezegenler ve uydular kütle çekimiyle, yüklü parçacıklar ve ışık elektromanyetik kuvvetle, çekirdeğin bir arada durması güçlü nükleer kuvvetle, parçacık dönüşümü zayıf nükleer kuvvetle ilgili.",
+      "Yörünge → kütle çekimi; kutup ışığı → elektromanyetik; fisyon → güçlü nükleer; bozunma → zayıf nükleer."
+    ]
+  },
+  "kesif2": {
+    "baslik": "KEŞİF 2 · MENZİL VE ŞİDDET",
+    "yonerge": "İki proton arasındaki uzaklığı değiştir. Hangi kuvvetler hâlâ etkili? Beş uzaklığın hepsini dene.",
+    "uzakliklar": [
+      { "etiket": "10⁻¹⁸ m", "aciklama": "protonun içi", "us": -18 },
+      { "etiket": "10⁻¹⁵ m", "aciklama": "çekirdek boyutu", "us": -15 },
+      { "etiket": "10⁻¹⁰ m", "aciklama": "atom boyutu", "us": -10 },
+      { "etiket": "1 m", "aciklama": "insan boyu", "us": 0 },
+      { "etiket": "10⁷ m", "aciklama": "Dünya boyutu", "us": 7 }
+    ],
+    "menzilSonuc": "Güçlü ve zayıf nükleer kuvvet çekirdekten biraz uzaklaşınca kayboluyor. Kütle çekimi ve elektromanyetik kuvvet her uzaklıkta etkili, yalnızca zayıflıyor.",
+    "siddet": {
+      "soru": "İki proton çekirdekte yan yana (10⁻¹⁵ m). Aralarındaki en güçlü kuvvet hangisi?",
+      "secenekler": [
+        { "metin": "Kütle çekimi: gezegenleri bile yörüngede tutuyor", "dogru": false, "yanilgi": "M_KUTLE_CEKIMI_EN_GUCLU" },
+        { "metin": "Güçlü nükleer kuvvet: çekirdeği bir arada tutuyor", "dogru": true }
+      ],
+      "dogru": "Güçlü nükleer kuvvet en güçlüsü. Kütle çekimi ise en zayıfı: güçlü nükleer kuvvetin yaklaşık 10³⁸'de biri!",
+      "yanlis": "Kütle çekimi en ZAYIFI çıktı: güçlü nükleer kuvvetin yaklaşık 10³⁸'de biri! Gezegen ölçeğinde baskın olması, kütlelerin çok büyük ve gezegenlerin yüksüz olmasından.",
+      "not": "Göreli şiddetler yaklaşıktır; güçlü nükleer kuvvet 1 kabul edilmiştir."
+    },
+    "ipuclari": [
+      "Her uzaklıkta hangi çubuklar dolu kalıyor?",
+      "Güçlü nükleer kuvvet çekirdeği tutuyordu; çekirdekten uzakta da etkili olsaydı ne olurdu?",
+      "Beş uzaklık düğmesinin hepsine dokun, sonra en güçlü kuvveti tahmin et."
+    ]
+  },
+  "genelleme": {
+    "baslik": "GÖZLEM DEFTERİ · KURALINI YAZ",
+    "yonerge": "Menzil ve şiddet ölçümlerine bak. Dört temel kuvveti karşılaştıran bir kural yaz.",
+    "parcalar": ["Güçlü ve zayıf nükleer kuvvetler", "yalnızca çekirdek boyutunda etkilidir;", "kütle çekimi ve elektromanyetik kuvvetin", "menzili sonsuzdur.", "En güçlüsü güçlü nükleer,", "en zayıfı kütle çekimidir."],
+    "celdiriciler": ["En güçlüsü kütle çekimidir.", "Sürtünme de temel bir kuvvettir."],
+    "kabul": [
+      ["Güçlü ve zayıf nükleer kuvvetler", "yalnızca çekirdek boyutunda etkilidir;", "kütle çekimi ve elektromanyetik kuvvetin", "menzili sonsuzdur.", "En güçlüsü güçlü nükleer,", "en zayıfı kütle çekimidir."],
+      ["En güçlüsü güçlü nükleer,", "en zayıfı kütle çekimidir.", "Güçlü ve zayıf nükleer kuvvetler", "yalnızca çekirdek boyutunda etkilidir;", "kütle çekimi ve elektromanyetik kuvvetin", "menzili sonsuzdur."]
+    ],
+    "serbestAnahtarlar": [["menzil", "uzaklık"], ["güçlü"], ["kütle çekimi", "yerçekimi", "çekim"]],
+    "kutleGuclu": "En güçlüsü kütle çekimi mi? Ama iki proton arasında kütle çekimi en kısa çubuktu: güçlü nükleer kuvvetin yaklaşık 10³⁸'de biri.",
+    "surtunme": "Sürtünme temel bir kuvvet değil; atomlar arasındaki elektromanyetik etkileşimden doğuyor. Dört temel kuvvet dışında temel kuvvet yok.",
+    "eksik": "Kuralın yarım kalmış gibi… Hem menzili hem şiddeti anlatır mısın?",
+    "serbestEksik": "Kuralında menzilden ve şiddetten söz et: hangi kuvvetler kısa menzilli, hangisi en güçlü, hangisi en zayıf?",
+    "kabulMesaji": "\"{kural5}\" Anladım! Reaktörün koruma panosunu bu kurala göre kuracağım.",
+    "ipuclari": [
+      "Uzaklık arttıkça hangi iki kuvvet kayboldu?",
+      "Şiddet çubuklarında en uzun ve en kısa çubuk hangileriydi?",
+      "Cümleye \"Güçlü ve zayıf nükleer kuvvetler\" ile başla."
+    ]
+  },
+  "gorev": {
+    "baslik": "GÖREV · KUVVET PANOSU",
+    "yonerge": "Reaktörün koruma panosunu kur: her kuvveti menziline (sütun) ve şiddet sırasına (satır) yerleştir. Önce kuvvete, sonra hücreye dokun.",
+    "sutunlar": ["KISA MENZİL\n(çekirdek boyutu)", "SONSUZ MENZİL"],
+    "satirlar": ["1 · en güçlü", "2", "3", "4 · en zayıf"],
+    "eksik": "Panoda {sayi} kuvvet eksik.",
+    "hatali": "Pano kararsız: {liste} yanlış hücrede. Kıvılcım çıkan hücrelere bak.",
+    "kutleGuclu": "Kütle çekimi en güçlü satırda mı? Şiddet çubuklarını hatırla: en kısa çubuk oydu.",
+    "panoTamam": "Pano kararlı! Son adım: iki kuvveti karşılaştıran bir cümle kur.",
+    "karsilastirmaYonerge": "Kutulara dokunarak seçenekleri değiştir ve iki kuvveti karşılaştıran doğru bir cümle kur.",
+    "ayni": "İki farklı kuvvet seç.",
+    "siddetYanlis": "Panoya bak: {A} {sa}. sırada, {B} {sb}. sırada. Hangisi daha güçlü?",
+    "menzilYanlis": "Menzillere bak: {A} için {ma}, {B} için {mb}.",
+    "basari": "Doğru karşılaştırma! Reaktör kararlı.",
+    "ipuclari": [
+      "Sütun menzili, satır şiddeti gösteriyor. Keşif 2'deki çubukları hatırla.",
+      "Kısa menzilliler: güçlü ve zayıf nükleer. Şiddet sırası: güçlü nükleer, elektromanyetik, zayıf nükleer, kütle çekimi.",
+      "Güçlü nükleer: kısa menzil, 1. satır. Elektromanyetik: sonsuz, 2. Zayıf nükleer: kısa, 3. Kütle çekimi: sonsuz, 4."
+    ]
+  }
+}

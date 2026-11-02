@@ -29,8 +29,18 @@ export function diyalogPaneli(sahne, { x = 948, y = 80, genislik = 320, yuksekli
 
   kap.add([argeZemin, argeAd, arge, argeYazi, elifZemin, elifAd, elifResim, elifYazi, ipucu]);
 
+  // Uzun metin (ör. ARGE ogrencinin kuralini tekrar ederken) panele sigsin diye yazi kuculur
+  const boyutlar = { arge: [19, 17, 15, 13], elif: [17, 16, 15, 14] };
+  const sigdir = (yazi, metin, tur) => {
+    const alan = tur === 'arge' ? argeYukseklik - 180 : yukseklik - argeYukseklik - 150;
+    for (const b of boyutlar[tur]) {
+      yazi.setFontSize(b).setText(metin);
+      if (yazi.height <= alan) break;
+    }
+  };
   const daktilo = (yazi, metin, sure = 26) => {
     if (yazi.daktilo) yazi.daktilo.remove(false);
+    sigdir(yazi, metin, yazi === argeYazi ? 'arge' : 'elif');
     let i = 0;
     yazi.setText('');
     yazi.daktilo = sahne.time.addEvent({ delay: sure, repeat: metin.length - 1, callback: () => yazi.setText(metin.slice(0, ++i)) });

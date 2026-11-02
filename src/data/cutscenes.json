@@ -515,5 +515,99 @@
         ]
       }
     ]
+  },
+  {
+    "id": "5A",
+    "ad": "Dört Kuvvet · açılış",
+    "paneller": [
+      {
+        "sahne": "reaktorBolmesi",
+        "sureMs": 14000,
+        "kamera": {"hareket": "dolly", "yon": "sag", "mesafe": 90, "zoom": [1, 1.05]},
+        "basliklar": [{"metin": "BÖLÜM 5 · DÖRT KUVVET", "ms": 600, "sureMs": 2600}],
+        "altyazilar": [
+          {
+            "konusan": "ARGE",
+            "metin": "Dört alarm… aynı anda… Hangisi… önce?",
+            "ms": 3800,
+            "sureMs": 3800,
+            "bozuk": true
+          },
+          {
+            "konusan": "Elif",
+            "metin": "Her alarmın arkasında farklı bir kuvvet var. Doğada yalnızca dört temel kuvvet bulunuyor.",
+            "ms": 8200,
+            "sureMs": 5400
+          }
+        ],
+        "olaylar": [{"ms": 3600, "fx": "sars", "sure": 400, "siddet": 0.004}]
+      },
+      {
+        "sahne": "istasyonDis",
+        "gecis": "fadeBlack",
+        "sureMs": 10000,
+        "kamera": {"hareket": "zoom", "zoom": [1, 1.06]},
+        "katmanAyar": {"aurora": {"alfa": 1}},
+        "altyazilar": [
+          {
+            "konusan": "ARGE",
+            "metin": "Yörünge… alçalıyor. Kutupta… ışıklar…",
+            "ms": 1400,
+            "sureMs": 3800,
+            "bozuk": true
+          },
+          {
+            "konusan": "Elif",
+            "metin": "Hangi kuvvetin ne yaptığını ARGE'ye sen göstereceksin, {ad}.",
+            "ms": 5600,
+            "sureMs": 4000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "5K",
+    "ad": "Dört Kuvvet · kapanış",
+    "paneller": [
+      {
+        "sahne": "reaktorBolmesi",
+        "sureMs": 9000,
+        "altyazilar": [{"konusan": "ARGE", "metin": "Dört alarm da kararlı. Reaktör güvende.", "ms": 3200, "sureMs": 3600}],
+        "olaylar": [{"ms": 600, "hedef": "reaktor", "olay": "sustur"}]
+      },
+      {
+        "sahne": "yerKontrol",
+        "gecis": "fadeBlack",
+        "sureMs": 26000,
+        "altyazilar": [
+          {
+            "konusan": "Feza",
+            "metin": "Merhaba {ad}, ben Dr. Feza, Ankara'daki yer kontrolden. ARGE'nin dört kuvveti yeniden tanıdığını gördük.",
+            "ms": 1400,
+            "sureMs": 5600
+          },
+          {
+            "konusan": "Feza",
+            "metin": "Fizikçilerin büyük hayallerinden biri, bu dört kuvveti tek bir kuramla açıklamak.",
+            "ms": 7400,
+            "sureMs": 5000
+          },
+          {
+            "konusan": "Feza",
+            "metin": "Adaşım Feza Gürsey de temel kuvvetleri birleştirme çalışmalarına önemli katkılar yapmış bir Türk fizikçiydi.",
+            "ms": 12800,
+            "sureMs": 6000
+          },
+          {
+            "konusan": "ARGE",
+            "metin": "Reaktör sistemi çevrimiçi. Öğrendiğim kural: {kural5}",
+            "ms": 19400,
+            "sureMs": 6200
+          }
+        ],
+        "olaylar": [{"ms": 300, "hedef": "feza", "olay": "ac"}, {"ms": 9000, "hedef": "halkalar", "olay": "birles"}]
+      }
+    ]
   }
 ]

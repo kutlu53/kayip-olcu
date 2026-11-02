@@ -84,7 +84,34 @@
         "ayar": {"ufukY": 410, "safak": "sol", "y": -60}
       },
       {"id": "nav", "tip": "navKonsol", "derinlik": 0.5},
-      {"id": "kerem", "tip": "keremVideo", "sabit": true, "ayar": {"x": 420, "y": -110, "olcek": 0.82, "gurultulu": true}}
+      {
+        "id": "kerem",
+        "tip": "keremVideo",
+        "sabit": true,
+        "ayar": {"x": 420, "y": -110, "olcek": 0.82, "gurultulu": true}
+      }
+    ]
+  },
+  "reaktorBolmesi": {
+    "aciklama": "Reaktör bölmesi: mor-beyaz çekirdek ışığı, lombozdan Dünya ve kutup ışıkları, dört alarm paneli",
+    "katmanlar": [
+      {"id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": {"katman": "uzak"}},
+      {
+        "id": "dunya",
+        "tip": "dunyaUfku",
+        "derinlik": 0.06,
+        "ayar": {"ufukY": 410, "safak": "sag", "x": -450, "y": -60, "olcek": 0.45}
+      },
+      {"id": "aurora", "tip": "aurora", "derinlik": 0.06, "ayar": {"x": -450, "y": -127, "olcek": 0.4}},
+      {"id": "reaktor", "tip": "reaktor", "derinlik": 0.35}
+    ]
+  },
+  "yerKontrol": {
+    "aciklama": "Yer kontrolle video bağlantısı: Dr. Feza ve dört kuvvet hologramı",
+    "katmanlar": [
+      {"id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": {"katman": "uzak"}},
+      {"id": "feza", "tip": "fezaVideo", "sabit": true, "ayar": {"x": -250, "y": -10, "olcek": 1.05}},
+      {"id": "halkalar", "tip": "kuvvetHalkalari", "derinlik": 0.2, "ayar": {"x": 300, "y": -20}}
     ]
   },
   "karanlikEkran": {

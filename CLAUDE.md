@@ -111,7 +111,7 @@ Her bölüm aynı üç adımı izler:
 | 2. Kör Pusula | FİZ.9.2.2 | Karşılaştırma | `M_SURAT_HIZ_AYNI`, `M_KUTLE_YONLU`, `M_SKALER_YONLU`, `M_YON_ONEMSIZ` |
 | 3. Römorkör | FİZ.9.2.3 | Bilimsel çıkarım | `M_ZIT_HEP_SIFIR` |
 | 4. Kenetlenme | FİZ.9.2.4 | Tümevarımsal akıl yürütme | `M_BILESKE_TOPLAM`, `M_BILESKE_FARK`, `M_BUYUK_KUVVET_YONU` |
-| 5. Dört Kuvvet | FİZ.9.2.5 | Karşılaştırma | `M_UZAY_YERCEKIMI_YOK`, `M_SURTUNME_TEMEL` |
+| 5. Dört Kuvvet | FİZ.9.2.5 | Karşılaştırma | `M_UZAY_YERCEKIMI_YOK`, `M_SURTUNME_TEMEL`, `M_KUTLE_CEKIMI_EN_GUCLU` |
 | 6. Kim Hareket Ediyor? | FİZ.9.2.6 | Tümevarımsal akıl yürütme | `M_YOL_YERDEG_AYNI`, `M_HAREKET_MUTLAK` |
 | 7. Son Onarım | FİZ.9.2.7 | Sınıflandırma | `M_TEK_HAREKET_TURU` |
 
@@ -130,6 +130,7 @@ Her bölüm aynı üç adımı izler:
 | `M_BILESKE_FARK` | Bileşkenin büyüklüğü, büyüklüklerin farkıdır | Yalnızca zıt yönlü vektörlerde böyledir; aradaki açı bileşkeyi belirler |
 | `M_BUYUK_KUVVET_YONU` | Cisim, büyük olan kuvvetin yönünde hareket eder | Cisim bileşke kuvvetin yönünde hareket eder |
 | `M_UZAY_YERCEKIMI_YOK` | Uzayda yerçekimi yoktur | Yörüngede kütle çekimi vardır; istasyon serbest düşmededir |
+| `M_KUTLE_CEKIMI_EN_GUCLU` | Kütle çekimi en güçlü temel kuvvettir | Kütle çekimi dört temel kuvvetin en zayıfıdır; gezegen ölçeğinde baskın olması kütlelerin çok büyük, cisimlerin yüksüz olmasındandır |
 | `M_SURTUNME_TEMEL` | Sürtünme temel bir kuvvettir | Sürtünme elektromanyetik kökenlidir |
 | `M_YOL_YERDEG_AYNI` | Alınan yol ile yer değiştirme aynıdır | Yol skaler ve rotaya bağlı, yer değiştirme vektörel ve yalnızca ilk/son konuma bağlı |
 | `M_HAREKET_MUTLAK` | Hareket mutlaktır | Hareket referans noktasına göre tanımlanır |
@@ -229,6 +230,13 @@ Her bölüm aynı üç adımı izler:
 - **Görev:** Dört kuvvet menzil ve şiddet eksenli bir panoya yerleştirilir; ardından iki kuvveti karşılaştıran bir cümle kurulur.
 - **Başarı:** Eşleştirme + panoda doğru sıralama.
 - **Ara bilgi:** Dr. Feza, Feza Gürsey'in temel kuvvetleri birleştirme çalışmalarına kısa bir gönderme yapar.
+- **Fizik notu:** Yörünge alarmında istasyonu Dünya'ya çeken kütle çekimidir; irtifanın yavaş düşmesi seyrek atmosfer sürtünmesindendir. Bu ayrım "Sürtünme" çeldirici kartıyla öğretilir (`M_SURTUNME_TEMEL`). Güçlü nükleer kuvvet "zayıflamaz": reaktör alarmı fisyon olarak verilir ve soru, birbirini iten protonları bir arada tutan kuvvettir.
+- **Uygulanan akış (`bolum5.json`):**
+  - *Keşif 1 · Dört alarm:* Dört alarm kartı (yörünge, kutup ışığı, fisyon, bozunma) ve beş kuvvet kartı (dört temel kuvvet + Sürtünme çeldiricisi). Önce alarm sonra kart ya da tersi. Yanlışta ARGE veriye yönlendirir; bazı yanlışların özel açıklaması var (ör. fisyonda elektromanyetik: "protonları İTİYOR"). Sonunda Kerem'in "uzayda yerçekimi yok" iddiası (`M_UZAY_YERCEKIMI_YOK`): 400 km'de kütle çekimi yerdekinin ≈%90'ı, istasyon serbest düşmede.
+  - *Keşif 2 · Menzil ve şiddet:* İki proton arasındaki uzaklık 5 adımda değiştirilir (10⁻¹⁸ m'den 10⁷ m'ye); her kuvvetin çubuğu menzili içinde dolu, dışında boş. Beşi de denenince en güçlü kuvvet tahmini (`M_KUTLE_CEKIMI_EN_GUCLU`), ardından çubuklar 10⁻¹⁵ m'deki göreli şiddete (logaritmik) dönüşür: güçlü 1, EM 10⁻², zayıf 10⁻⁶, kütle çekimi 10⁻³⁸ (yaklaşık, ekranda belirtilir).
+  - *Genelleme:* Menzil + şiddet kuralı. Çeldiriciler: "En güçlüsü kütle çekimidir." (`M_KUTLE_CEKIMI_EN_GUCLU`), "Sürtünme de temel bir kuvvettir." (`M_SURTUNME_TEMEL`). İki cümle sırası da kabul.
+  - *Görev · Kuvvet panosu:* 2 sütun (kısa / sonsuz menzil) × 4 satır (şiddet sırası). Önce kuvvet sonra hücre; dolu hücreye dokununca geri alınır. Doğru pano sonrası karşılaştırma cümlesi: dokunarak dönen kutularla "[A], [B'den] daha güçlü/zayıftır; menzili daha kısa/uzun/aynı" kurulur, iki yönden de denetlenir.
+  - *5A/5K:* Reaktör bölmesinde dört alarm (saniyede bir yanıp söner), istasyon dışında kutup ışıkları. 5K'da alarmlar sırayla susar, ardından Dr. Feza'nın yer kontrolden video bağlantısı; dört kuvvet halkası tek halkada birleşir ("Tek kuram?").
 
 ### Bölüm 6 — Kim Hareket Ediyor? (FİZ.9.2.6)
 - **Sahne:** İstasyonun dönen halkası ve sabit merkez modülü; Kerem ile ARGE tartışıyor.
@@ -516,6 +524,8 @@ kayip-olcu/
 │  │  ├─ Panel.js             ← kopan güneş paneli, tamir dronu
 │  │  ├─ Navigasyon.js        ← navigasyon köprüsü, radar ve pusula hologramları
 │  │  ├─ Port.js              ← tıbbi kapsül, kenetlenme portu
+│  │  ├─ Reaktor.js           ← reaktör bölmesi, dört alarm paneli
+│  │  ├─ YerKontrol.js        ← Dr. Feza video bağlantısı, dört kuvvet hologramı
 │  │  ├─ Interiors.js         ← kontrol odası (karartma, acil ışık, süzülen nesneler), lomboz
 │  │  ├─ Characters.js        ← Elif (hologram), Kerem (video bağlantısı); ifadeler
 │  │  ├─ Arge.js              ← ışık halkası + dalga formu, 0–7 evrim durumu
@@ -536,6 +546,7 @@ kayip-olcu/
 │     ├─ bolum1.json          ← Bölüm 1 içeriği: sensörler, birim çözücü, kural parçaları, SI çekirdeği kartları
 │     ├─ bolum2.json          ← Bölüm 2 içeriği: Kerem araması, yön deneyleri, kural parçaları, rota nicelikleri
 │     ├─ bolum3.json          ← Bölüm 3 içeriği: dron deneyleri, kural parçaları, taşıma senaryoları
+│     ├─ bolum5.json          ← Bölüm 5 içeriği: kuvvet özellikleri (menzil, şiddet), alarmlar, uzaklıklar, pano
 │     ├─ bolum4.json          ← Bölüm 4 içeriği: örnekler, tahmin kartları, kural parçaları, ipuçları, ARGE replikleri
 │     ├─ misconceptions.json
 │     └─ quantities.json      ← SI nicelik listesi (ad, birim, temel/türetilmiş, skaler/vektörel)
@@ -668,7 +679,7 @@ kayip-olcu/
 - [x] Bölüm 1 Uyanış (sürükle-bırak SI tablosu; bağımlılık kilidi) + 1A/1K ara sahneleri
 - [x] Bölüm 2 Kör Pusula (etiketleme + rota sapması) + 2A/2K ara sahneleri
 - [x] Bölüm 3 Römorkör (aynı doğrultuda kuvvetler, tahmin → test) + 3A/3K ara sahneleri
-- [ ] Bölüm 5 Dört Kuvvet (eşleştirme + menzil/şiddet panosu)
+- [x] Bölüm 5 Dört Kuvvet (eşleştirme + menzil/şiddet panosu) + 5A/5K ara sahneleri
 - [ ] Bölüm 6 Kim Hareket Ediyor? (üç gözlemci görünümü, veri tablosu, tanım kurma, gizemin çözülmesi)
 - [ ] Bölüm 7 Son Onarım (hareket türü sınıflama + final manevrası)
 - [ ] Giriş (G) ve Final (F) ara sahneleri
