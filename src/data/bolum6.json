@@ -1,0 +1,176 @@
+{
+  "bolum": 6,
+  "cikti": "FİZ.9.2.6",
+  "giris": [
+    { "kim": "ARGE", "metin": "Kargo robotu… koridorda dolaştı. Kerem ile ben… aynı şeyi ölçmüyoruz." },
+    { "kim": "Elif", "metin": "Robotun rotalarını ölç. Her rotadan önce sonucu tahmin et." }
+  ],
+  "kesif1": {
+    "baslik": "KEŞİF 1 · KARGO ROBOTU",
+    "yonerge": "Kargo robotu koridorda 2 m/s ile gidiyor. Yol sayacına ve başlangıçtan son konuma çizilen oka bak.",
+    "hiz": 2,
+    "rotalar": [
+      {
+        "ad": "A", "parcalar": [[10, 0], [0, 10], [-10, 0], [0, -10]], "yonAdi": "",
+        "kerem": "Kerem: \"Robot 40 metre yol aldı, demek ki şu an başlangıçtan 40 metre uzakta!\"",
+        "tahmin": {
+          "soru": "Robot bu rotayı bitirince başlangıçtan ne kadar uzakta olur?",
+          "secenekler": [
+            { "metin": "40 m: sayaç ne gösteriyorsa o", "dogru": false, "yanilgi": "M_YOL_YERDEG_AYNI" },
+            { "metin": "0 m: başladığı yere döner", "dogru": true }
+          ]
+        },
+        "sonuc": "Sayaç 40 m dedi ama robot başladığı yerde, ok 0 m! Sayacın ölçtüğüne alınan yol, başlangıçtan son konuma çizilen oka yer değiştirme deniyor."
+      },
+      {
+        "ad": "B", "parcalar": [[30, 0]], "yonAdi": "doğu",
+        "sonuc": "Düz bir rota: yol 30 m, yer değiştirme de 30 m doğuya. Bu kez büyüklükleri eşit."
+      },
+      {
+        "ad": "C", "parcalar": [[30, 0], [-10, 0]], "yonAdi": "doğu",
+        "tahmin": {
+          "soru": "Robot 30 m doğuya gidip 10 m geri dönüyor. Yer değiştirme ne olur?",
+          "secenekler": [
+            { "metin": "40 m", "dogru": false, "yanilgi": "M_YOL_YERDEG_AYNI" },
+            { "metin": "20 m doğuya", "dogru": true },
+            { "metin": "20 m batıya", "dogru": false, "yanilgi": "M_YON_ONEMSIZ" }
+          ]
+        },
+        "sonuc": "Yol 40 m ama yer değiştirme 20 m doğuya. Geri dönülen 10 m, yer değiştirmeden düştü."
+      },
+      {
+        "ad": "D", "parcalar": [[6, 0], [0, 8]], "yonAdi": "kuzeydoğu",
+        "tahmin": {
+          "soru": "Robot 6 m doğuya, sonra 8 m kuzeye gidiyor. Başlangıçtan ne kadar uzakta olur?",
+          "secenekler": [
+            { "metin": "14 m", "dogru": false, "yanilgi": "M_YOL_YERDEG_AYNI" },
+            { "metin": "10 m", "dogru": true },
+            { "metin": "2 m", "dogru": false, "yanilgi": "M_BILESKE_FARK" }
+          ]
+        },
+        "sonuc": "Yol 14 m, yer değiştirme 10 m. Bölüm 4'teki gibi: birbirine dik 6 ve 8'in bileşkesi 10."
+      }
+    ],
+    "oranlar": "Son iki sütuna bak: yol ÷ süre her rotada 2 m/s. Ama yer değiştirme ÷ süre rotaya göre değişiyor, A'da 0 bile oluyor!",
+    "ipuclari": [
+      "Sayaç robotun gittiği her metreyi sayar. Ok ise yalnızca başlangıç ile son konumu birleştirir.",
+      "Bir koşucu 400 m'lik pistte bir tur atınca kaç metre koşmuş olur? Başladığı yerden ne kadar uzaktadır?",
+      "Rota A'da robot başladığı noktaya geri dönüyor: ok 0 m."
+    ]
+  },
+  "kesif2": {
+    "baslik": "KEŞİF 2 · KİM HAREKET EDİYOR?",
+    "yonerge": "Kargo robotu dönen halkada park hâlinde. Üç gözlemci onu 30 saniye izliyor.",
+    "tahmin": {
+      "soru": "Park hâlindeki robot hareket ediyor mu?",
+      "secenekler": [
+        { "metin": "Hayır, park hâlinde: kesinlikle duruyor", "dogru": false, "yanilgi": "M_HAREKET_MUTLAK" },
+        { "metin": "Evet, istasyonla birlikte uzayda kesinlikle hareket ediyor", "dogru": false, "yanilgi": "M_HAREKET_MUTLAK" },
+        { "metin": "Kimin baktığına bağlı", "dogru": true }
+      ]
+    },
+    "gozlemciler": [
+      { "ad": "HALKADAKİ KEREM", "konum": "Konum: değişmedi", "yol": "Alınan yol: 0 m", "yd": "Yer değiştirme: 0 m" },
+      { "ad": "MERKEZ MODÜLDEKİ ARGE", "konum": "Konum: daire çizdi", "yol": "Alınan yol: ≈ 126 m", "yd": "Yer değiştirme: 0 m (tam tur)" },
+      { "ad": "DÜNYA'DAKİ YER KONTROL", "konum": "Konum: değişti", "yol": "Alınan yol: ≈ 230 km", "yd": "Yer değiştirme: ≈ 230 km" }
+    ],
+    "not": "Halkanın yarıçapı 20 m, bir turu 30 s. İstasyonun yörünge sürati 7,66 km/s.",
+    "dogru": "Üç gözlemci, üç farklı cevap. Hangisi doğru? Üçü de! Hareketi anlatmak için önce nereden baktığımızı seçmeliyiz: buna referans noktası denir.",
+    "yanlis": "Kerem'e göre robot hiç kıpırdamadı, yer kontrole göre 230 km gitti. İkisi de doğru! Hareketi anlatmak için önce nereden baktığımızı seçmeliyiz: buna referans noktası denir.",
+    "ipuclari": [
+      "Üç gözlemci de aynı robota bakıyor ama farklı yerlerden.",
+      "Trende oturan biri yanındaki yolcuya göre durur, yoldaki bir ağaca göre hareket eder.",
+      "Hareket, neye göre baktığına bağlıdır: \"Kimin baktığına bağlı\" seçeneği."
+    ]
+  },
+  "genelleme": {
+    "baslik": "GÖZLEM DEFTERİ · TANIMLARI KUR",
+    "yonerge": "Ölçümlerinden yola çıkarak altı tanımı kur. En az beşi kabul edilmeli.",
+    "enAz": 5,
+    "tanimlar": [
+      {
+        "terim": "Referans noktası",
+        "parcalar": ["Referans noktası,", "konumu ve hareketi tanımlamak için", "seçilen gözlem noktasıdır."],
+        "celdiriciler": [{ "metin": "her zaman duran", "yanilgi": "M_HAREKET_MUTLAK", "mesaj": "Her zaman duran mı? Keşif 2'de Kerem dönen halkadaydı; yine de onun baktığı yer bir referans noktasıydı." }],
+        "anahtarlar": [["göre", "gözlem", "seçilen", "başlangıç"], ["konum", "hareket"]]
+      },
+      {
+        "terim": "Konum",
+        "parcalar": ["Konum,", "bir cismin referans noktasına göre", "uzaklığı ve yönüdür."],
+        "celdiriciler": [{ "metin": "yalnızca uzaklığıdır.", "yanilgi": "M_YON_ONEMSIZ", "mesaj": "Yalnızca uzaklık mı? Rota C'de robot 20 m doğuda kaldı. 20 m batıda olsaydı başka bir yerde olurdu." }],
+        "anahtarlar": [["referans", "göre", "başlangıç"], ["yön"]]
+      },
+      {
+        "terim": "Alınan yol",
+        "parcalar": ["Alınan yol,", "cismin izlediği rotanın", "toplam uzunluğudur", "ve skalerdir."],
+        "celdiriciler": [
+          { "metin": "ilk ve son konum arasındaki", "yanilgi": "M_YOL_YERDEG_AYNI", "mesaj": "İlk ve son konum arası okun işiydi. Rota A'da sayaç 40 m saydı, ok 0 m'ydi." },
+          { "metin": "ve vektöreldir.", "yanilgi": "M_SKALER_YONLU", "mesaj": "Yol sayacı hiç yön göstermedi, yalnızca metreleri saydı." }
+        ],
+        "anahtarlar": [["rota", "izle", "gidilen", "toplam"], ["uzunluk", "mesafe", "metre"]]
+      },
+      {
+        "terim": "Yer değiştirme",
+        "parcalar": ["Yer değiştirme,", "ilk konumdan son konuma çizilen", "yönlü doğru parçasıdır", "ve vektöreldir."],
+        "celdiriciler": [
+          { "metin": "izlenen rotanın uzunluğudur", "yanilgi": "M_YOL_YERDEG_AYNI", "mesaj": "Rota A'da robot 40 m'lik bir rota izledi ama başladığı yere döndü: ok 0 m'ydi." },
+          { "metin": "ve skalerdir.", "yanilgi": "M_YON_ONEMSIZ", "mesaj": "Rota C'de ok doğuyu gösteriyordu. Yönü olmasaydı \"20 m doğuya\" diyemezdik." }
+        ],
+        "anahtarlar": [["ilk", "başlangıç"], ["son"], ["yön", "ok", "vektör"]]
+      },
+      {
+        "terim": "Sürat",
+        "parcalar": ["Sürat,", "alınan yolun", "geçen süreye oranıdır", "ve skalerdir."],
+        "celdiriciler": [
+          { "metin": "yer değiştirmenin", "yanilgi": "M_SURAT_HIZ_AYNI", "mesaj": "Yer değiştirme ÷ süre Rota A'da 0'dı ama robot 2 m/s ile gidiyordu. Sayaçtaki 2 m/s neyin oranıydı?" },
+          { "metin": "ve vektöreldir.", "yanilgi": "M_SURAT_HIZ_AYNI", "mesaj": "Bölüm 2'yi hatırla: sürat yön söylemez. \"500 km/h\" Kerem'i bulmaya yetmemişti." }
+        ],
+        "anahtarlar": [["yol"], ["süre", "zaman"]],
+        "yasak": ["yer değiştirme"]
+      },
+      {
+        "terim": "Hız",
+        "parcalar": ["Hız,", "yer değiştirmenin", "geçen süreye oranıdır", "ve vektöreldir."],
+        "celdiriciler": [
+          { "metin": "alınan yolun", "yanilgi": "M_SURAT_HIZ_AYNI", "mesaj": "Alınan yol ÷ süre her rotada 2 m/s'ydi: o sürattı. Hız ise rotaya göre değişiyordu." },
+          { "metin": "ve skalerdir.", "yanilgi": "M_SURAT_HIZ_AYNI", "mesaj": "Hız yön söyler: Rota C'de 1 m/s doğuya." }
+        ],
+        "anahtarlar": [["yer değiştirme"], ["süre", "zaman"]]
+      }
+    ],
+    "eksik": "Bu tanım yarım kalmış gibi… Tablondaki ölçümlere bak.",
+    "serbestEksik": "Tanımında şunlar geçmeli: {anahtar}.",
+    "kabul": "Tanımı belleğime yazdım.",
+    "yetersiz": "Kabul edilen tanım: {n}/6. En az 5 gerekli. Eksik kalan tanımlara dönüyoruz.",
+    "tamam": "Altı tanımdan {n}'i belleğimde. Şimdi gizemi çözebiliriz.",
+    "ipuclari": [
+      "Tabloya bak: bu niceliği sayaç mı ölçtü, ok mu?",
+      "Yön söyleyen nicelikler vektöreldir; yalnızca sayı ve birimle anlatılanlar skalerdir.",
+      "Cümleye niceliğin adıyla başla, sonra neyi ölçtüğünü, en sonda skaler mi vektörel mi olduğunu ekle."
+    ]
+  },
+  "gorev": {
+    "baslik": "GÖREV · UYARININ İZİ",
+    "yonerge": "Anteni halkanın üzerinde kaydırarak yönünü ayarla, sonra GÖNDER. Işın Dünya'daki yer kontrole ulaşmalı.",
+    "kayit": [
+      { "kim": "ARGE", "metin": "Kayıt bulundu: fırtına uyarısının yönü merkez modüle göre hesaplanmış, 270°, yani Dünya'ya doğru.", "bekle": 4200 },
+      { "kim": "ARGE", "metin": "Ama halkadaki anten bu açıyı kendi çerçevesinde kullanmış. O anda halka 120° dönmüştü…", "bekle": 4400 },
+      { "kim": "Elif", "metin": "Uyarı bu yüzden uzaya gitti! Kayıttaki anı yeniden kur ve anteni düzelt." }
+    ],
+    "senaryolar": [
+      { "ad": "1/2 · KAYITTAKİ AN", "halka": 120, "aciklama": "Fırtına uyarısının gönderildiği an: halka 120° dönmüş." },
+      { "ad": "2/2 · ŞİMDİ", "halka": 210, "aciklama": "Halka şimdi 210° dönmüş. Yeni uyarıyı yer kontrole gönder." }
+    ],
+    "hedef": 270,
+    "mutlak": "Işın yine uzaya gitti! 270°, merkez modüle göre \"aşağı\". Halka döndüğü için halkadaki anten için aşağı başka bir açı. Sağdaki halka görünümüne bak: Dünya orada nerede?",
+    "ters": "Halkanın dönüşünü ters yönde hesaba kattın. Halka saat yönünün tersine döndü.",
+    "iska": "Işın Dünya'yı ıskaladı. Sağdaki halka görünümünde Dünya hangi yönde?",
+    "basari1": "Uyarı Dünya'ya ulaştı! Hata buymuş: yön, halkanın referans çerçevesine çevrilmemiş.",
+    "basari2": "Yer kontrol uyarıyı aldı! Artık her yönü neye göre hesapladığımızı biliyoruz.",
+    "ipuclari": [
+      "Antenin açısı halkaya göre ölçülüyor. Sağdaki görünüm, halkadaki gözlemcinin gördüğü.",
+      "Halkadaki gözlemciye göre Dünya, halkanın dönüş açısı kadar geride görünür.",
+      "Halkaya göre açı = 270° − halkanın dönüş açısı. 1. senaryoda 270 − 120 = 150°."
+    ]
+  }
+}

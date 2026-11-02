@@ -244,6 +244,12 @@ Her bölüm aynı üç adımı izler:
 - **Görev:** Verilerden konum, yer değiştirme, alınan yol, sürat, hız ve referans noktası tanımları oyuncu tarafından kurulur. Ardından gizem çözülür: Fırtına uyarısı yanlış referans çerçevesiyle hesaplanmıştır.
 - **Başarı:** 6 tanımdan en az 5'i kabul edilir (anahtar sözcük eşleştirmesi + öğretmen onayı).
 - **Diyalog:** Kerem: "Robot 40 metre yol aldı, demek ki 40 metre uzakta." Oysa robot başladığı yere dönmüştür.
+- **Uygulanan akış (`bolum6.json`):**
+  - *Keşif 1 · Kargo robotu:* 4 rota, 2 m/s (A: kare 10 m → yol 40, yer değiştirme 0; B: 30 m doğu; C: 30 doğu + 10 batı → 40 / 20 doğu; D: 6 doğu + 8 kuzey → 14 / 10). Kerem'in iddiası ve tahmin kartları (`M_YOL_YERDEG_AYNI`, `M_YON_ONEMSIZ`, `M_BILESKE_FARK`). Yol sayacı (skaler, gri iz) ve başlangıçtan son konuma turuncu ok. "Alınan yol" ve "yer değiştirme" adları Rota A'nın sonunda verilir. Tabloda süre de var; sonunda yol ÷ süre (hep 2 m/s) ve yer değiştirme ÷ süre (rotaya göre değişir) sütunları açılır.
+  - *Keşif 2 · Kim hareket ediyor?:* Halkada park hâlindeki robot 30 s boyunca üç gözlemciden: halkadaki Kerem (durgun), merkez modüldeki ARGE (daire: yol ≈126 m, yer değiştirme 0), Dünya'daki yer kontrol (≈230 km). Halka r = 20 m, tur 30 s; yörünge sürati 7,66 km/s. Tahmin: `M_HAREKET_MUTLAK` (iki mutlak seçenek). "Referans noktası" adı burada verilir.
+  - *Genelleme · Altı tanım:* Referans noktası, konum, alınan yol, yer değiştirme, sürat, hız; her biri parçalardan ya da serbest metinle (anahtar sözcük + öğretmen onayı, sürat için "yer değiştirme" yasak). Her tanımın çeldiricileri yanılgı koduna bağlı. İki yanlıştan sonra tanım geçilebilir; en az 5 kabul edilmezse geçilenlere dönülür. Referans noktası tanımı bölümün kuralıdır (`{kural6}`).
+  - *Görev · Uyarının izi (gizem):* İki görünüm: merkez modüle göre ve halkaya göre (antenin gördüğü; Dünya 270° − halka açısı yönünde görünür). Anten halka üzerinde 30°'lik adımlarla kaydırılır, GÖNDER. Önce kayıt oynatılır (anten 270°, halka 120° → ışın uzaya). Senaryolar: halka 120° (doğrusu 150°), halka 210° (doğrusu 60°). Anteni 270°'de bırakmak `M_HAREKET_MUTLAK`.
+  - *6A/6K:* Kerem–ARGE tartışması ve Elif'in kayıttaki yön hatasından söz etmesi. 6K'da kayıt merkez modüle göre oynatılır: halka döner, anten onunla döner, ışın uzaya gider; anten 150°'ye alınınca yer kontrol uyarıyı alır.
 
 ### Bölüm 7 — Son Onarım (FİZ.9.2.7)
 - **Sahne:** Yörünge düzeltmesine 10 dakika kala, istasyonun dış gövdesi.
@@ -526,6 +532,7 @@ kayip-olcu/
 │  │  ├─ Port.js              ← tıbbi kapsül, kenetlenme portu
 │  │  ├─ Reaktor.js           ← reaktör bölmesi, dört alarm paneli
 │  │  ├─ YerKontrol.js        ← Dr. Feza video bağlantısı, dört kuvvet hologramı
+│  │  ├─ Halka.js             ← dönen halka diyagramı, kargo robotu, uyarı kaydı (6K)
 │  │  ├─ Interiors.js         ← kontrol odası (karartma, acil ışık, süzülen nesneler), lomboz
 │  │  ├─ Characters.js        ← Elif (hologram), Kerem (video bağlantısı); ifadeler
 │  │  ├─ Arge.js              ← ışık halkası + dalga formu, 0–7 evrim durumu
@@ -547,6 +554,7 @@ kayip-olcu/
 │     ├─ bolum2.json          ← Bölüm 2 içeriği: Kerem araması, yön deneyleri, kural parçaları, rota nicelikleri
 │     ├─ bolum3.json          ← Bölüm 3 içeriği: dron deneyleri, kural parçaları, taşıma senaryoları
 │     ├─ bolum5.json          ← Bölüm 5 içeriği: kuvvet özellikleri (menzil, şiddet), alarmlar, uzaklıklar, pano
+│     ├─ bolum6.json          ← Bölüm 6 içeriği: rotalar, gözlemciler, altı tanım, anten senaryoları
 │     ├─ bolum4.json          ← Bölüm 4 içeriği: örnekler, tahmin kartları, kural parçaları, ipuçları, ARGE replikleri
 │     ├─ misconceptions.json
 │     └─ quantities.json      ← SI nicelik listesi (ad, birim, temel/türetilmiş, skaler/vektörel)
@@ -636,7 +644,9 @@ kayip-olcu/
 - `konusan` değerleri `characters.json` içindeki anahtarlardır. `bozuk: true` ARGE'nin bozuk konuşmasıdır.
 - Ses alanı (`ses`) seslendirme eklendiğinde kullanılacak.
 
-**Geliştirme kısayolları:** `npm run dev` → `http://localhost:5173`; `npm test` vektör matematiği testlerini çalıştırır. Bir bölümü doğrudan açmak için `?bolum=4` (adım: `&adim=kesif2|genelleme|gorev`; aktif oyuncu yoksa "Deneme#SUNUM" oluşturulur), bir ara sahneyi doğrudan açmak için `?sahne=G&panel=3`, kalite kademesini zorlamak için `?kalite=yuksek|orta|dusuk`, WebGL'siz (Canvas) çiziciyi denemek için `?cizici=canvas`, karışık sıraları (çipler, kartlar) sabitlemek için `?sabit=1` (otomatik test). Canvas çizicide `setTint` çalışmaz: renkli katmanlar dokuya işlenerek çizilir.
+**Geliştirme kısayolları:** `npm run dev` → `http://localhost:5173`; `npm test` vektör matematiği testlerini çalıştırır. Bir bölümü doğrudan açmak için `?bolum=4` (adım: `&adim=kesif2|genelleme|gorev`; aktif oyuncu yoksa "Deneme#SUNUM" oluşturulur), bir ara sahneyi doğrudan açmak için `?sahne=G&panel=3`, kalite kademesini zorlamak için `?kalite=yuksek|orta|dusuk`, WebGL'siz (Canvas) çiziciyi denemek için `?cizici=canvas`, karışık sıraları (çipler, kartlar) sabitlemek için `?sabit=1` (otomatik test). Geliştirme sunucusunda (`npm run dev`) oyun nesnesi `window.oyun` olarak açıktır; otomatik testler düğme ve çiplere yazılarıyla tıklayabilir. Yayın sürümüne girmez.
+
+**Ad çakışması uyarısı:** `BolumTemel` alt sınıflarında `this.tanim` (bölüm bilgisi), `this.panel`, `this.diyalog`, `this.ipucu`, `this.oyuncu`, `this.cikti` dolu alanlardır; aynı adla yöntem yazılmaz. Canvas çizicide `setTint` çalışmaz: renkli katmanlar dokuya işlenerek çizilir.
 
 **Kayıt modeli (`SaveSystem.js`):** IndexedDB `kayipOlcu` veritabanı, `oyuncular` ve `olaylar` depoları; IndexedDB yoksa localStorage. Oyuncu kimliği `takmaad#SINIFKODU`; aynı takma ad + sınıf kodu girilince eski ilerleme yüklenir (paylaşılan okul bilgisayarları). Oyuncu kaydı: `girisIzlendi`, `sistemler` (tamamlanan bölüm numaraları; sayısı `guc` değeridir), `bolumler`, `defter`. Hub'da bir bölüm, kendinden önceki *hazır* (`hazir: true`) bölümlerin hepsi tamamlanınca açılır; henüz yapılmamış bölümler sırayı kilitlemez. Bölüm 1 de hazır olduğu için Bölüm 4, Bölüm 1 bitince açılır (doğrudan erişim: `?bolum=4`). `hazir: false` olan bölüm "hazırlanıyor" mesajı verir. Bölüm içeriği `src/data/bolumN.json` dosyasında, sahne sınıfı `levels.json`'daki `sahne` alanında.
 
@@ -680,7 +690,7 @@ kayip-olcu/
 - [x] Bölüm 2 Kör Pusula (etiketleme + rota sapması) + 2A/2K ara sahneleri
 - [x] Bölüm 3 Römorkör (aynı doğrultuda kuvvetler, tahmin → test) + 3A/3K ara sahneleri
 - [x] Bölüm 5 Dört Kuvvet (eşleştirme + menzil/şiddet panosu) + 5A/5K ara sahneleri
-- [ ] Bölüm 6 Kim Hareket Ediyor? (üç gözlemci görünümü, veri tablosu, tanım kurma, gizemin çözülmesi)
+- [x] Bölüm 6 Kim Hareket Ediyor? (üç gözlemci görünümü, veri tablosu, tanım kurma, gizemin çözülmesi) + 6A/6K ara sahneleri
 - [ ] Bölüm 7 Son Onarım (hareket türü sınıflama + final manevrası)
 - [ ] Giriş (G) ve Final (F) ara sahneleri
 - [ ] Gözlem Defteri PDF dışa aktarım

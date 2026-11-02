@@ -114,6 +114,13 @@
       {"id": "halkalar", "tip": "kuvvetHalkalari", "derinlik": 0.2, "ayar": {"x": 300, "y": -20}}
     ]
   },
+  "uyariKaydi": {
+    "aciklama": "Fırtına uyarısının kaydı: merkez modüle göre dönen halka, anten ve Dünya",
+    "katmanlar": [
+      {"id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": {"katman": "uzak"}},
+      {"id": "kayit", "tip": "uyariKaydi", "derinlik": 0.1}
+    ]
+  },
   "karanlikEkran": {
     "aciklama": "Karanlıkta tek ekran: Elif'in hologramı ve geri sayım",
     "katmanlar": [

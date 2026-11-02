@@ -609,5 +609,123 @@
         "olaylar": [{"ms": 300, "hedef": "feza", "olay": "ac"}, {"ms": 9000, "hedef": "halkalar", "olay": "birles"}]
       }
     ]
+  },
+  {
+    "id": "6A",
+    "ad": "Kim Hareket Ediyor? · açılış",
+    "paneller": [
+      {
+        "sahne": "istasyonDis",
+        "sureMs": 15000,
+        "kamera": {"hareket": "zoom", "zoom": [1, 1.1]},
+        "ekKatmanlar": [
+          {"id": "kerem", "tip": "keremVideo", "sabit": true, "ayar": {"x": 420, "y": -110, "olcek": 0.8}},
+          {
+            "id": "arge",
+            "tip": "arge",
+            "sabit": true,
+            "ayar": {"x": -560, "y": -210, "yaricap": 30, "durum": 5}
+          }
+        ],
+        "basliklar": [{"metin": "BÖLÜM 6 · KİM HAREKET EDİYOR?", "ms": 500, "sureMs": 2600}],
+        "altyazilar": [
+          {
+            "konusan": "Kerem",
+            "metin": "Kargo robotu 40 metre yol aldı, demek ki şu an 40 metre uzakta!",
+            "ms": 3600,
+            "sureMs": 4200
+          },
+          {
+            "konusan": "ARGE",
+            "metin": "Ama… robot başladığı yerde duruyor. Sayaç 40 diyor, ölçüm 0 diyor…",
+            "ms": 8200,
+            "sureMs": 5200,
+            "bozuk": true
+          }
+        ],
+        "olaylar": [{"ms": 2800, "hedef": "kerem", "olay": "ac"}]
+      },
+      {
+        "sahne": "karanlikEkran",
+        "gecis": "fadeBlack",
+        "sureMs": 13000,
+        "katmanAyar": {"ekran": {"ifade": "notr"}},
+        "altyazilar": [
+          {
+            "konusan": "Elif",
+            "metin": "İkiniz de bir şey ölçüyorsunuz, ama aynı şeyi değil.",
+            "ms": 1200,
+            "sureMs": 3800
+          },
+          {
+            "konusan": "Elif",
+            "metin": "Bir de şu var: fırtına uyarısının kaydında bir yön hatası bulundu. Uyarının neden bize ulaşmadığını çözmeliyiz.",
+            "ms": 5400,
+            "sureMs": 6600
+          }
+        ],
+        "olaylar": [{"ms": 300, "hedef": "ekran", "olay": "ac"}]
+      }
+    ]
+  },
+  {
+    "id": "6K",
+    "ad": "Kim Hareket Ediyor? · kapanış",
+    "paneller": [
+      {
+        "sahne": "uyariKaydi",
+        "sureMs": 20000,
+        "altyazilar": [
+          {
+            "konusan": "ARGE",
+            "metin": "Kayıt: uyarının yönü merkez modüle göre Dünya'ya doğru hesaplanmış.",
+            "ms": 600,
+            "sureMs": 3600
+          },
+          {
+            "konusan": "ARGE",
+            "metin": "Ama anten halkayla birlikte dönmüş. Açı halkaya çevrilmeyince uyarı uzaya gitmiş.",
+            "ms": 4600,
+            "sureMs": 5000
+          },
+          {
+            "konusan": "ARGE",
+            "metin": "Doğrusu: halkaya göre 150°. Uyarı Dünya'ya ulaşır.",
+            "ms": 12000,
+            "sureMs": 5000
+          }
+        ],
+        "olaylar": [{"ms": 1200, "hedef": "kayit", "olay": "yanlis"}, {"ms": 10400, "hedef": "kayit", "olay": "dogru"}]
+      },
+      {
+        "sahne": "karanlikEkran",
+        "gecis": "fadeBlack",
+        "sureMs": 15000,
+        "katmanAyar": {"ekran": {"ifade": "gulumseme"}},
+        "ekKatmanlar": [
+          {
+            "id": "arge",
+            "tip": "arge",
+            "sabit": true,
+            "ayar": {"x": -560, "y": -210, "yaricap": 30, "durum": 6}
+          }
+        ],
+        "altyazilar": [
+          {
+            "konusan": "Elif",
+            "metin": "Demek uyarı bu yüzden ulaşmadı. Bir yön, neye göre ölçüldüğü söylenmeden bir işe yaramıyor.",
+            "ms": 1200,
+            "sureMs": 5600
+          },
+          {
+            "konusan": "ARGE",
+            "metin": "Referans sistemi çevrimiçi. Öğrendiğim tanım: {kural6}",
+            "ms": 7400,
+            "sureMs": 6800
+          }
+        ],
+        "olaylar": [{"ms": 300, "hedef": "ekran", "olay": "ac"}]
+      }
+    ]
   }
 ]

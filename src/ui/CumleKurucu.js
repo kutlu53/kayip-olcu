@@ -2,7 +2,7 @@ import { dugme } from './Dugme.js';
 import { YAZI } from './tipografi.js';
 
 // Gozlem Defteri genellemesi: cumle parcalarina dokunarak kural kurma ya da serbest metin (CLAUDE.md §6)
-export function cumleKurucu(sahne, { x, y, genislik, parcalar, kontrol, serbestMetin = true }) {
+export function cumleKurucu(sahne, { x, y, genislik, parcalar, kontrol, serbestMetin = true, bosMetin = 'Parçalara dokunarak kuralını kur…' }) {
   const kap = sahne.add.container(0, 0);
   const secilen = [];
   const g = sahne.add.graphics();
@@ -10,7 +10,7 @@ export function cumleKurucu(sahne, { x, y, genislik, parcalar, kontrol, serbestM
   g.fillStyle(0x05070d, 0.7).fillRoundedRect(x, y, genislik, 110, 10);
   g.lineStyle(2, 0xd8f6ff, 0.35).strokeRoundedRect(x, y, genislik, 110, 10);
   const cumle = sahne.add.text(x + 18, y + 16, '', { fontFamily: YAZI, fontSize: '22px', color: '#FFFFFF', wordWrap: { width: genislik - 36 }, lineSpacing: 6 });
-  const bos = sahne.add.text(x + 18, y + 16, 'Parçalara dokunarak kuralını kur…', { fontFamily: YAZI, fontSize: '20px', color: '#8A96A6', fontStyle: 'italic' });
+  const bos = sahne.add.text(x + 18, y + 16, bosMetin, { fontFamily: YAZI, fontSize: '20px', color: '#8A96A6', fontStyle: 'italic' });
   kap.add([g, cumle, bos]);
 
   // Parca havuzu: dokununca cumleye eklenir, tekrar dokununca geri doner
