@@ -25,3 +25,10 @@ export function cokgenIcinde(x, y, cokgen) {
   }
   return icinde;
 }
+
+// Ogrenciye karisik sira; ?sabit=1 ile sabit sira (otomatik test ve sunum)
+const SABIT = typeof location !== 'undefined' && new URLSearchParams(location.search).get('sabit') === '1';
+export function karistir(dizi) {
+  if (SABIT) return [...dizi];
+  return dizi.map((d) => [Math.random(), d]).sort((a, b) => a[0] - b[0]).map((d) => d[1]);
+}

@@ -45,6 +45,7 @@ export function kontrolOdasiDokusu(sahne) {
   odaMaskeDokusu(sahne);
   nesneDokulari(sahne);
   isikKonisiDokusu(sahne);
+  elFeneriDokusu(sahne);
   return dokuCiz(sahne, 'oda_kontrol', W, H, (ctx) => {
     const r = rastgele(3);
     poligon(ctx, [[0, 0], [W, 0], [X2, Y1], [X1, Y1]], dikeyGradyan(ctx, 0, Y1, '#0d131d', '#1b2533'));
@@ -180,6 +181,16 @@ function odaMaskeDokusu(sahne) {
   dokuCiz(sahne, 'lamba_kirmizi', 32, 32, (c) => yumusakDaire(c, 16, 16, 16, '255,80,64', 1));
 }
 
+function elFeneriDokusu(sahne) {
+  return dokuCiz(sahne, 'el_feneri', 900, 360, (ctx) => {
+    const g = ctx.createRadialGradient(0, 180, 0, 0, 180, 900);
+    g.addColorStop(0, 'rgba(255,248,230,0.55)');
+    g.addColorStop(0.5, 'rgba(255,248,230,0.16)');
+    g.addColorStop(1, 'rgba(255,248,230,0)');
+    poligon(ctx, [[0, 172], [900, 0], [900, 360], [0, 188]], g);
+  });
+}
+
 function isikKonisiDokusu(sahne) {
   return dokuCiz(sahne, 'isik_konisi', 700, 300, (ctx) => {
     const g = ctx.createRadialGradient(0, 150, 0, 0, 150, 700);
@@ -238,8 +249,10 @@ function nesneDokulari(sahne) {
 const EKRAN_NORMAL = ['ALT.    412,6 km\nSÜRAT   7,66 km/s\nGÜÇ     %98\nARGE    ÇEVRİMİÇİ', 'GÜNEŞ ETKİNLİĞİ\n▁▂▃▂▁▂▃▂▁▂\nUYARI KANALI: AÇIK\nMÜRETTEBAT: UYKU'];
 const EKRAN_BOZUK = ['ALT.    412,6 ??\nSÜRAT   7,66 ??/??\nGÜÇ     %??\nARGE    ?????', 'BİRİM TABLOSU\nOKUNAMIYOR\n▒▒▒▒▒▒▒▒▒▒\nYÖN: TANIMSIZ'];
 
-export function kontrolOdasiOlustur(sahne) {
+// ayar.karanlik: acil durum isiginda baslar; ayar.elFeneri: oyuncunun feneri; ayar.ekranlar: { normal: [..], bozuk: [..] }
+export function kontrolOdasiOlustur(sahne, ayar = {}) {
   const ADD = Phaser.BlendModes.ADD;
+  const EKRAN = { normal: (ayar.ekranlar && ayar.ekranlar.normal) || EKRAN_NORMAL, bozuk: (ayar.ekranlar && ayar.ekranlar.bozuk) || EKRAN_BOZUK };
   const kap = sahne.add.container(0, 0);
   const taban = sahne.add.image(0, 0, kontrolOdasiDokusu(sahne));
 
@@ -259,12 +272,28 @@ export function kontrolOdasiOlustur(sahne) {
   const fener = sahne.add.image(fx, fy, 'isik_konisi').setOrigin(0, 0.5).setBlendMode(ADD).setAlpha(0);
   const lamba = sahne.add.image(fx, fy, 'lamba_kirmizi').setBlendMode(ADD).setScale(1.6).setAlpha(0);
   const yaziStili = { fontFamily: MONO, fontSize: '15px', color: '#5FE3E8', lineSpacing: 6 };
-  const ekranlar = [yerel(182, 480), yerel(1052, 480)].map(([x, y], i) => sahne.add.text(x, y, EKRAN_NORMAL[i], yaziStili));
+  const ekranlar = [yerel(182, 480), yerel(1052, 480)].map(([x, y], i) => sahne.add.text(x, y, EKRAN.normal[i], yaziStili));
   const [kx, ky] = yerel(300, 300);
   const kivilcim = kivilcimYayici(sahne, kx, ky);
 
-  kap.add([taban, ...nesneler.map((n) => n.img), isik, karanlik, kirmizi, fener, lamba, ...ekranlar, kivilcim]);
+  // El feneri (oyuncunun elinden) ve isikta gorunen suzulen toz
+  const elFeneri = sahne.add.image(-520, 330, 'el_feneri').setOrigin(0, 0.5).setBlendMode(ADD).setAlpha(ayar.elFeneri ? 0.85 : 0);
+  const toz = sahne.add.particles(0, 0, 'p_nokta', {
+    emitZone: { type: 'random', source: new Phaser.Geom.Rectangle(-600, -330, 1200, 660) },
+    speed: { min: 2, max: 10 }, lifespan: 6000, scale: { min: 0.05, max: 0.14 }, alpha: { start: 0.5, end: 0 },
+    frequency: 180, blendMode: 'ADD', emitting: !!ayar.elFeneri
+  });
+
+  kap.add([taban, ...nesneler.map((n) => n.img), isik, karanlik, kirmizi, fener, lamba, elFeneri, toz, ...ekranlar, kivilcim]);
   const durum = { karanlik: false, acil: false, suzulme: false };
+  if (ayar.karanlik) {
+    durum.karanlik = durum.acil = durum.suzulme = true;
+    isik.setAlpha(0);
+    karanlik.setAlpha(0.62);
+    fener.setAlpha(0.9);
+    for (const n of nesneler) n.img.setTint(0x4a4650);
+    ekranlar.forEach((e, i) => e.setText(EKRAN.bozuk[i]).setColor('#ff6b6b'));
+  }
 
   kap.guncelle = (zaman, delta) => {
     const dt = delta / 1000;
@@ -282,9 +311,22 @@ export function kontrolOdasiOlustur(sahne) {
       kirmizi.alpha = 0.08 + 0.2 * Math.max(0, Math.cos(t * 2.4 - 0.6));
       lamba.alpha = 0.6 + 0.4 * Math.max(0, Math.cos(t * 2.4));
     }
+    // Fener yavasca odayi tarar
+    elFeneri.rotation = -0.62 + 0.22 * Math.sin(t * 0.45);
   };
 
   kap.olay = (ad) => {
+    if (ad === 'aydinlat') {
+      // Isiklar bolum bolum geri gelir; ekranlar birimleriyle okunur
+      durum.acil = false;
+      sahne.tweens.add({ targets: [fener, lamba, kirmizi, elFeneri], alpha: 0, duration: 500 });
+      sahne.tweens.add({ targets: karanlik, alpha: 0, duration: 1600, ease: titreme });
+      sahne.tweens.add({ targets: isik, alpha: 1, duration: 1600, ease: titreme });
+      toz.stop();
+      for (const n of nesneler) n.img.clearTint();
+      sahne.time.delayedCall(700, () => ekranlar.forEach((e, i) => e.setText(EKRAN.normal[i]).setColor('#5FE3E8')));
+      return;
+    }
     if (ad !== 'karart' || durum.karanlik) return;
     durum.karanlik = true;
     durum.suzulme = true;
@@ -301,7 +343,7 @@ export function kontrolOdasiOlustur(sahne) {
         for (const n of nesneler) n.img.setTint(0x4a4650);
       }
     });
-    sahne.time.delayedCall(350, () => ekranlar.forEach((e, i) => e.setText(EKRAN_BOZUK[i]).setColor('#ff6b6b')));
+    sahne.time.delayedCall(350, () => ekranlar.forEach((e, i) => e.setText(EKRAN.bozuk[i]).setColor('#ff6b6b')));
     kivilcim.explode(14);
     const kivilcimOlayi = sahne.time.addEvent({
       delay: 850,

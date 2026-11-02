@@ -1,0 +1,121 @@
+{
+  "bolum": 1,
+  "cikti": "FİZ.9.2.1",
+  "giris": [
+    { "kim": "ARGE", "metin": "Sensör… okumaları… geliyor. Ama… birimler… kayıp." },
+    { "kim": "Elif", "metin": "Bir ekrana dokun, sonra ona uyan birimi seç. Yanlış birim seçersen ARGE ne olduğunu sana söyler." }
+  ],
+  "birimler": {
+    "K": "sıcaklık",
+    "kg": "kütle",
+    "m": "uzunluk",
+    "s": "zaman",
+    "m/s": "sürat",
+    "N": "kuvvet",
+    "Pa": "basınç",
+    "J": "enerji"
+  },
+  "kesif1": {
+    "baslik": "KEŞİF 1 · SENSÖR EKRANLARI",
+    "yonerge": "Her ekranda bir ölçüm var ama birimi kayıp. Önce bir ekrana, sonra aşağıdaki birimlerden birine dokun.",
+    "sensorler": [
+      { "ad": "KABİN SICAKLIĞI", "nicelik": "sıcaklık", "deger": "293", "birim": "K" },
+      { "ad": "TIBBİ KAPSÜLÜN KÜTLESİ", "nicelik": "kütle", "deger": "7200", "birim": "kg" },
+      { "ad": "KORİDOR UZUNLUĞU", "nicelik": "uzunluk", "deger": "12", "birim": "m" },
+      { "ad": "YÖRÜNGE PERİYODU", "nicelik": "zaman", "deger": "5520", "birim": "s" },
+      { "ad": "İSTASYONUN SÜRATİ", "nicelik": "sürat", "deger": "7660", "birim": "m/s" },
+      { "ad": "ANA İTİCİ KUVVETİ", "nicelik": "kuvvet", "deger": "400", "birim": "N" },
+      { "ad": "KABİN BASINCI", "nicelik": "basınç", "deger": "101 300", "birim": "Pa" },
+      { "ad": "PİL ENERJİSİ", "nicelik": "enerji", "deger": "3 600 000", "birim": "J" }
+    ],
+    "yanlisSablon": "{ad}: {deger} {secilen} mi? Ama {secilen}, {secilenNicelik} ölçer. {nicelik} ile {secilenNicelik} aynı şey mi?",
+    "ozelYanlis": {
+      "kütle:m": "Kapsülün kütlesi 7200 metre mi? Bir kilogram ne kadar uzun? Kafam karıştı."
+    },
+    "dogru": "{deger} {birim}. Şimdi anlamlı!",
+    "newton": {
+      "soru": "ARGE soruyor: \"Newton… Bu bir bilim insanı mı, bir birim mi? İkisi de mi?\" Ekrandaki N nedir?",
+      "secenekler": [
+        { "metin": "Bir nicelik: kuvvetin kendisi", "dogru": false, "yanilgi": "M_BIRIM_NICELIK" },
+        { "metin": "Bir birim: kuvveti ölçtüğümüz standart", "dogru": true }
+      ],
+      "dogru": "Birim! Adını Isaac Newton'dan alıyor. Hem bilim insanı hem birim, ikisi de!",
+      "yanlis": "Kuvvet ölçülen şey; N ise onu neyle ölçtüğümüz. 400 N derken kuvvetin kendisi 400 N'dir. Adı da Isaac Newton'dan geliyor."
+    },
+    "ipuclari": [
+      "Bu ekranda ne ölçülüyor: bir uzunluk mu, bir süre mi, bir sıcaklık mı?",
+      "Bir cetvel metreyle, bir saat saniyeyle, bir termometre kelvinle ölçer.",
+      "Kabin sıcaklığı ekranına dokun, sonra K birimine dokun."
+    ]
+  },
+  "kesif2": {
+    "baslik": "KEŞİF 2 · BİRİM ÇÖZÜCÜ",
+    "yonerge": "ARGE birimlerin içine bakıyor. Bu birim hangi birimlerden oluşuyor? Parçaları seç, sonra ÇÖZ. Hiçbir birime bölünemiyorsa \"Parçalanamaz\"ı seç.",
+    "parcalar": ["m", "kg", "s", "K", "A", "Parçalanamaz"],
+    "birimler": [
+      { "nicelik": "Sürat", "birim": "m/s", "arsiv": "Saniyede kaç metre gidildiğini gösterir.", "cevap": ["m", "s"], "acilim": "m/s = m ÷ s" },
+      { "nicelik": "Alan", "birim": "m²", "arsiv": "Bir yüzeyin büyüklüğü: kare metre.", "cevap": ["m"], "acilim": "m² = m · m" },
+      { "nicelik": "Kuvvet", "birim": "N", "arsiv": "ARGE arşivi: 1 N = 1 kg·m/s²", "cevap": ["kg", "m", "s"], "acilim": "N = kg·m/s²", "temelSanilirsa": "M_KUVVET_TEMEL" },
+      { "nicelik": "Kütle", "birim": "kg", "arsiv": "ARGE arşivi: kilogram, bir ölçü standardıyla tanımlanır.", "cevap": ["Parçalanamaz"], "acilim": "kg" },
+      { "nicelik": "Enerji", "birim": "J", "arsiv": "ARGE arşivi: 1 J = 1 N·m = 1 kg·m²/s²", "cevap": ["kg", "m", "s"], "acilim": "J = kg·m²/s²" },
+      { "nicelik": "Sıcaklık", "birim": "K", "arsiv": "ARGE arşivi: kelvin, bir ölçü standardıyla tanımlanır.", "cevap": ["Parçalanamaz"], "acilim": "K" }
+    ],
+    "yanlis": "Senin seçtiğin parçalarla {secim} kurulur. Ama ekranda {birim} yazıyor.",
+    "kuvvetTemel": "Kuvvet parçalanamaz mı? Ama arşivde 1 N = 1 kg·m/s² yazıyor. N, kg, m ve s'den oluşuyor!",
+    "dogru": "{acilim}. Çözüldü!",
+    "kapanis": "İki küme oluştu: bazı birimler başka birimlerden kuruluyor, bazıları hiçbir birime bölünmüyor.",
+    "ipuclari": [
+      "Birimin sembolüne bak: içinde başka birim sembolleri görüyor musun?",
+      "Arşiv satırını oku: 1 N = 1 kg·m/s² ise N'nin içinde hangi semboller var?",
+      "m/s için m ve s'yi seç; kg için yalnızca \"Parçalanamaz\"ı seç."
+    ]
+  },
+  "genelleme": {
+    "baslik": "GÖZLEM DEFTERİ · KURALINI YAZ",
+    "yonerge": "İki kümeye bak. Birimi başka birimlerden oluşmayan nicelikler ile oluşanlar için bir kural yaz. Bilim insanları birincilere \"temel nicelik\", ikincilere \"türetilmiş nicelik\" der.",
+    "parcalar": ["Birimi başka birimlerden oluşmayan", "niceliklere temel nicelik,", "birimi temel birimlerden oluşan", "niceliklere türetilmiş nicelik denir."],
+    "celdiriciler": ["kuvvet gibi", "birimi kısa olan"],
+    "kabul": [
+      ["Birimi başka birimlerden oluşmayan", "niceliklere temel nicelik,", "birimi temel birimlerden oluşan", "niceliklere türetilmiş nicelik denir."]
+    ],
+    "serbestAnahtarlar": [["temel"], ["türet"], ["birim"]],
+    "kuvvetTemel": "Kuvvet gibi mi? Ama N = kg·m/s². Kuvvetin birimi başka birimlerden oluşuyordu!",
+    "kisaUzun": "Birimin kısa olması mı? Ama N kısa bir sembol ve yine de kg, m ve s'den oluşuyor.",
+    "eksik": "Kuralın yarım kalmış gibi… İki türü de anlatır mısın?",
+    "serbestEksik": "Kuralında \"temel\", \"türetilmiş\" ve \"birim\" sözcükleri geçsin. Hangi nicelikler hangi kümeye giriyordu?",
+    "kabulMesaji": "\"{kural1}\" Anladım! SI çekirdeğimi bu kurala göre kuracağım.",
+    "ipuclari": [
+      "Parçalanamayanlar kümesinde hangi birimler vardı? Diğer kümede?",
+      "m/s, m ve s'den kuruluyordu. kg ise hiçbir birime bölünmüyordu.",
+      "Cümleye \"Birimi başka birimlerden oluşmayan\" ile başla."
+    ]
+  },
+  "gorev": {
+    "baslik": "GÖREV · SI ÇEKİRDEĞİ",
+    "yonerge": "ARGE'nin SI çekirdeğini yeniden kur: temel nicelikler iç halkaya, türetilmiş nicelikler dış halkaya. Bir türetilmiş nicelik, onu oluşturan temel nicelikler iç halkaya yerleşmeden takılamaz.",
+    "nicelikler": [
+      { "id": "uzunluk", "ad": "Uzunluk", "birim": "m", "tur": "temel" },
+      { "id": "kutle", "ad": "Kütle", "birim": "kg", "tur": "temel" },
+      { "id": "zaman", "ad": "Zaman", "birim": "s", "tur": "temel" },
+      { "id": "akim", "ad": "Elektrik akımı", "birim": "A", "tur": "temel" },
+      { "id": "sicaklik", "ad": "Sıcaklık", "birim": "K", "tur": "temel" },
+      { "id": "madde", "ad": "Madde miktarı", "birim": "mol", "tur": "temel" },
+      { "id": "isik", "ad": "Işık şiddeti", "birim": "cd", "tur": "temel" },
+      { "id": "surat", "ad": "Sürat", "birim": "m/s", "tur": "turetilmis", "gerekli": ["uzunluk", "zaman"] },
+      { "id": "alan", "ad": "Alan", "birim": "m²", "tur": "turetilmis", "gerekli": ["uzunluk"] },
+      { "id": "kuvvet", "ad": "Kuvvet", "birim": "N", "aciklama": "kg·m/s²", "tur": "turetilmis", "gerekli": ["kutle", "uzunluk", "zaman"], "temeldeYanilgi": "M_KUVVET_TEMEL" },
+      { "id": "basinc", "ad": "Basınç", "birim": "Pa", "aciklama": "N/m²", "tur": "turetilmis", "gerekli": ["kutle", "uzunluk", "zaman"] },
+      { "id": "enerji", "ad": "Enerji", "birim": "J", "aciklama": "N·m", "tur": "turetilmis", "gerekli": ["kutle", "uzunluk", "zaman"] }
+    ],
+    "enAzDogru": 11,
+    "kilitli": "{ad} takılamıyor: önce {eksik} iç halkada olmalı. Türetilmiş nicelik temel parçaları olmadan kurulamaz.",
+    "basari": "Çekirdek kararlı! {dogru}/12 nicelik yerinde. Sistemler açılıyor…",
+    "basarisiz": "Çekirdek titriyor: {yanlis} yanlış halkada. Kıvılcım çıkan yuvalara bak.",
+    "kuvvetTemel": "Kuvvet iç halkada mı? Ama N = kg·m/s². Kuvvet, temel parçalardan kuruluyor!",
+    "ipuclari": [
+      "Birimi parçalanabiliyor mu? Parçalanıyorsa dış halkaya, parçalanamıyorsa iç halkaya.",
+      "Keşif 2'de kg ve K parçalanamıyordu; m/s, N ve J ise parçalanıyordu. A, mol ve cd de parçalanamaz.",
+      "Önce m, kg ve s'yi iç halkaya yerleştir; sonra sürat, kuvvet, basınç ve enerjiyi dış halkaya."
+    ]
+  }
+}

@@ -9,6 +9,7 @@ import { dugme } from '../../ui/Dugme.js';
 import { YAZI, MONO, aralikli } from '../../ui/tipografi.js';
 import { ayarlar } from '../../config/settings.js';
 import { dunyaDokusu } from '../../art/Earth.js';
+import { karistir } from '../../art/Rastgele.js';
 import { tibbiKapsulDokusu, istasyonPortuOlustur, sizintiYayici, SIZINTI_NOKTASI, KAPSUL_BURUN, PORT_YUZU } from '../../art/Port.js';
 
 const CSS = { vektor: '#F28C28', bileske: '#4A90E8', bilesen: '#3BB273', skaler: '#E6E8EB' };
@@ -17,7 +18,6 @@ const birim = ([x, y]) => {
   return [x / b, y / b];
 };
 const kisitla = (deger, en, enCok) => Math.max(en, Math.min(enCok, deger));
-const karistir = (dizi) => dizi.map((d) => [Math.random(), d]).sort((a, b) => a[0] - b[0]).map((d) => d[1]);
 
 // Bolum 4 · Kenetlenme (FİZ.9.2.4): uc uca ekleme -> paralelkenar -> genelleme -> bilesenlere ayirma ve kenetlenme.
 // Tanim kesiften once verilmez; yanlis cevabin sonucu deneyde gorulur (CLAUDE.md §1, §5, §6)

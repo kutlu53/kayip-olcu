@@ -1,5 +1,5 @@
 [
-  { "bolum": 1, "id": "uyanis", "ad": "Uyanış", "ciktilar": ["FİZ.9.2.1"], "mekan": "Kontrol Odası", "acilisSahnesi": "1A", "kapanisSahnesi": "1K", "hazir": false },
+  { "bolum": 1, "id": "uyanis", "ad": "Uyanış", "ciktilar": ["FİZ.9.2.1"], "mekan": "Kontrol Odası", "acilisSahnesi": "1A", "kapanisSahnesi": "1K", "hazir": true, "sahne": "Level1Uyanis" },
   { "bolum": 2, "id": "korPusula", "ad": "Kör Pusula", "ciktilar": ["FİZ.9.2.2"], "mekan": "Navigasyon Köprüsü", "acilisSahnesi": "2A", "kapanisSahnesi": "2K", "hazir": false },
   { "bolum": 3, "id": "romorkor", "ad": "Römorkör", "ciktilar": ["FİZ.9.2.3"], "mekan": "Güneş Paneli Kolu", "acilisSahnesi": "3A", "kapanisSahnesi": "3K", "hazir": false },
   { "bolum": 4, "id": "kenetlenme", "ad": "Kenetlenme", "ciktilar": ["FİZ.9.2.4"], "mekan": "Kenetlenme Portu", "acilisSahnesi": "4A", "kapanisSahnesi": "4K", "hazir": true, "sahne": "Level4Kenetlenme" },

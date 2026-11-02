@@ -179,6 +179,12 @@ Her bölüm aynı üç adımı izler:
 - **Görev:** "SI Tablosu" yeniden kurulur. 7 temel nicelik çekirdek yuvalara, türetilmiş nicelikler dış halkaya yerleştirilir. Türetilmiş bir niceliği yerleştirmek için onu oluşturan temel niceliklerin yuvaları önce dolu olmalıdır.
 - **Başarı:** 12 nicelikten en az 11'i doğru yuvada.
 - **Diyalog:** ARGE: "Newton… Bu bir bilim insanı mı, bir birim mi? İkisi de mi? Kafam karıştı."
+- **Uygulanan akış (`bolum1.json`):**
+  - *Keşif 1 · Sensör ekranları:* 8 ölçüme (293 K, 7200 kg, 12 m, 5520 s, 7660 m/s, 400 N, 101 300 Pa, 3 600 000 J) birim verilir; önce ekran sonra birim ya da tersi. Yanlış birimde ARGE ölçümü o birimle okur ("Kapsülün kütlesi 7200 metre mi? Bir kilogram ne kadar uzun?"). Ardından "N nedir: nicelik mi, birim mi?" kartı (`M_BIRIM_NICELIK`).
+  - *Keşif 2 · Birim çözücü:* m/s, m², N, kg, J ve K için parçalar seçilir. N ve J için arşiv satırı verilir. N'ye "Parçalanamaz" demek `M_KUVVET_TEMEL`. Sonuçlar "başka birimlerden oluşanlar / parçalanamayanlar" diye iki sütunda kendiliğinden ayrışır; "temel/türetilmiş" adları henüz verilmez.
+  - *Genelleme:* Adlar bu adımda verilir, kuralı öğrenci kurar. "kuvvet gibi" çeldiricisi `M_KUVVET_TEMEL`.
+  - *Görev · SI çekirdeği:* 7 iç yuva (temel), 5 dış yuva (türetilmiş), 12 kart (birimleri ve N, Pa, J'nin açılımları verilir). Sürükle-bırak ya da dokun-dokun. Bağımlılık kilidi: türetilmiş nicelik dış halkaya ancak gerekli temel nicelikler iç halkadayken takılır; temel nicelik çekilince ona bağlı türetilmişler düşer. 12 yuva dolunca BAŞLAT; yanlış yuvalar kıvılcım çıkarır. Yıldız kuralı Bölüm 4 ile aynı (görev hataları).
+  - *1K:* Işıklar geri gelir, ekranlar birimleriyle okunur, ARGE'nin halkası bir anlığına tam daire olur (sonra haritada durum = açılan sistem sayısı).
 
 ### Bölüm 2 — Kör Pusula (FİZ.9.2.2)
 - **Sahne:** Navigasyon köprüsü; istasyon yavaşça sürükleniyor.
@@ -504,13 +510,14 @@ kayip-olcu/
 │  │  ├─ Particles.js         ← kıvılcım (mikro yerçekimi), parçacık akısı
 │  │  ├─ Shaders.js           ← SinemaFX: film greni, vinyet, bozulma (kromatik sapma)
 │  │  └─ Quality.js           ← FPS ölçümü, kalite kademesi
-│  ├─ ui/                     ← Dugme, Panel (cam zemin, açılır pencere), UstCubuk, DiyalogPaneli, Defter, tipografi
+│  ├─ ui/                     ← Dugme, Cip, Panel (cam zemin, açılır pencere), UstCubuk, DiyalogPaneli, Defter, Secenekler, CumleKurucu, tipografi
 │  └─ data/
 │     ├─ levels.json
 │     ├─ dialogues.json
 │     ├─ cutscenes.json       ← ara sahneler: paneller, altyazılar, olay zamanlaması
 │     ├─ scenes.json          ← sahne kompozisyonları (katmanlar, derinlik, konum)
 │     ├─ characters.json      ← konuşan adı ve altyazı rengi
+│     ├─ bolum1.json          ← Bölüm 1 içeriği: sensörler, birim çözücü, kural parçaları, SI çekirdeği kartları
 │     ├─ bolum4.json          ← Bölüm 4 içeriği: örnekler, tahmin kartları, kural parçaları, ipuçları, ARGE replikleri
 │     ├─ misconceptions.json
 │     └─ quantities.json      ← SI nicelik listesi (ad, birim, temel/türetilmiş, skaler/vektörel)
@@ -600,9 +607,9 @@ kayip-olcu/
 - `konusan` değerleri `characters.json` içindeki anahtarlardır. `bozuk: true` ARGE'nin bozuk konuşmasıdır.
 - Ses alanı (`ses`) seslendirme eklendiğinde kullanılacak.
 
-**Geliştirme kısayolları:** `npm run dev` → `http://localhost:5173`; `npm test` vektör matematiği testlerini çalıştırır. Bir bölümü doğrudan açmak için `?bolum=4` (adım: `&adim=kesif2|genelleme|gorev`; aktif oyuncu yoksa "Deneme#SUNUM" oluşturulur), bir ara sahneyi doğrudan açmak için `?sahne=G&panel=3`, kalite kademesini zorlamak için `?kalite=yuksek|orta|dusuk`, WebGL'siz (Canvas) çiziciyi denemek için `?cizici=canvas`. Canvas çizicide `setTint` çalışmaz: renkli katmanlar dokuya işlenerek çizilir.
+**Geliştirme kısayolları:** `npm run dev` → `http://localhost:5173`; `npm test` vektör matematiği testlerini çalıştırır. Bir bölümü doğrudan açmak için `?bolum=4` (adım: `&adim=kesif2|genelleme|gorev`; aktif oyuncu yoksa "Deneme#SUNUM" oluşturulur), bir ara sahneyi doğrudan açmak için `?sahne=G&panel=3`, kalite kademesini zorlamak için `?kalite=yuksek|orta|dusuk`, WebGL'siz (Canvas) çiziciyi denemek için `?cizici=canvas`, karışık sıraları (çipler, kartlar) sabitlemek için `?sabit=1` (otomatik test). Canvas çizicide `setTint` çalışmaz: renkli katmanlar dokuya işlenerek çizilir.
 
-**Kayıt modeli (`SaveSystem.js`):** IndexedDB `kayipOlcu` veritabanı, `oyuncular` ve `olaylar` depoları; IndexedDB yoksa localStorage. Oyuncu kimliği `takmaad#SINIFKODU`; aynı takma ad + sınıf kodu girilince eski ilerleme yüklenir (paylaşılan okul bilgisayarları). Oyuncu kaydı: `girisIzlendi`, `sistemler` (tamamlanan bölüm numaraları; sayısı `guc` değeridir), `bolumler`, `defter`. Hub'da bir bölüm, kendinden önceki *hazır* (`hazir: true`) bölümlerin hepsi tamamlanınca açılır; henüz yapılmamış bölümler sırayı kilitlemez (bu yüzden dikey dilim Bölüm 4 doğrudan oynanabilir). `hazir: false` olan bölüm "hazırlanıyor" mesajı verir. Bölüm içeriği `src/data/bolumN.json` dosyasında, sahne sınıfı `levels.json`'daki `sahne` alanında.
+**Kayıt modeli (`SaveSystem.js`):** IndexedDB `kayipOlcu` veritabanı, `oyuncular` ve `olaylar` depoları; IndexedDB yoksa localStorage. Oyuncu kimliği `takmaad#SINIFKODU`; aynı takma ad + sınıf kodu girilince eski ilerleme yüklenir (paylaşılan okul bilgisayarları). Oyuncu kaydı: `girisIzlendi`, `sistemler` (tamamlanan bölüm numaraları; sayısı `guc` değeridir), `bolumler`, `defter`. Hub'da bir bölüm, kendinden önceki *hazır* (`hazir: true`) bölümlerin hepsi tamamlanınca açılır; henüz yapılmamış bölümler sırayı kilitlemez. Bölüm 1 de hazır olduğu için Bölüm 4, Bölüm 1 bitince açılır (doğrudan erişim: `?bolum=4`). `hazir: false` olan bölüm "hazırlanıyor" mesajı verir. Bölüm içeriği `src/data/bolumN.json` dosyasında, sahne sınıfı `levels.json`'daki `sahne` alanında.
 
 **Bölüm yazma kuralları (BolumTemel):** Her adım `adimBaslat` ile başlar (eski nesneler ve konuşmalar temizlenir). Her cevap `cevap({ dogru, yanilgi, ayrinti })` ile telemetriye düşer; tahmin kartlarında her yanlış seçeneğin `yanilgi` kodu `misconceptions.json`'da olmalı. Sürekli (sürükle-bırak) görevlerde kodlanabilen hata `yanilgi` ile, diğerleri `ayrinti` ile kaydedilir. Metinlerde `{ad}` ve `{kuralN}` şablonları kullanılabilir.
 
@@ -638,7 +645,7 @@ kayip-olcu/
 - [ ] 5–10 öğrenciyle deneme; geri bildirimleri kaydet
 
 ### Aşama 3 — Kalan bölümler (4–9. hafta)
-- [ ] Bölüm 1 Uyanış (sürükle-bırak SI tablosu; bağımlılık kilidi)
+- [x] Bölüm 1 Uyanış (sürükle-bırak SI tablosu; bağımlılık kilidi) + 1A/1K ara sahneleri
 - [ ] Bölüm 2 Kör Pusula (etiketleme + rota sapması)
 - [ ] Bölüm 3 Römorkör (aynı doğrultuda kuvvetler, tahmin → test)
 - [ ] Bölüm 5 Dört Kuvvet (eşleştirme + menzil/şiddet panosu)
