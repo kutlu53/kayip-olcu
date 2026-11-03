@@ -738,7 +738,7 @@
         "kamera": {"hareket": "zoom", "zoom": [1, 1.08]},
         "ekKatmanlar": [
           {"id": "atmosfer", "tip": "atmosferParlama", "sabit": true, "ayar": {"y": 200}},
-          {"id": "sayac", "tip": "geriSayim", "sabit": true, "ayar": {"x": 400, "y": -180, "saniye": 600}}
+          {"id": "sayac", "tip": "geriSayim", "sabit": true, "ayar": {"x": 330, "y": -180, "saniye": 600}}
         ],
         "basliklar": [{"metin": "BÖLÜM 7 · SON ONARIM", "ms": 500, "sureMs": 2600}],
         "altyazilar": [
@@ -836,7 +836,7 @@
         "sahne": "kenetlenmePortu",
         "gecis": "fadeBlack",
         "sureMs": 12000,
-        "katmanAyar": {"kapsul": {"sizinti": false, "yalpa": false, "etiket": "KURTARMA ARACI"}},
+        "katmanAyar": {"kapsul": {"sizinti": false, "yalpa": false, "etiket": "KURTARMA ARACI", "govdeYazi": "KURTARMA"}},
         "altyazilar": [
           {
             "konusan": "Elif",

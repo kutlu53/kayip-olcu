@@ -134,7 +134,7 @@ export default class Level4Kenetlenme extends BolumTemel {
         this.diyalog.soyle('ARGE', this.tahmin && !this.tahmin.dogru ? s.yanlis : s.dogru);
         if (i + 1 < k.ornekler.length) this.devam('Sonraki örnek  ▸', () => this.kesif1(i + 1));
         else {
-          this.time.delayedCall(3200, () => this.diyalog.soyle('ARGE', k.kapanis));
+          this.diyalog.sonra(3200, 'ARGE', k.kapanis);
           this.devam('Keşif 2  ▸', () => this.kesif2());
         }
       }

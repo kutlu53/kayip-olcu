@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import { modalAc } from './Panel.js';
 import { cip } from './Cip.js';
 import { dugme } from './Dugme.js';
@@ -21,7 +22,8 @@ export function defterSimgesi(sahne, x, y, oyuncuGetir, secenek = {}) {
   for (const yy of [-10, -3, 4]) g.lineBetween(-5, yy, 11, yy);
   const etiket = sahne.add.text(0, 50, aralikli('DEFTER'), { fontFamily: YAZI, fontSize: '12px', color: '#D8F6FF' }).setOrigin(0.5);
   kap.add([g, etiket]);
-  kap.setSize(72, 72).setInteractive({ useHandCursor: true });
+  // Dokunma alani simgeyle birlikte alttaki DEFTER yazisini da kapsar
+  kap.setInteractive({ hitArea: new Phaser.Geom.Rectangle(-36, -36, 72, 100), hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
   kap.on('pointerup', () => defterAc(sahne, oyuncuGetir(), secenek));
   return kap;
 }

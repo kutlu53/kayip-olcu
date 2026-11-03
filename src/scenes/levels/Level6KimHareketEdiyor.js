@@ -329,6 +329,8 @@ export default class Level6KimHareketEdiyor extends BolumTemel {
   tanimKontrol(c) {
     const k = veri.genelleme;
     const i = this.tanimNo;
+    // Kabul edilen tanim ARGE tekrar ederken yeniden gonderilemez
+    if (this.tanimDurum[i] !== null) return;
     const t = k.tanimlar[i];
     let kabul = false;
     let yanilgi = null;
@@ -350,14 +352,17 @@ export default class Level6KimHareketEdiyor extends BolumTemel {
     if (!kabul) {
       this.tanimDenemesi[i] += 1;
       this.diyalog.soyle('ARGE', mesaj);
-      if (this.tanimDenemesi[i] === 2) this.devam('Bu tanımı geç  ▸', () => this.tanimBitti(i, 'gecildi'), { x: 800, y: 664 });
+      if (this.tanimDenemesi[i] === 2) this.gecDugmesi = this.devam('Bu tanımı geç  ▸', () => this.tanimBitti(i, 'gecildi'), { x: 800, y: 664 });
       return;
     }
     this.defterYaz({ tur: 'tanim', metin: c.metin, onay });
     // Referans noktasi tanimi bolumun kurali: ARGE 6K'da bunu tekrar eder
     if (t.terim === 'Referans noktası') this.defterYaz({ tur: 'kural', metin: c.metin, onay });
+    if (this.gecDugmesi) this.gecDugmesi.destroy();
+    this.gecDugmesi = null;
     this.diyalog.soyle('ARGE', `${k.kabul} "${c.metin}"`);
-    this.tanimBitti(i, 'kabul', 1600);
+    // ARGE ogrencinin cumlesini tekrar ederken sonraki tanim acilip onu kesmesin
+    this.tanimBitti(i, 'kabul', Math.max(1600, this.panel.argeMesgul - this.time.now));
   }
 
   tanimBitti(i, durum, bekle = 0) {

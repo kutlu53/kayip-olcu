@@ -134,7 +134,7 @@ export default class Level2KorPusula extends BolumTemel {
 
     const keremiGoster = (sansli) => {
       asama = 'bitti';
-      this.ekle(this.add.image(...kerem, tibbiKapsulDokusu(this)).setScale(0.18));
+      this.ekle(this.add.image(...kerem, tibbiKapsulDokusu(this, 'KURTARMA')).setScale(0.18));
       ciz.lineStyle(3, 0xffffff, 1).strokeCircle(...kerem, 16);
       if (sansli) {
         this.diyalog.soyle('ARGE', k.sansli);
@@ -191,7 +191,7 @@ export default class Level2KorPusula extends BolumTemel {
     ekle(this.add.text(430, 176, 'GÜNEYE', { fontFamily: MONO, fontSize: '14px', color: '#5FE3E8' }).setOrigin(0.5, 0));
     ekle(this.add.text(300, 440, `${d.ad}: ${d.deger}`, { fontFamily: YAZI, fontSize: '22px', fontStyle: 'bold', color: '#FFFFFF' }).setOrigin(0.5));
     // Iki kapsul: biri kuzeye, biri guneye ayni olcum
-    const kapsuller = [170, 430].map((x) => ekle(this.add.image(x, 320, tibbiKapsulDokusu(this)).setScale(0.32).setAngle(-90)));
+    const kapsuller = [170, 430].map((x) => ekle(this.add.image(x, 320, tibbiKapsulDokusu(this, 'KURTARMA')).setScale(0.32).setAngle(-90)));
     const etiketler = [-1, 1].map((yon, j) => {
       const x = j === 0 ? 170 : 430;
       if (d.canlandirma === 'yok') return ekle(this.add.text(x, 380, `${yon < 0 ? 'kuzeye' : 'güneye'} ${d.deger}?`, { fontFamily: YAZI, fontSize: '16px', color: SKALER }).setOrigin(0.5));
@@ -226,7 +226,7 @@ export default class Level2KorPusula extends BolumTemel {
         this.time.delayedCall(1300, tabloYaz);
         if (i + 1 < k.deneyler.length) ekle(this.devam('Sonraki  ▸', () => this.deney(i + 1)));
         else {
-          this.time.delayedCall(3000, () => this.diyalog.soyle('ARGE', k.kapanis));
+          this.diyalog.sonra(3000, 'ARGE', k.kapanis);
           ekle(this.devam('Kuralını yaz  ▸', () => this.genelleme()));
         }
       }, { genislik: 330, yukseklik: 52 })
@@ -285,7 +285,7 @@ export default class Level2KorPusula extends BolumTemel {
     this.radar = this.radarKur(690, 430, 215, 300);
     const [ux, uy] = yonVektoru(veri.kesif1.yonDerece);
     this.hedef = [this.radar.cx + ux * 250 * this.radar.olcek, this.radar.cy + uy * 250 * this.radar.olcek];
-    this.ekle(this.add.image(...this.hedef, tibbiKapsulDokusu(this)).setScale(0.18));
+    this.ekle(this.add.image(...this.hedef, tibbiKapsulDokusu(this, 'KURTARMA')).setScale(0.18));
     this.rotaG = this.ekle(this.add.graphics());
     this.kartlar = k.nicelikler.map((n, j) => this.etiketKarti(n, 125 + (j % 2) * 175, 200 + Math.floor(j / 2) * 64));
     this.cizDugme = this.ekle(dugme(this, 212, 548, 'ROTAYI ÇİZ  ▸', () => this.rotaCiz(), { genislik: 300, yukseklik: 56, birincil: true, boyut: 18 }));

@@ -167,10 +167,11 @@ export default class HubScene extends Phaser.Scene {
       this.tweens.add({ targets: nabiz, alpha: { from: 0.15, to: 0.9 }, duration: 1100, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
     }
 
-    // Dokunma alani (en az 48 px)
-    const hw = Math.max(w + 20, halka ? w * 2 + 20 : 0, 96);
-    const hh = Math.max(h + 50, halka ? h * 2 + 60 : 0, 80);
-    kap.setSize(hw, hh).setInteractive({ useHandCursor: true });
+    // Dokunma alani (en az 48 px): bolme ve altindaki iki etiket (ogrenciler cogu zaman yaziya dokunur)
+    const yari = Math.max(w / 2 + 10, halka ? w + 10 : 0, 48, ad.width / 2, alt.width / 2);
+    const ust = (halka ? -h : -h / 2) - 10;
+    const alan = new Phaser.Geom.Rectangle(-yari, ust, yari * 2, etiketY + 42 - ust);
+    kap.setInteractive({ hitArea: alan, hitAreaCallback: Phaser.Geom.Rectangle.Contains, useHandCursor: true });
     kap.on('pointerup', () => this.bolmeSec(b, durum));
     return kap;
   }
@@ -191,7 +192,7 @@ export default class HubScene extends Phaser.Scene {
     const ad = this.oyuncu.takmaAd;
     if (n === 0) {
       this.panel.argeSoyle('Ben… ARGE. Birim… tanımsız. Yön… tanımsız. Sen… kimsin?');
-      this.karsilamaZamanlayici = this.time.delayedCall(2600, () =>
+      this.karsilamaZamanlayici = this.time.delayedCall(Math.max(2600, this.panel.argeMesgul - this.time.now), () =>
         this.panel.elifSoyle(`Hoş geldin ${ad}. Bu, istasyonun haritası. Işığı sönük her bölme kapalı bir sistem. Nabız gibi parlayan bölme seni bekliyor.`)
       );
     } else if (n < 7) {

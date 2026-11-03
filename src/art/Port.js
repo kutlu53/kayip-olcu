@@ -8,8 +8,9 @@ export const KAPSUL_BURUN = 112;
 // Sizinti deligi ust arkada: gaz geriye-yukari puskurur, tepki kuvveti kapsulu ileri-asagi iter
 export const SIZINTI_NOKTASI = [-65, -29];
 
-export function tibbiKapsulDokusu(sahne) {
-  return dokuCiz(sahne, 'tibbi_kapsul', 240, 110, (c) => {
+// govdeYazi: ayni govde finalde kurtarma araci olarak da kullanilir
+export function tibbiKapsulDokusu(sahne, govdeYazi = 'TIBBİ') {
+  return dokuCiz(sahne, govdeYazi === 'TIBBİ' ? 'tibbi_kapsul' : `kapsul_${govdeYazi}`, 240, 110, (c) => {
     // Motor nozulu
     poligon(c, [[16, 40], [42, 34], [42, 76], [16, 70]], '#3a4250');
     // Govde (isik sol ustten)
@@ -37,7 +38,7 @@ export function tibbiKapsulDokusu(sahne) {
     c.fillRect(40, 62, 152, 6);
     c.font = 'bold 13px "Segoe UI", Arial, sans-serif';
     c.fillStyle = '#26324a';
-    c.fillText('TIBBİ', 92, 52);
+    c.fillText(govdeYazi, govdeYazi.length > 6 ? 84 : 92, 52);
     // Pencereler
     c.fillStyle = '#10161f';
     for (const x of [166, 180]) {
@@ -79,7 +80,7 @@ export function sizintiYayici(sahne, x, y, aciDerece = 217) {
 export function tibbiKapsulOlustur(sahne, ayar = {}) {
   const kap = sahne.add.container(0, 0);
   const ic = sahne.add.container(0, 0);
-  const govde = sahne.add.image(0, 0, tibbiKapsulDokusu(sahne));
+  const govde = sahne.add.image(0, 0, tibbiKapsulDokusu(sahne, ayar.govdeYazi));
   ic.add(govde);
   let gaz = null;
   if (ayar.sizinti) {
@@ -90,10 +91,11 @@ export function tibbiKapsulOlustur(sahne, ayar = {}) {
   const kilitler = [-12, -4, 4, 12].map((dy) => sahne.add.image(KAPSUL_BURUN - 4, dy, 'p_nokta').setScale(0.35).setAlpha(0).setBlendMode(Phaser.BlendModes.ADD));
   ic.add(kilitler);
   kap.add(ic);
+  // Etiket araca baglidir (yanasirken onunla gider); hasarli kapsulde kirmizi, saglam aracta camgobegi
   if (ayar.etiket) {
-    kap.add(
+    ic.add(
       sahne.add
-        .text(-120, -95, ayar.etiket, { fontFamily: MONO, fontSize: '14px', color: '#FF8A8A', backgroundColor: 'rgba(5,7,13,0.7)', padding: { x: 6, y: 3 } })
+        .text(-120, -95, ayar.etiket, { fontFamily: MONO, fontSize: '14px', color: ayar.sizinti === false ? '#5FE3E8' : '#FF8A8A', backgroundColor: 'rgba(5,7,13,0.7)', padding: { x: 6, y: 3 } })
         .setOrigin(0, 0.5)
     );
   }

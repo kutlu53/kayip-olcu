@@ -9,7 +9,7 @@ import { aktifOyuncu, aktifiKaydet } from '../systems/SaveSystem.js';
 import { olayKaydet } from '../systems/Telemetry.js';
 import { efekt, muzikBaslat, seslendirmeCal, seslendirmeDurdur } from '../systems/Ses.js';
 import { guc } from '../systems/SaveSystem.js';
-import { oku, durdur as okumaDurdur } from '../systems/SesliOkuma.js';
+import { oku, okumaSuresi, durdur as okumaDurdur } from '../systems/SesliOkuma.js';
 import { sablonDoldur } from '../systems/DialogueSystem.js';
 
 // Katman olaylarinin sesi; JSON'da bir olaya "ses" alani eklenirse o calar
@@ -106,13 +106,26 @@ export default class CutsceneScene extends Phaser.Scene {
     for (const b of p.basliklar || []) zamanla(b.ms, () => this.overlay.baslik(b));
     for (const s of p.altyazilar || []) {
       zamanla(s.ms, () => {
-        this.overlay.altyazi(s);
+        const metin = sablonDoldur(s.metin);
+        // Uzun cumle (or. ogrencinin kendi kurali) en hizli okumada bile sigmiyorsa altyazi ve panel uzar
+        const okuma = s.ses ? 0 : okumaSuresi(s.konusan, metin, { kaynak: 'sahne', sureMs: s.sureMs });
+        const sure = Math.max(s.sureMs || 3000, okuma + 300);
+        this.overlay.altyazi({ ...s, sureMs: sure });
         if (s.ses) seslendirmeCal(s.ses);
-        else oku(s.konusan, sablonDoldur(s.metin), { sureMs: s.sureMs, bozuk: s.bozuk, kaynak: 'sahne' });
-        if (s.konusan === 'ARGE') panel.katmanlar.forEach((L) => L.nesne.konus && L.nesne.konus(s.sureMs));
+        else oku(s.konusan, metin, { sureMs: s.sureMs, bozuk: s.bozuk, kaynak: 'sahne' });
+        if (s.konusan === 'ARGE') panel.katmanlar.forEach((L) => L.nesne.konus && L.nesne.konus(sure));
+        const gereken = s.ms + okuma + 700;
+        if (gereken > panel.bitisMs) {
+          panel.bitis.remove(false);
+          panel.bitisMs = gereken;
+          panel.bitis = this.time.delayedCall(gereken - s.ms, () => this.sonraki());
+          panel.zamanlayicilar.push(panel.bitis);
+        }
       });
     }
-    zamanla(p.sureMs, () => this.sonraki());
+    panel.bitisMs = p.sureMs;
+    panel.bitis = this.time.delayedCall(p.sureMs, () => this.sonraki());
+    panel.zamanlayicilar.push(panel.bitis);
     this.kameraUygula(panel, this.time.now);
     return panel;
   }
@@ -162,9 +175,10 @@ export default class CutsceneScene extends Phaser.Scene {
     }
   }
 
-  sonraki() {
+  // elle: oyuncu dokundu ya da tusa basti (son panelde sahneyi bitirmek atlama sayilir)
+  sonraki(elle = false) {
     if (this.geciste || this.bitiyor || !this.panel) return;
-    if (this.panelNo + 1 >= this.tanim.paneller.length) this.bitir();
+    if (this.panelNo + 1 >= this.tanim.paneller.length) this.bitir(elle);
     else this.panelDegistir(this.panelNo + 1);
   }
 
@@ -172,6 +186,9 @@ export default class CutsceneScene extends Phaser.Scene {
     const yeni = this.tanim.paneller[no];
     const eski = this.panel;
     for (const z of eski.zamanlayicilar) z.remove(false);
+    // Panel elle gecilince onceki panelin konusmasi yeni panelin ustune binmesin
+    seslendirmeDurdur();
+    okumaDurdur();
     this.overlay.temizle();
     this.panelNo = no;
     const kur = () => (this.panel = this.panelKur(yeni));

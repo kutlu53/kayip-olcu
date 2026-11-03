@@ -5,6 +5,7 @@ import { ustCubuk, UST_YUKSEKLIK } from '../../ui/UstCubuk.js';
 import { diyalogPaneli } from '../../ui/DiyalogPaneli.js';
 import { defterSimgesi } from '../../ui/Defter.js';
 import { dugme } from '../../ui/Dugme.js';
+import { modalAc } from '../../ui/Panel.js';
 import { YAZI, MONO, OKUMA, okumaBoyutu, aralikli } from '../../ui/tipografi.js';
 import { aktifOyuncu, aktifiKaydet, guc } from '../../systems/SaveSystem.js';
 import { olayKaydet } from '../../systems/Telemetry.js';
@@ -37,7 +38,7 @@ export default class BolumTemel extends Phaser.Scene {
 
     this.add.image(640, 360, yildizDokusu(this, { katman: 'uzak' }));
     this.arkaPlan();
-    const cubuk = ustCubuk(this, { menuye: () => this.git('HubScene'), menuEtiketi: 'Harita' });
+    const cubuk = ustCubuk(this, { menuye: () => this.haritayaDonSor(), menuEtiketi: 'Harita' });
     cubuk.guncelle(this.oyuncu);
     this.panel = diyalogPaneli(this, { argeDurum: guc(this.oyuncu) });
     this.diyalog = new Diyalog(this, this.panel);
@@ -142,6 +143,17 @@ export default class BolumTemel extends Phaser.Scene {
     olayKaydet('bolumBitir', { bolum: this.bolumNo, cikti: this.cikti, sureSn, ayrinti: `${yildiz} yıldız` });
     const kapanis = this.tanim.kapanisSahnesi;
     this.git(kapanis ? 'CutsceneScene' : 'HubScene', kapanis ? { id: kapanis, donus: 'HubScene' } : undefined);
+  }
+
+  // Bolumun ortasinda ilerleme kaydedilmez: haritaya donmeden once sorulur
+  haritayaDonSor() {
+    if (this.bitiyor) return;
+    const { kap, kapan } = modalAc(this, 'HARİTAYA DÖN', (k, alan) => {
+      k.add(this.add.text(alan.sol, alan.ust + 10, 'Haritaya dönersen bu bölüme sonra baştan başlarsın. Gözlem Defteri’ne yazdıkların kalır.', { fontFamily: OKUMA, fontSize: okumaBoyutu(20), color: '#D8F6FF', wordWrap: { width: alan.genislik }, lineSpacing: 4 }));
+      k.add(dugme(this, alan.sol + 150, alan.ust + alan.yukseklik - 30, 'Bölümde kal', () => kapan(), { genislik: 280, yukseklik: 56, boyut: 18 }));
+      k.add(dugme(this, alan.sol + alan.genislik - 150, alan.ust + alan.yukseklik - 30, 'Haritaya dön', () => this.git('HubScene'), { genislik: 280, yukseklik: 56, birincil: true, boyut: 18 }));
+    }, { genislik: 680, yukseklik: 300 });
+    kap.setDepth(2000);
   }
 
   git(sahne, veri) {

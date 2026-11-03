@@ -107,7 +107,7 @@
           { "metin": "ilk ve son konum arasındaki", "yanilgi": "M_YOL_YERDEG_AYNI", "mesaj": "İlk ve son konum arası okun işiydi. Rota A'da sayaç 40 m saydı, ok 0 m'ydi." },
           { "metin": "ve vektöreldir.", "yanilgi": "M_SKALER_YONLU", "mesaj": "Yol sayacı hiç yön göstermedi, yalnızca metreleri saydı." }
         ],
-        "anahtarlar": [["rota", "izle", "gidilen", "toplam"], ["uzunluk", "mesafe", "metre"]]
+        "anahtarlar": [["rota", "izle", "gidilen", "toplam"], ["uzunlu", "mesafe", "metre"]]
       },
       {
         "terim": "Yer değiştirme",

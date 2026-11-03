@@ -13,6 +13,7 @@ import { istasyonDokusu } from '../../art/Station.js';
 import { kivilcimYayici } from '../../fx/Particles.js';
 import { karistir } from '../../art/Rastgele.js';
 import { ayarlar } from '../../config/settings.js';
+import { okumaSuresi } from '../../systems/SesliOkuma.js';
 
 const doldur = (s, d) => s.replace(/\{(\w+)\}/g, (_, k) => (k in d ? d[k] : `{${k}}`));
 const kisitla = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -134,7 +135,7 @@ export default class Level7SonOnarim extends BolumTemel {
     this.cevap({ dogru: yanlis < 0, yanilgi: tekTur ? 'M_TEK_HAREKET_TURU' : null, ayrinti: `${parca.id}: ${cevap.map((c) => (c ? 'E' : 'H')).join('')}` });
     if (yanlis >= 0) {
       this.diyalog.soyle('ARGE', tekTur ? k.tekTur : doldur(k.yanlis, { ad: parca.ad, soru: veri.sorular[yanlis] }));
-      if (!this.izAcik) this.diyalog.soyle('Elif', 'İzi açmak işine yarayabilir.');
+      if (!this.izAcik) this.diyalog.soyle('Elif', 'İzi açmak işine yarayabilir.', true);
       return;
     }
     this.tablo[parca.id] = parca.cevap;
@@ -144,8 +145,9 @@ export default class Level7SonOnarim extends BolumTemel {
     this.soruAlani = [];
     this.diyalog.soyle('ARGE', doldur(k.dogru, { ad: parca.ad }));
     if (Object.keys(this.tablo).length === k.parcalar.length) {
-      this.time.delayedCall(1200, () => this.diyalog.soyle('ARGE', k.kapanis));
-      this.devam('Kuralını yaz  ▸', () => this.genelleme());
+      // Hareket turlerinin adlari bu cumlede verilir: dugme cumle okunduktan sonra gelir
+      const gecikme = this.diyalog.sonra(1200, 'ARGE', k.kapanis);
+      this.time.delayedCall(gecikme + Math.max(1500, okumaSuresi('ARGE', k.kapanis)), () => this.devam('Kuralını yaz  ▸', () => this.genelleme()));
     }
   }
 
@@ -308,15 +310,17 @@ export default class Level7SonOnarim extends BolumTemel {
     const canli = this.ekle(this.add.graphics());
     const okuma = this.yazi(600, 190, '', { fontSize: '18px', color: '#D8F6FF', lineSpacing: 8 });
     const D = k.hasarli;
+    // Zor modda bileske ATESLE'ye kadar gizli: yoksa hasarli iticinin bilesenleri sin/cos gerekmeden okunurdu
+    let bileskeAcik = !zor;
     const ciz = () => {
       canli.clear();
       // Uc uca ekleme (Bolum 4): hasarli -> ana -> dikey; bileske mavi
       izgaradaOk(canli, iz, D, A.v, STILLER.kopya);
       izgaradaOk(canli, iz, topla(D, A.v), Y.v, STILLER.kopya);
       const R = topla(D, A.v, Y.v);
-      izgaradaOk(canli, iz, [0, 0], R, STILLER.bileske);
+      if (bileskeAcik) izgaradaOk(canli, iz, [0, 0], R, STILLER.bileske);
       const hasarliMetin = zor ? `${k.zorMod.buyukluk} kN, ileriyle ${k.zorMod.aci}° yukarı` : `${D[0]} kN ileri, ${D[1]} kN yukarı`;
-      okuma.setText(`Hasarlı itici: ${hasarliMetin}\nAna itici: ${yaz(A.v[0])} kN ${A.v[0] >= 0 ? 'ileri' : 'geri'}\nDikey itici: ${yaz(Math.abs(Y.v[1]))} kN ${Y.v[1] >= 0 ? 'yukarı' : 'aşağı'}\nBileşke: (${yaz(R[0])} ; ${yaz(R[1])}) kN`);
+      okuma.setText(`Hasarlı itici: ${hasarliMetin}\nAna itici: ${yaz(A.v[0])} kN ${A.v[0] >= 0 ? 'ileri' : 'geri'}\nDikey itici: ${yaz(Math.abs(Y.v[1]))} kN ${Y.v[1] >= 0 ? 'yukarı' : 'aşağı'}\nBileşke: ${bileskeAcik ? `(${yaz(R[0])} ; ${yaz(R[1])}) kN` : '? (ATEŞLE ile görülür)'}`);
     };
     const hasar = this.ekle(new SuruklenebilirVektor(this, iz, { v: D, etiket: 'Hasarlı', birimAdi: 'kN' }));
     hasar.kilitle();
@@ -332,6 +336,8 @@ export default class Level7SonOnarim extends BolumTemel {
     const ates = this.ekle(dugme(this, 720, 470, 'ATEŞLE  ▸', () => {
       const R = topla(D, A.v, Y.v);
       const dogru = esitMi(R, k.hedef, 0.01);
+      bileskeAcik = true;
+      ciz();
       this.cevap({ dogru, ayrinti: `final itici: ana ${A.v[0]}, dikey ${Y.v[1]} → bileşke (${R[0]}, ${R[1]})` });
       if (!dogru) {
         this.gorevHata += 1;

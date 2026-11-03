@@ -20,6 +20,17 @@ describe('Sesli okuma metni', () => {
     expect(konusmaMetni('%90')).toBe('yüzde 90');
     expect(konusmaMetni('2,8 kN, 45°')).toBe('2,8 kilonewton, 45 derece');
     expect(konusmaMetni('101 300 Pa')).toBe('101300 paskal');
+    expect(konusmaMetni('3 600 000 J')).toBe('3600000 jul');
+    expect(konusmaMetni('Fx = 5 · cos 37°')).toBe('Fx = 5 çarpı cos 37 derece');
+  });
+
+  it('birimden sonraki ekler okunan sözcüğe uyar', () => {
+    expect(konusmaMetni("400 km'de")).toBe('400 kilometrede');
+    expect(konusmaMetni("6 kN'den fazla")).toBe('6 kilonewtondan fazla');
+    expect(konusmaMetni("5 N'lik kuvvet")).toBe('5 newtonluk kuvvet');
+    expect(konusmaMetni("400 m'lik")).toBe('400 metrelik');
+    expect(konusmaMetni('293 K mı?')).toBe('293 kelvin mi?');
+    expect(konusmaMetni("12 s'de")).toBe('12 saniyede');
   });
 
   it('sahne notları okunmaz', () => {

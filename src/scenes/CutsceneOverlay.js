@@ -58,10 +58,10 @@ export default class CutsceneOverlay extends Phaser.Scene {
     this.dugmeler = [atla, ipucu];
 
     this.input.on('pointerdown', (isaretci, uzerindekiler) => {
-      if (uzerindekiler.length === 0) this.sahne.sonraki();
+      if (uzerindekiler.length === 0) this.sahne.sonraki(true);
     });
     if (this.input.keyboard) {
-      for (const tus of ['SPACE', 'ENTER', 'RIGHT']) this.input.keyboard.on(`keydown-${tus}`, () => this.sahne.sonraki());
+      for (const tus of ['SPACE', 'ENTER', 'RIGHT']) this.input.keyboard.on(`keydown-${tus}`, () => this.sahne.sonraki(true));
       this.input.keyboard.on('keydown-ESC', () => this.sahne.bitir(true));
     }
     this.sahne.overlayHazir(this);

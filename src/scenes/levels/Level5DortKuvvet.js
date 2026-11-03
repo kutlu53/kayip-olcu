@@ -331,6 +331,7 @@ export default class Level5DortKuvvet extends BolumTemel {
   gorev() {
     const k = veri.gorev;
     this.adimBaslat({ no: 3, baslik: k.baslik, ipuclari: k.ipuclari, ad: 'gorev.pano' });
+    this.panoKilitli = false;
     this.yonerge(k.yonerge);
     const PX = 250;
     const PY = 190;
@@ -366,6 +367,8 @@ export default class Level5DortKuvvet extends BolumTemel {
   }
 
   hucreSec(h) {
+    // Pano kurulduktan sonra kilitlenir
+    if (this.panoKilitli) return;
     // Dolu hucreye dokunmak kuvveti geri alir
     if (h.kuvvet) {
       const id = h.kuvvet;
@@ -401,6 +404,7 @@ export default class Level5DortKuvvet extends BolumTemel {
       this.diyalog.soyle('ARGE', kutleGuclu ? k.kutleGuclu : doldur(k.hatali, { liste: yanlis.map((h) => K[h.kuvvet].kisa).join(', ') }));
       return;
     }
+    this.panoKilitli = true;
     this.panoDugme.destroy();
     this.panoCipleri.forEach((c) => c.setVisible(false));
     this.hucreler.forEach((h) => h.kuvvet && this.ekle(this.add.rectangle(h.x, h.y, 200, 66).setStrokeStyle(2, renkSayi(K[h.kuvvet].renk), 0.9)));

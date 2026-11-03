@@ -164,7 +164,10 @@ export default class Level1Uyanis extends BolumTemel {
     });
     const coz = this.ekle(dugme(this, 440, 460, 'ÇÖZ', () => kontrol(), { genislik: 180, yukseklik: 56, birincil: true, boyut: 20 }));
 
+    // Dogru cevaptan sonra yeni birim gelene kadar CÖZ bekler (yavas cihazda eski birim yeni cevapla denetlenmesin)
+    let bekliyor = false;
     const goster = () => {
+      bekliyor = false;
       const b = k.birimler[sira];
       nicelik.setText(aralikli(b.nicelik.toLocaleUpperCase('tr')));
       birim.setText(b.birim);
@@ -178,6 +181,7 @@ export default class Level1Uyanis extends BolumTemel {
     };
 
     const kontrol = () => {
+      if (bekliyor) return;
       const b = k.birimler[sira];
       const secilen = [...secim];
       if (!secilen.length) return this.diyalog.soyle('Elif', 'Önce parçaları seç.');
@@ -187,10 +191,13 @@ export default class Level1Uyanis extends BolumTemel {
         listeYaz();
         this.diyalog.soyle('ARGE', doldur(k.dogru, { acilim: b.acilim }));
         sira += 1;
-        if (sira < k.birimler.length) return this.time.delayedCall(900, goster);
+        if (sira < k.birimler.length) {
+          bekliyor = true;
+          return this.time.delayedCall(900, goster);
+        }
         coz.destroy();
         parcalar.forEach((c) => c.durumAyarla('pasif'));
-        this.time.delayedCall(1800, () => this.diyalog.soyle('ARGE', k.kapanis));
+        this.diyalog.sonra(1800, 'ARGE', k.kapanis);
         return this.devam('Kuralını yaz  ▸', () => this.genelleme());
       }
       const temelSandi = b.temelSanilirsa && ayniKume(secilen, ['Parçalanamaz']);
@@ -380,13 +387,19 @@ export default class Level1Uyanis extends BolumTemel {
     this.yuvaCiz();
     // Temel parca cekilince ona bagli turetilmis nicelikler dis halkadan duser
     if (yuva.halka === 'ic') {
+      const dusenler = [];
       for (const y of this.yuvalar) {
         if (y.halka === 'dis' && y.kart && (y.kart.n.gerekli || []).includes(kart.n.id)) {
           const dusen = y.kart;
           this.cikar(dusen);
           this.eveDon(dusen);
-          this.diyalog.soyle('ARGE', `${kart.n.ad} çekilince ${dusen.n.ad.toLocaleLowerCase('tr')} dış halkadan düştü.`);
+          dusenler.push(dusen.n.ad.toLocaleLowerCase('tr'));
         }
+      }
+      // Birden cok nicelik duserse tek cumle: art arda soylenen cumleler birbirini keserdi
+      if (dusenler.length) {
+        const liste = dusenler.length > 1 ? `${dusenler.slice(0, -1).join(', ')} ve ${dusenler[dusenler.length - 1]}` : dusenler[0];
+        this.diyalog.soyle('ARGE', `${kart.n.ad} çekilince ${liste} dış halkadan düştü.`);
       }
     }
   }

@@ -13,6 +13,7 @@ export class IpucuSistemi {
   }
 
   adimAyarla(adim, ipuclari) {
+    this.surum = (this.surum || 0) + 1;
     this.adim = adim;
     this.ipuclari = ipuclari || [];
     this.kademe = 0;
@@ -28,10 +29,21 @@ export class IpucuSistemi {
     olayKaydet('ipucu', { bolum: this.bolum, cikti: this.cikti, ipucuKademesi: this.kademe, ayrinti: this.adim });
   }
 
+  // Oneri, bolumun bu cevaba verdigi tepkiden (ARGE/Elif) sonra gelir; yoksa tepki onu hemen ezer ve okunmaz
   hata() {
     this.ardisikHata += 1;
     if (this.ardisikHata === 2 && this.kademe === 0 && this.ipuclari.length) {
-      this.panel.elifSoyle('Zorlanıyor musun? İstersen sana bir ipucu vereyim: "İpucu iste" düğmesine dokun.');
+      const surum = this.surum;
+      const sahne = this.panel.scene;
+      // Konusmalar susunca soyler; bu arada yeni bir cumle baslamissa yeniden bekler
+      const dene = () => {
+        // Arada dogru cevap verildiyse (ardisikHata sifirlanir) ya da ipucu istendiyse oneri gereksiz
+        if (this.surum !== surum || this.kademe !== 0 || this.ardisikHata < 2) return;
+        const bekle = Math.max((this.panel.elifMesgul || 0) - sahne.time.now, (this.panel.argeMesgul || 0) - sahne.time.now);
+        if (bekle > 50) sahne.time.delayedCall(bekle, dene);
+        else this.panel.elifSoyle('Zorlanıyor musun? İstersen sana bir ipucu vereyim: "İpucu iste" düğmesine dokun.');
+      };
+      sahne.time.delayedCall(0, dene);
     }
   }
 

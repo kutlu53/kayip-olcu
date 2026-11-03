@@ -29,7 +29,7 @@ export const KATMANLAR = {
   ekranElif: { hazirla: (s, a) => elifDokusu(s, a.ifade), olustur: ekranElifOlustur },
   geriSayim: { olustur: geriSayimOlustur },
   parcacikAkisi: { olustur: parcacikAkisiOlustur },
-  tibbiKapsul: { hazirla: tibbiKapsulDokusu, olustur: tibbiKapsulOlustur },
+  tibbiKapsul: { hazirla: (s, a) => tibbiKapsulDokusu(s, a.govdeYazi), olustur: tibbiKapsulOlustur },
   istasyonPortu: { hazirla: istasyonPortuDokusu, olustur: istasyonPortuOlustur },
   navKonsol: { hazirla: navKoprusuDokusu, olustur: navKonsolOlustur },
   reaktor: { hazirla: reaktorDokusu, olustur: reaktorOlustur },

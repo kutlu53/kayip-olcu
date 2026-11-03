@@ -1,5 +1,5 @@
 import { aktifOyuncu } from './SaveSystem.js';
-import { durdur as okumaDurdur } from './SesliOkuma.js';
+import { durdur as okumaDurdur, okumaSuresi } from './SesliOkuma.js';
 
 // Metin sablonlari: {ad} oyuncunun takma adi, {kuralN} oyuncunun N. bolumde deftere yazdigi kural.
 // ARGE kurali oyuncunun kendi cumlesiyle tekrar eder: ogreterek ogrenme (CLAUDE.md §4)
@@ -32,15 +32,31 @@ export class Diyalog {
     else this.panel.elifSoyle(m);
   }
 
+  // Sesli okuma aciksa sonraki replik oncekinin okunmasi bitmeden gelmez (yazi sesin onune gecmesin)
   oynat(replikler = []) {
     this.durdur();
     let t = 0;
     for (const r of replikler) {
       const sure = t;
       this.zamanlayicilar.push(this.sahne.time.delayedCall(sure, () => this.soyle(r.kim, r.metin, true)));
-      t += r.bekle !== undefined ? r.bekle : 900 + r.metin.length * 30;
+      const yazma = r.bekle !== undefined ? r.bekle : 900 + r.metin.length * 30;
+      const okuma = okumaSuresi(r.kim, sablonDoldur(r.metin));
+      t += Math.max(yazma, okuma ? okuma + 400 : 0);
     }
     return t;
+  }
+
+  // Gecikmeli replik: ayni konusanin onceki cumlesi okunup bitince gelir; adim degisince (durdur) iptal edilir.
+  // Dondurdugu sure (ms) replik gelene kadar gecen zamandir
+  sonra(ms, kim, metin) {
+    const mesgul = (kim === 'ARGE' ? this.panel.argeMesgul : this.panel.elifMesgul) || 0;
+    ms = Math.max(ms, mesgul - this.sahne.time.now);
+    const z = this.sahne.time.delayedCall(ms, () => {
+      this.zamanlayicilar = this.zamanlayicilar.filter((x) => x !== z);
+      this.soyle(kim, metin, true);
+    });
+    this.zamanlayicilar.push(z);
+    return ms;
   }
 
   durdur() {

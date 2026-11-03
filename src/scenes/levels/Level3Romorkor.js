@@ -145,7 +145,7 @@ export default class Level3Romorkor extends BolumTemel {
           this.tabloCiz(650, 150);
           if (i + 1 < k.deneyler.length) this.devam('Sonraki deney  ▸', () => this.deney(i + 1));
           else {
-            this.time.delayedCall(2800, () => this.diyalog.soyle('ARGE', k.kapanis));
+            this.diyalog.sonra(2800, 'ARGE', k.kapanis);
             this.devam('Kuralını yaz  ▸', () => this.genelleme());
           }
         }
@@ -353,7 +353,7 @@ export default class Level3Romorkor extends BolumTemel {
   gorevBitti() {
     const yildiz = this.gorevHata === 0 ? 3 : this.gorevHata <= 2 ? 2 : 1;
     this.yazi(480, 640, '★'.repeat(yildiz) + '☆'.repeat(3 - yildiz), { fontSize: '40px', color: '#FFD79A' }).setOrigin(0.5);
-    this.diyalog.soyle('ARGE', 'Üç senaryoda da tahmin ve sonuç uyumlu. Panel yuvasında!');
+    this.diyalog.soyle('ARGE', 'Üç senaryoda da tahmin ve sonuç uyumlu. Panel yuvasında!', true);
     this.time.delayedCall(3600, () => this.bitir(yildiz));
   }
 }

@@ -28,17 +28,39 @@ const BILESIK = [
 const SAYIDAN_SONRA = { kN: 'kilonewton', km: 'kilometre', kg: 'kilogram', 'm²': 'metrekare', 'm³': 'metreküp', Pa: 'paskal', mol: 'mol', cd: 'kandela', dk: 'dakika', m: 'metre', s: 'saniye', N: 'newton', J: 'jul', W: 'vat', K: 'kelvin', A: 'amper' };
 const kacir = (s) => s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
 
+// Unlu uyumu: ekin unlulerini sozcugun son unlusune, d/t'yi son sese gore ayarlar ("kilonewton" + "den" -> "dan")
+const KALIN = 'aıou';
+function ekUydur(sozcuk, ek) {
+  const unluler = sozcuk.toLocaleLowerCase('tr').match(/[aeıioöuü]/g);
+  if (!unluler) return ek;
+  const son = unluler[unluler.length - 1];
+  const kalin = KALIN.includes(son);
+  const yuvarlak = 'oöuü'.includes(son);
+  const dar = kalin ? (yuvarlak ? 'u' : 'ı') : yuvarlak ? 'ü' : 'i';
+  const sert = /[fstkçşhp]$/i.test(sozcuk);
+  return ek
+    .replace(/[ae]/g, kalin ? 'a' : 'e')
+    .replace(/[ıiuü]/g, dar)
+    .replace(/^[dt]/, (h) => (sert ? 't' : h === 't' ? 'd' : h));
+}
+
 export function konusmaMetni(metin) {
   let s = String(metin || '');
   s = s.replace(/\[[^\]]*\]/g, ' '); // [sinyal kesildi] gibi sahne notlari okunmaz
   for (const [b, o] of BILESIK) s = s.replace(new RegExp(kacir(b), 'g'), o);
   // Ust simgeler: 10⁻¹⁵ -> 10 üzeri eksi 15
   s = s.replace(/(\d)\s?([⁻]?)([⁰¹²³⁴⁵⁶⁷⁸⁹]+)/g, (_, d, eksi, us) => `${d} üzeri ${eksi ? 'eksi ' : ''}${[...us].map((c) => UST[c]).join('')}`);
-  // Binlik bosluk: "101 300" -> "101300"
-  s = s.replace(/(\d) (\d{3})(?!\d)/g, '$1$2');
+  // Binlik bosluk: "3 600 000" -> "3600000"
+  s = s.replace(/(?<=\d) (?=\d{3}(?!\d))/g, '');
   s = s.replace(/%\s?(\d)/g, 'yüzde $1');
+  // Formulde carpma: "5 · cos 37°"
+  s = s.replace(/(\d)\s*·\s*(?=\d|sin|cos)/g, '$1 çarpı ');
   const birimler = Object.keys(SAYIDAN_SONRA).sort((a, b) => b.length - a.length).map(kacir).join('|');
-  s = s.replace(new RegExp(`(\\d)\\s?(${birimler})(?![\\p{L}\\d²³])`, 'gu'), (_, d, b) => `${d} ${SAYIDAN_SONRA[b]}`);
+  // Birimden sonraki ek okunan sozcuge uydurulur: "6 kN'den" -> "6 kilonewtondan", "293 K mı" -> "293 kelvin mi"
+  s = s.replace(new RegExp(`(\\d)\\s?(${birimler})(?:'(\\p{L}+)|(?![\\p{L}\\d²³]))(\\s+m[ıiuü](?!\\p{L}))?`, 'gu'), (_, d, b, ek, soru) => {
+    const sozcuk = SAYIDAN_SONRA[b];
+    return `${d} ${sozcuk}${ek ? ekUydur(sozcuk, ek) : ''}${soru ? ` ${ekUydur(sozcuk + (ek ? ekUydur(sozcuk, ek) : ''), soru.trim())}` : ''}`;
+  });
   s = s.replace(/(\d)\s?°/g, '$1 derece');
   s = s
     .replace(/≈/g, ' yaklaşık ')
@@ -103,15 +125,15 @@ const bitti = () => {
 
 // kaynak: 'sahne' (ara sahne altyazisi) | 'bolum' (sag panel) | 'deneme' (ayarlar). kuyruk: oncekini kesmeden sona ekle.
 // sureMs verilirse metin o surede bitsin diye hiz gerektigi kadar artar (altyazi zamanlamasi)
-export function oku(konusan, metin, { sureMs = null, bozuk = false, kuyruk = false, kaynak = 'bolum' } = {}) {
-  if (!destek()) return;
-  if (kaynak !== 'deneme' && (ayarlar.sesliOkuma === 'kapali' || (kaynak === 'bolum' && ayarlar.sesliOkuma === 'sahneler'))) return;
+const okunurMu = (kaynak) => destek() && (kaynak === 'deneme' || !(ayarlar.sesliOkuma === 'kapali' || (kaynak === 'bolum' && ayarlar.sesliOkuma === 'sahneler')));
+
+// Konusanin sesi, hizi ve perdesi; okunamayacaksa null
+function okumaAyari(konusan, temiz, { sureMs = null, bozuk = false } = {}) {
   const p = PROFILLER[konusan];
-  const temiz = konusmaMetni(metin);
-  if (!p || !temiz) return;
+  if (!p || !temiz) return null;
   if (!sesler.length) sesleriYukle();
   const { ses, tercihli } = sesSec(konusan);
-  if (!ses) return;
+  if (!ses) return null;
   let { hiz, perde } = tercihli ? p : p.yedek;
   if (konusan === 'ARGE') {
     const n = guc();
@@ -120,6 +142,23 @@ export function oku(konusan, metin, { sureMs = null, bozuk = false, kuyruk = fal
   }
   // Turkce konusma motoru hiz 1'de saniyede ~14 harf okur
   if (sureMs) hiz = Math.max(hiz, Math.min(1.45, temiz.length / (sureMs / 1000) / 14));
+  return { ses, hiz, perde };
+}
+
+// Sirali replikler (DialogueSystem) bir sonrakine okuma bitmeden gecmesin: tahmini okuma suresi (ms), okunmayacaksa 0
+export function okumaSuresi(konusan, metin, { kaynak = 'bolum', sureMs = null } = {}) {
+  if (!okunurMu(kaynak)) return 0;
+  const temiz = konusmaMetni(metin);
+  const a = okumaAyari(konusan, temiz, { sureMs });
+  return a ? Math.round((temiz.length / (14 * a.hiz)) * 1000) : 0;
+}
+
+export function oku(konusan, metin, { sureMs = null, bozuk = false, kuyruk = false, kaynak = 'bolum' } = {}) {
+  if (!okunurMu(kaynak)) return;
+  const temiz = konusmaMetni(metin);
+  const a = okumaAyari(konusan, temiz, { sureMs, bozuk });
+  if (!a) return;
+  const { ses, hiz, perde } = a;
   if (!kuyruk) durdur();
   const u = new SpeechSynthesisUtterance(temiz);
   u.voice = ses;

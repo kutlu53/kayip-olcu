@@ -5,7 +5,7 @@ import { camZemin } from './Panel.js';
 import { dugme } from './Dugme.js';
 import { YAZI, OKUMA, OKUMA_OLCEK, aralikli } from './tipografi.js';
 import { altyaziOlcegi } from '../config/settings.js';
-import { oku, durdur as okumaDurdur } from '../systems/SesliOkuma.js';
+import { oku, durdur as okumaDurdur, okumaSuresi } from '../systems/SesliOkuma.js';
 
 // Sag panel (CLAUDE.md §6): ustte ARGE konusma balonu, altta Komutan Elif'in telsizi + ipucu dugmesi
 export function diyalogPaneli(sahne, { x = 948, y = 80, genislik = 320, yukseklik = 620, argeDurum = 7 } = {}) {
@@ -60,10 +60,13 @@ export function diyalogPaneli(sahne, { x = 948, y = 80, genislik = 320, yuksekli
     daktilo(argeYazi, metin);
     oku('ARGE', metin, { kuyruk: true });
     arge.konus(metin.length * 26 + 400);
+    kap.argeMesgul = sahne.time.now + Math.max(metin.length * 26, okumaSuresi('ARGE', metin)) + 400;
   };
   kap.elifSoyle = (metin) => {
     daktilo(elifYazi, metin, 22);
     oku('Elif', metin, { kuyruk: true });
+    // Elif'in yazisi okunup bitene kadar dolu sayilir (ipucu onerisi bunu bekler)
+    kap.elifMesgul = sahne.time.now + Math.max(metin.length * 22, okumaSuresi('Elif', metin)) + 400;
     sahne.tweens.add({ targets: elifResim, alpha: { from: 0.4, to: 1 }, duration: 300 });
   };
   // fn verilirse ipucu dugmesi gorunur (Elif'in 3 kademeli ipucu sistemi bolumlerde baglanacak)
@@ -74,6 +77,8 @@ export function diyalogPaneli(sahne, { x = 948, y = 80, genislik = 320, yuksekli
   // Yeni adimda eski konusmalar ekranda kalmasin
   kap.sustur = () => {
     okumaDurdur();
+    kap.elifMesgul = 0;
+    kap.argeMesgul = 0;
     for (const y of [argeYazi, elifYazi]) {
       if (y.daktilo) y.daktilo.remove(false);
       y.setText('');

@@ -126,7 +126,7 @@
     "katmanlar": [
       {"id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": {"katman": "uzak"}},
       {"id": "diyagram", "tip": "yorungeDiyagrami", "derinlik": 0.1, "ayar": {"x": 0, "y": -20}},
-      {"id": "sayac", "tip": "geriSayim", "sabit": true, "ayar": {"x": 420, "y": 200, "saniye": 600}}
+      {"id": "sayac", "tip": "geriSayim", "sabit": true, "ayar": {"x": 330, "y": 200, "saniye": 600}}
     ]
   },
   "argeYakin": {
