@@ -1,8 +1,11 @@
 import { ayarlar } from '../config/settings.js';
+import { efekt } from '../systems/Ses.js';
 
 // "Hareketi azalt" acikken sarsinti ve bozulma kapanir, flas yumusar (CLAUDE.md §10.6)
 
+// Sarsintinin sesi (govdeye yayilan titresim) hareketi azalt acikken de calar
 export function sars(sahne, sure = 400, siddet = 0.008) {
+  efekt('gumbur', { siddet });
   if (ayarlar.hareketiAzalt) return;
   sahne.cameras.main.shake(sure, siddet);
 }

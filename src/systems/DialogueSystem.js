@@ -1,4 +1,5 @@
 import { aktifOyuncu } from './SaveSystem.js';
+import { durdur as okumaDurdur } from './SesliOkuma.js';
 
 // Metin sablonlari: {ad} oyuncunun takma adi, {kuralN} oyuncunun N. bolumde deftere yazdigi kural.
 // ARGE kurali oyuncunun kendi cumlesiyle tekrar eder: ogreterek ogrenme (CLAUDE.md §4)
@@ -22,7 +23,10 @@ export class Diyalog {
 
   // Dogrudan konusma, siradaki (oynat ile kurulmus) replikleri iptal eder: oyuncuya verilen yanit ezilmesin
   soyle(kim, metin, siradan = false) {
-    if (!siradan) this.durdur();
+    if (!siradan) {
+      this.durdur();
+      okumaDurdur();
+    }
     const m = sablonDoldur(metin);
     if (kim === 'ARGE') this.panel.argeSoyle(m);
     else this.panel.elifSoyle(m);

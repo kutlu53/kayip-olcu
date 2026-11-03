@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
 import karakterler from '../data/characters.json';
-import { YAZI, aralikli } from '../ui/tipografi.js';
+import { YAZI, OKUMA, okumaBoyutu, aralikli } from '../ui/tipografi.js';
 import { sablonDoldur } from '../systems/DialogueSystem.js';
+import { altyaziOlcegi } from '../config/settings.js';
 
 const SERIT = 92; // 2.39:1 sinema seridi: 1280 / 2.39 = 536 px goruntu
 const BOZUK_HARFLER = '█▓▒░#%&?/<>01';
@@ -23,14 +24,17 @@ export default class CutsceneOverlay extends Phaser.Scene {
   }
 
   create() {
+    // Altyazi boyutu ayari (CLAUDE.md §10.8): buyuk altyazida alt serit de buyur, iki satir sigar
+    const o = altyaziOlcegi();
+    this.altSerit = Math.round(SERIT + 60 * (o - 1));
     this.ust = this.add.rectangle(640, -SERIT / 2, 1280, SERIT, 0x000000);
-    this.alt = this.add.rectangle(640, 720 + SERIT / 2, 1280, SERIT, 0x000000);
+    this.alt = this.add.rectangle(640, 720 + this.altSerit / 2, 1280, this.altSerit, 0x000000);
     this.tweens.add({ targets: this.ust, y: SERIT / 2, duration: 900, ease: 'Cubic.easeOut' });
-    this.tweens.add({ targets: this.alt, y: 720 - SERIT / 2, duration: 900, ease: 'Cubic.easeOut' });
+    this.tweens.add({ targets: this.alt, y: 720 - this.altSerit / 2, duration: 900, ease: 'Cubic.easeOut' });
 
-    this.konusan = this.add.text(640, 720 - SERIT + 8, '', { fontFamily: YAZI, fontSize: '15px', fontStyle: 'bold', color: '#5FE3E8' }).setOrigin(0.5, 0);
+    this.konusan = this.add.text(640, 720 - this.altSerit + 8, '', { fontFamily: YAZI, fontSize: `${Math.round(15 * o)}px`, fontStyle: 'bold', color: '#5FE3E8' }).setOrigin(0.5, 0);
     this.metin = this.add
-      .text(640, 720 - SERIT + 30, '', { fontFamily: YAZI, fontSize: '24px', color: '#EEF3F7', align: 'center', wordWrap: { width: 1080 }, lineSpacing: 2 })
+      .text(640, 720 - this.altSerit + 10 + Math.round(20 * o), '', { fontFamily: OKUMA, fontSize: okumaBoyutu(24 * o), color: '#EEF3F7', align: 'center', wordWrap: { width: 1160 }, lineSpacing: 2 })
       .setOrigin(0.5, 0);
     this.baslikYazi = this.add
       .text(640, 520, '', { fontFamily: YAZI, fontSize: '26px', color: '#E6E8EB' })
@@ -114,6 +118,6 @@ export default class CutsceneOverlay extends Phaser.Scene {
     this.temizle();
     this.tweens.add({ targets: [...this.dugmeler, this.baslikYazi], alpha: 0, duration: ms / 2 });
     this.tweens.add({ targets: this.ust, y: -SERIT / 2, duration: ms, ease: 'Cubic.easeIn' });
-    this.tweens.add({ targets: this.alt, y: 720 + SERIT / 2, duration: ms, ease: 'Cubic.easeIn' });
+    this.tweens.add({ targets: this.alt, y: 720 + this.altSerit / 2, duration: ms, ease: 'Cubic.easeIn' });
   }
 }

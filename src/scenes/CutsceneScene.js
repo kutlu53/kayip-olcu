@@ -7,6 +7,13 @@ import { SinemaFX } from '../fx/Shaders.js';
 import { sars, flas, bozulma } from '../fx/CameraFX.js';
 import { aktifOyuncu, aktifiKaydet } from '../systems/SaveSystem.js';
 import { olayKaydet } from '../systems/Telemetry.js';
+import { efekt, muzikBaslat, seslendirmeCal, seslendirmeDurdur } from '../systems/Ses.js';
+import { guc } from '../systems/SaveSystem.js';
+import { oku, durdur as okumaDurdur } from '../systems/SesliOkuma.js';
+import { sablonDoldur } from '../systems/DialogueSystem.js';
+
+// Katman olaylarinin sesi; JSON'da bir olaya "ses" alani eklenirse o calar
+const OLAY_SESLERI = { kilitle: 'kilit', atesle: 'itici', isiklariSondur: 'gucKesik', isiklariYak: 'gucAcik' };
 
 const CX = 640;
 const CY = 360;
@@ -40,7 +47,12 @@ export default class CutsceneScene extends Phaser.Scene {
         if (tur && tur.hazirla) tur.hazirla(this, k.ayar || {});
       }
     }
-    this.events.once('shutdown', () => this.scene.stop('CutsceneOverlay'));
+    this.events.once('shutdown', () => {
+      seslendirmeDurdur();
+      okumaDurdur();
+      this.scene.stop('CutsceneOverlay');
+    });
+    muzikBaslat(guc());
     this.scene.launch('CutsceneOverlay', { sahne: this });
   }
 
@@ -95,6 +107,8 @@ export default class CutsceneScene extends Phaser.Scene {
     for (const s of p.altyazilar || []) {
       zamanla(s.ms, () => {
         this.overlay.altyazi(s);
+        if (s.ses) seslendirmeCal(s.ses);
+        else oku(s.konusan, sablonDoldur(s.metin), { sureMs: s.sureMs, bozuk: s.bozuk, kaynak: 'sahne' });
         if (s.konusan === 'ARGE') panel.katmanlar.forEach((L) => L.nesne.konus && L.nesne.konus(s.sureMs));
       });
     }
@@ -107,6 +121,7 @@ export default class CutsceneScene extends Phaser.Scene {
     if (o.fx === 'sars') sars(this, o.sure, o.siddet);
     else if (o.fx === 'flas') flas(this, o.sure);
     else if (o.fx === 'bozulma') bozulma(this, o.sure, o.guc);
+    if (o.ses || OLAY_SESLERI[o.olay]) efekt(o.ses || OLAY_SESLERI[o.olay]);
     if (o.hedef) {
       const L = panel.katmanlar.find((k) => k.id === o.hedef);
       if (L && L.nesne.olay) L.nesne.olay(o.olay, o);

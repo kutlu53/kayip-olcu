@@ -9,6 +9,8 @@ import { defterSimgesi } from '../ui/Defter.js';
 import { dugme } from '../ui/Dugme.js';
 import { YAZI, MONO, aralikli } from '../ui/tipografi.js';
 import { aktifOyuncu, guc } from '../systems/SaveSystem.js';
+import { muzikBaslat } from '../systems/Ses.js';
+import { durdur as okumaDurdur } from '../systems/SesliOkuma.js';
 
 // Istasyonun yan kesit haritasi: her bolme bir bolum (CLAUDE.md §10.4 Hub).
 // [merkez x, merkez y, genislik, yukseklik]
@@ -36,6 +38,8 @@ export default class HubScene extends Phaser.Scene {
       return;
     }
     const n = guc(this.oyuncu);
+    muzikBaslat(n);
+    okumaDurdur();
 
     this.add.image(640, 360, yildizDokusu(this, { katman: 'uzak' }));
     this.add.image(640, 360, yildizDokusu(this, { katman: 'yakin' })).setAlpha(0.7);
@@ -53,7 +57,8 @@ export default class HubScene extends Phaser.Scene {
         .setOrigin(1, 0.5)
     );
     this.panel = diyalogPaneli(this, { argeDurum: n });
-    defterSimgesi(this, 64, 626, () => this.oyuncu);
+    // Ara sahneler defterden yalnizca haritadayken tekrar izlenir (bolum ortasinda ilerleme kaybolmasin)
+    defterSimgesi(this, 64, 626, () => this.oyuncu, { sahneIzle: (id) => this.git('CutsceneScene', { id, donus: 'HubScene' }) });
     dugme(this, 790, 664, '↻  Girişi tekrar izle', () => this.git('CutsceneScene', { id: 'G', donus: 'HubScene' }), {
       genislik: 250,
       yukseklik: 50,
@@ -199,6 +204,7 @@ export default class HubScene extends Phaser.Scene {
   bolmeSec(b, durum) {
     // Oyuncu dokunursa bekleyen karsilama mesaji yaniti ezmesin
     if (this.karsilamaZamanlayici) this.karsilamaZamanlayici.remove(false);
+    okumaDurdur();
     if (durum === 'kilitli') {
       this.panel.argeSoyle(`${b.mekan}… enerji yok. Önce ${this.engel(b).mekan} sistemini aç.`);
       return;

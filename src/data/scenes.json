@@ -121,6 +121,21 @@
       {"id": "kayit", "tip": "uyariKaydi", "derinlik": 0.1}
     ]
   },
+  "yorungeDiyagrami": {
+    "aciklama": "Yörünge diyagramı: alçalan yörünge ve düzeltme sonrası güvenli yörünge",
+    "katmanlar": [
+      {"id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": {"katman": "uzak"}},
+      {"id": "diyagram", "tip": "yorungeDiyagrami", "derinlik": 0.1, "ayar": {"x": 0, "y": -20}},
+      {"id": "sayac", "tip": "geriSayim", "sabit": true, "ayar": {"x": 420, "y": 200, "saniye": 600}}
+    ]
+  },
+  "argeYakin": {
+    "aciklama": "ARGE yakın plan: tam belleğiyle, kararlı ışık halkası",
+    "katmanlar": [
+      {"id": "yildizUzak", "tip": "yildizlar", "derinlik": 0.02, "ayar": {"katman": "uzak"}},
+      {"id": "arge", "tip": "arge", "derinlik": 0.2, "ayar": {"y": -20, "yaricap": 140, "durum": 7}}
+    ]
+  },
   "karanlikEkran": {
     "aciklama": "Karanlıkta tek ekran: Elif'in hologramı ve geri sayım",
     "katmanlar": [

@@ -9,6 +9,7 @@ import { navKoprusuDokusu, navKonsolOlustur } from './Navigasyon.js';
 import { reaktorDokusu, reaktorOlustur } from './Reaktor.js';
 import { fezaDokusu, fezaVideoOlustur, kuvvetHalkalariOlustur } from './YerKontrol.js';
 import { uyariKaydiOlustur } from './Halka.js';
+import { atmosferParlamaOlustur, iticiAtesiOlustur, yorungeDiyagramiOlustur, rozetlerOlustur } from './SonOnarim.js';
 import { gunesPaneliDokusu, dronDokusu, kopukPanelOlustur } from './Panel.js';
 import { tibbiKapsulDokusu, tibbiKapsulOlustur, istasyonPortuDokusu, istasyonPortuOlustur } from './Port.js';
 
@@ -35,5 +36,9 @@ export const KATMANLAR = {
   fezaVideo: { hazirla: fezaDokusu, olustur: fezaVideoOlustur },
   kuvvetHalkalari: { olustur: kuvvetHalkalariOlustur },
   uyariKaydi: { olustur: uyariKaydiOlustur },
+  atmosferParlama: { olustur: atmosferParlamaOlustur },
+  iticiAtesi: { olustur: iticiAtesiOlustur },
+  yorungeDiyagrami: { olustur: yorungeDiyagramiOlustur },
+  rozetler: { olustur: rozetlerOlustur },
   kopukPanel: { hazirla: (s) => { gunesPaneliDokusu(s); dronDokusu(s); }, olustur: kopukPanelOlustur }
 };

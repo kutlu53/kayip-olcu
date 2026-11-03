@@ -1,7 +1,7 @@
 # Kayıp Ölçü — Proje Bilgi Dosyası (Claude Code için)
 
 > Bu dosya projenin tek kaynak belgesidir. Repo köküne `CLAUDE.md` adıyla koyarsan Claude Code her oturumda otomatik okur.
-> Son güncelleme: 2 Kasım 2026
+> Son güncelleme: 3 Kasım 2026
 
 ---
 
@@ -256,6 +256,12 @@ Her bölüm aynı üç adımı izler:
 - **Keşif:** Hareketli parçalar: dönen halka, titreşen anten, raylarda kayan kargo, dönerek ilerleyen tamir robotu (birleşik hareket).
 - **Görev:** Her parçanın hareket türü belirlenir ve doğru onarım modülü takılır. Final: İticiler doğru yön ve bileşkeyle ateşlenerek istasyon kurtarılır. Bu, önceki bölümlerin hepsini kullanan bir sınavdır.
 - **Başarı:** Sınıflama + final manevrası.
+- **Uygulanan akış (`bolum7.json`):**
+  - *Keşif · Gövdedeki hareketler:* Dört karo: raylarda kayan kargo, dönen halka, yaylı bağlantıda titreşen anten, yuvarlanan tamir robotu tekerleği. İZ düğmesi merkezin (beyaz) ve işaretli noktanın (camgöbeği) son 4 saniyelik izini çizer; tekerlekte merkez düz çizgi, nokta sikloit. Her parça için üç evet/hayır sorusu: ilerliyor mu, eksen etrafında dönüyor mu, denge konumu etrafında gidip geliyor mu? Kerem'in "tekerlek yalnızca dönüyor" iddiası; birleşik harekette tek tür seçmek `M_TEK_HAREKET_TURU`. Adlar (öteleme, dönme, titreşim) keşfin sonunda verilir.
+  - *Genelleme:* Üç tür + birleşik olabilme. Çeldiriciler: "aynı anda yalnızca bir tür" (`M_TEK_HAREKET_TURU`), "hızlı giden her cisim titreşir".
+  - *Görev · Onarım modülleri:* Altı yeni parça (sürgülü kapak, panel motoru, radyatör plakası, reaksiyon tekerleği, dönerek uzaklaşan cıvata, yaya asılı alet kutusu). Tür seçimi = modül (öteleme → ray kilidi, dönme → döner yatak freni, titreşim → sönümleyici); birleşik harekette birden çok seçilir. Doğru modül takılan parça durur.
+  - *Final manevrası:* Dört kontrol kartı önceki bölümleri yoklar: kN'nin niceliği (B1, `M_BIRIM_NICELIK`), "6 kN" yetmez çünkü vektör (B2, `M_YON_ONEMSIZ`), yörüngede tutan kuvvet (B5, `M_UZAY_YERCEKIMI_YOK`), açıların merkez modüle göre olması (B6, `M_HAREKET_MUTLAK`). Ardından itici ayarı (B3 + B4): hasarlı itici (2; 2) kN kapanmıyor; ana itici (yatay) ve dikey itici ile bileşke tam (6; 0) kN yapılır (doğrusu ana 4, dikey −2). Kontrol kartı hataları da yıldızı etkiler.
+  - *7A:* İstasyon dışı, alt kenarda üst atmosferin kızıl parıltısı, geri sayım 00:10:00'dan iner. Üst çubukta geri sayım hikâyeyle uyumlu: 72 → 60 → … → 12 saat, son bölümde 00:10:00, yedi sistem açılınca "GÜVENDE".
 
 ---
 
@@ -458,7 +464,7 @@ Bilim kurgu yalnızca mekandır; görseller de gerçek fiziğe uyar (§0):
 - **Arayüz:** Yarı saydam hologram cam paneller, ince camgöbeği kenarlar. Dokunma hedefleri en az 48 px, yüksek kontrast, disleksiye uygun yazı tipi seçeneği.
 - **Müzik:** Sakin ambient keşif müziği; geri sayım yaklaştıkça tempo artar; finalde tema müziği.
 - **Ses efektleri:** Sert alarm yerine fiziksel sesler (kenetlenme kilidi, motor homurtusu, metal gerilmesi).
-- **Seslendirme:** ARGE için hafif işlenmiş bir ses; diğer karakterleri öğrenciler ve öğretmenler seslendirir. Tüm diyaloglarda altyazı var.
+- **Seslendirme (karar, 3 Kasım 2026): tarayıcının konuşma motoru** (Web Speech API, `SesliOkuma.js`); ses kaydı alınmaz. Elif → Microsoft Emel (kadın, Edge, çevrim içi), Kerem ve Dr. Feza → Microsoft Ahmet (Edge, çevrim içi), ARGE → Microsoft Tolga (Windows'ta yerel, çevrim dışı; mekanik tınısı ARGE'ye uyar, `guc` arttıkça hızı ve perdesi doğallaşır). Tercih edilen ses yoksa ya da internet yoksa cihazdaki yerel Türkçe ses kullanılır, karakterler hız/perdeyle ayrışır; Türkçe ses hiç yoksa yalnızca altyazı kalır. Chrome'un kendi çevrim içi seslerinde Türkçe yoktur. Okunan metinde birimler sözcüğe çevrilir (`konusmaMetni`: "9,8 m/s²" → "9,8 metre bölü saniye kare"). Ara sahne altyazısının süresine sığsın diye hız gerektiği kadar artar. Konuşurken müzik kısılır. Tüm diyaloglarda altyazı var.
 - **Telif:** Müzik ve efektler telifsiz kütüphanelerden veya özgün üretim; görseller kodla üretildiği için görsel telif sorunu yoktur.
 
 ---
@@ -497,7 +503,8 @@ kayip-olcu/
 │  ├─ main.js                 ← Phaser config, sahne kaydı
 │  ├─ config/
 │  │  ├─ colors.js
-│  │  └─ settings.js          ← zor mod, ses, yazı tipi
+│  │  ├─ settings.js          ← zor mod, ses, yazı tipi, altyazı boyutu
+│  │  └─ renkKorlugu.js       ← renk körlüğü benzetimi (test + ?renkKorlugu=)
 │  ├─ scenes/
 │  │  ├─ BootScene.js
 │  │  ├─ MenuScene.js         ← takma ad + sınıf kodu
@@ -512,14 +519,17 @@ kayip-olcu/
 │  │  │  ├─ Level5DortKuvvet.js
 │  │  │  ├─ Level6KimHareketEdiyor.js
 │  │  │  └─ Level7SonOnarim.js
-│  │  └─ TeacherScene.js      ← öğretmen panosu (PIN korumalı)
+│  │  └─ TeacherScene.js      ← öğretmen panosu (PIN korumalı): ısı haritası, yanılgılar, defter onayı, CSV
 │  ├─ systems/
 │  │  ├─ VectorMath.js        ← toplama, bileşen, büyüklük, açı (saf fonksiyonlar, test edilebilir)
 │  │  ├─ VectorDraw.js        ← ok çizimi, sürükleyerek vektör oluşturma
 │  │  ├─ DialogueSystem.js    ← ARGE/Elif/Kerem balonları
 │  │  ├─ HintSystem.js        ← 3 kademeli ipucu
-│  │  ├─ Notebook.js          ← Gözlem Defteri + PDF
-│  │  ├─ Telemetry.js         ← olay kaydı (bkz. olay şeması)
+│  │  ├─ Notebook.js          ← Gözlem Defteri içeriği + PDF (sayfalar tuvale çizilir, jsPDF'e resim olarak eklenir)
+│  │  ├─ Telemetry.js         ← olay kaydı (bkz. olay şeması), CSV dışa/içe aktarım
+│  │  ├─ Rapor.js             ← öğretmen panosu hesapları (saf fonksiyonlar)
+│  │  ├─ Ses.js               ← kodla üretilen müzik ve efektler (WebAudio), seslendirme dosyası oynatma
+│  │  ├─ SesliOkuma.js        ← tarayıcı sesiyle okuma: karakter → ses eşlemesi, birimlerin okunuşu
 │  │  └─ SaveSystem.js        ← IndexedDB
 │  ├─ art/                    ← kodla çizim (prosedürel görseller)
 │  │  ├─ Katmanlar.js         ← scenes.json'daki "tip" adlarını çizim fonksiyonlarına bağlayan kayıt
@@ -533,6 +543,7 @@ kayip-olcu/
 │  │  ├─ Reaktor.js           ← reaktör bölmesi, dört alarm paneli
 │  │  ├─ YerKontrol.js        ← Dr. Feza video bağlantısı, dört kuvvet hologramı
 │  │  ├─ Halka.js             ← dönen halka diyagramı, kargo robotu, uyarı kaydı (6K)
+│  │  ├─ SonOnarim.js         ← hareket modelleri ve izler, atmosfer parıltısı, itici ateşi, yörünge diyagramı, rozetler
 │  │  ├─ Interiors.js         ← kontrol odası (karartma, acil ışık, süzülen nesneler), lomboz
 │  │  ├─ Characters.js        ← Elif (hologram), Kerem (video bağlantısı); ifadeler
 │  │  ├─ Arge.js              ← ışık halkası + dalga formu, 0–7 evrim durumu
@@ -543,7 +554,7 @@ kayip-olcu/
 │  │  ├─ Particles.js         ← kıvılcım (mikro yerçekimi), parçacık akısı
 │  │  ├─ Shaders.js           ← SinemaFX: film greni, vinyet, bozulma (kromatik sapma)
 │  │  └─ Quality.js           ← FPS ölçümü, kalite kademesi
-│  ├─ ui/                     ← Dugme, Cip, Panel (cam zemin, açılır pencere), UstCubuk, DiyalogPaneli, Defter, Secenekler, CumleKurucu, tipografi
+│  ├─ ui/                     ← Dugme, Cip, Panel (cam zemin, açılır pencere), UstCubuk, DiyalogPaneli, Defter, Ayarlar, Secenekler, CumleKurucu, tipografi
 │  └─ data/
 │     ├─ levels.json
 │     ├─ dialogues.json
@@ -555,11 +566,11 @@ kayip-olcu/
 │     ├─ bolum3.json          ← Bölüm 3 içeriği: dron deneyleri, kural parçaları, taşıma senaryoları
 │     ├─ bolum5.json          ← Bölüm 5 içeriği: kuvvet özellikleri (menzil, şiddet), alarmlar, uzaklıklar, pano
 │     ├─ bolum6.json          ← Bölüm 6 içeriği: rotalar, gözlemciler, altı tanım, anten senaryoları
+│     ├─ bolum7.json          ← Bölüm 7 içeriği: hareket soruları, onarım parçaları, final kontrol listesi ve itici ayarı
 │     ├─ bolum4.json          ← Bölüm 4 içeriği: örnekler, tahmin kartları, kural parçaları, ipuçları, ARGE replikleri
 │     ├─ misconceptions.json
 │     └─ quantities.json      ← SI nicelik listesi (ad, birim, temel/türetilmiş, skaler/vektörel)
-└─ tests/
-   └─ VectorMath.test.js      ← Vitest
+└─ tests/                     ← Vitest: VectorMath, Rapor, Notebook, renkKorlugu, SesliOkuma
 ```
 
 **Bölüm veri şeması (örnek: `levels.json` içindeki bir öğe)**
@@ -610,7 +621,7 @@ kayip-olcu/
   "sureSn": 74
 }
 ```
-`olay` değerleri: `bolumBasla`, `cevap`, `ipucu`, `defterKayit`, `bolumBitir`, `sahneAtla`. Ek alan `ayrinti`: serbest açıklama (ör. `sahneAtla` için `G panel 3/6`). CSV dışa aktarım `;` ayırıcılı ve UTF-8 BOM'ludur (Türkçe Excel'de doğrudan açılır); menüdeki "Öğretmen: verileri indir" düğmesiyle o cihazdaki tüm olaylar indirilir.
+`olay` değerleri: `bolumBasla`, `cevap`, `ipucu`, `defterKayit`, `bolumBitir`, `sahneAtla`. Ek alan `ayrinti`: serbest açıklama (ör. `sahneAtla` için `G panel 3/6`). CSV dışa aktarım `;` ayırıcılı ve UTF-8 BOM'ludur (Türkçe Excel'de doğrudan açılır); öğretmen panosunun "Veri" sekmesinden o cihazdaki tüm olaylar indirilir; başka cihazların CSV'leri aynı sekmeden yüklenip birleştirilir (aynı olay iki kez sayılmaz). Zor modda başlayan bölümün `bolumBasla` olayında `ayrinti: "zor mod"` yazar.
 
 **Ara sahne şeması (`cutscenes.json`)**
 
@@ -642,17 +653,21 @@ kayip-olcu/
 - `kamera`: `yon` (`sag`/`sol`/`yukari`/`asagi`) ve `mesafe` ile kayma, `zoom: [başlangıç, bitiş]`. Yakın katmanlar daha çok kayar ve büyür.
 - `olaylar`: `fx` (`sars`, `flas`, `bozulma`) ya da `hedef` + `olay` (katman kimliği ve o katmanın olay adı). `ms` panel başından itibaren.
 - `konusan` değerleri `characters.json` içindeki anahtarlardır. `bozuk: true` ARGE'nin bozuk konuşmasıdır.
-- Ses alanı (`ses`) seslendirme eklendiğinde kullanılacak.
+- Altyazılar tarayıcı sesiyle okunur (`konusan` → karakter sesi; `Sistem` okunmaz, `[...]` sahne notları atlanır). İleride kayıt yapılırsa altyazıdaki `ses` alanı o satırda tarayıcı sesi yerine dosyayı çalar (ör. `"ses": "assets/audio/G-6.mp3"`, dosya `public/assets/audio/` içinde); dosya yoksa sessizce geçilir. Olaylara da `ses` eklenebilir (`Ses.js` efekt adları: `kilit`, `gumbur`, `itici`, `gucKesik`, `gucAcik`, `dogru`, `yanlis`, `basari`, `tik`). `kilitle`, `atesle`, `isiklariSondur`, `isiklariYak` olayları ve `sars` efekti sesini kendiliğinden çalar.
 
-**Geliştirme kısayolları:** `npm run dev` → `http://localhost:5173`; `npm test` vektör matematiği testlerini çalıştırır. Bir bölümü doğrudan açmak için `?bolum=4` (adım: `&adim=kesif2|genelleme|gorev`; aktif oyuncu yoksa "Deneme#SUNUM" oluşturulur), bir ara sahneyi doğrudan açmak için `?sahne=G&panel=3`, kalite kademesini zorlamak için `?kalite=yuksek|orta|dusuk`, WebGL'siz (Canvas) çiziciyi denemek için `?cizici=canvas`, karışık sıraları (çipler, kartlar) sabitlemek için `?sabit=1` (otomatik test). Geliştirme sunucusunda (`npm run dev`) oyun nesnesi `window.oyun` olarak açıktır; otomatik testler düğme ve çiplere yazılarıyla tıklayabilir. Yayın sürümüne girmez.
+**Geliştirme kısayolları:** `npm run dev` → `http://localhost:5173`; `npm test` vektör matematiği, rapor, defter ve renk körlüğü testlerini çalıştırır. Bir bölümü doğrudan açmak için `?bolum=4` (adım: `&adim=kesif2|genelleme|gorev`; aktif oyuncu yoksa "Deneme#SUNUM" oluşturulur), bir ara sahneyi doğrudan açmak için `?sahne=G&panel=3`, kalite kademesini zorlamak için `?kalite=yuksek|orta|dusuk`, WebGL'siz (Canvas) çiziciyi denemek için `?cizici=canvas`, karışık sıraları (çipler, kartlar) sabitlemek için `?sabit=1` (otomatik test), oyunu renk körlüğü benzetimiyle görmek için `?renkKorlugu=protan|deutan|tritan`. Geliştirme sunucusunda (`npm run dev`) oyun nesnesi `window.oyun` olarak açıktır; otomatik testler düğme ve çiplere yazılarıyla tıklayabilir. Yayın sürümüne girmez.
 
 **Ad çakışması uyarısı:** `BolumTemel` alt sınıflarında `this.tanim` (bölüm bilgisi), `this.panel`, `this.diyalog`, `this.ipucu`, `this.oyuncu`, `this.cikti` dolu alanlardır; aynı adla yöntem yazılmaz. Canvas çizicide `setTint` çalışmaz: renkli katmanlar dokuya işlenerek çizilir.
 
-**Kayıt modeli (`SaveSystem.js`):** IndexedDB `kayipOlcu` veritabanı, `oyuncular` ve `olaylar` depoları; IndexedDB yoksa localStorage. Oyuncu kimliği `takmaad#SINIFKODU`; aynı takma ad + sınıf kodu girilince eski ilerleme yüklenir (paylaşılan okul bilgisayarları). Oyuncu kaydı: `girisIzlendi`, `sistemler` (tamamlanan bölüm numaraları; sayısı `guc` değeridir), `bolumler`, `defter`. Hub'da bir bölüm, kendinden önceki *hazır* (`hazir: true`) bölümlerin hepsi tamamlanınca açılır; henüz yapılmamış bölümler sırayı kilitlemez. Bölüm 1 de hazır olduğu için Bölüm 4, Bölüm 1 bitince açılır (doğrudan erişim: `?bolum=4`). `hazir: false` olan bölüm "hazırlanıyor" mesajı verir. Bölüm içeriği `src/data/bolumN.json` dosyasında, sahne sınıfı `levels.json`'daki `sahne` alanında.
+**Kayıt modeli (`SaveSystem.js`):** IndexedDB `kayipOlcu` veritabanı, `oyuncular` ve `olaylar` depoları; IndexedDB yoksa localStorage. Oyuncu kimliği `takmaad#SINIFKODU`; aynı takma ad + sınıf kodu girilince eski ilerleme yüklenir (paylaşılan okul bilgisayarları). Oyuncu kaydı: `girisIzlendi`, `sistemler` (tamamlanan bölüm numaraları; sayısı `guc` değeridir), `bolumler`, `defter`, `mektup` (ARGE'ye mektup). Defter kaydının `onay` alanı: `otomatik` (parçalardan kurulan doğru cümle), `beklemede` (serbest metin), `onaylandi`, `duzeltilmeli` (+ `ogretmenNotu`); öğretmen panosundan değişir, öğrenci defterde görür. Hub'da bir bölüm, kendinden önceki *hazır* (`hazir: true`) bölümlerin hepsi tamamlanınca açılır; henüz yapılmamış bölümler sırayı kilitlemez. Bölüm 1 de hazır olduğu için Bölüm 4, Bölüm 1 bitince açılır (doğrudan erişim: `?bolum=4`). `hazir: false` olan bölüm "hazırlanıyor" mesajı verir. Bölüm içeriği `src/data/bolumN.json` dosyasında, sahne sınıfı `levels.json`'daki `sahne` alanında.
 
 **İçerik JSON biçimi:** `scenes.json` ve `cutscenes.json` bir betikle yeniden yazılırsa `node scripts/json-bicimle.mjs <dosya>` ile biçimlendir (kısa nesneler tek satır; metinlere dokunmaz).
 
 **Bölüm yazma kuralları (BolumTemel):** Her adım `adimBaslat` ile başlar (eski nesneler ve konuşmalar temizlenir). Her cevap `cevap({ dogru, yanilgi, ayrinti })` ile telemetriye düşer; tahmin kartlarında her yanlış seçeneğin `yanilgi` kodu `misconceptions.json`'da olmalı. Sürekli (sürükle-bırak) görevlerde kodlanabilen hata `yanilgi` ile, diğerleri `ayrinti` ile kaydedilir. Metinlerde `{ad}` ve `{kuralN}` şablonları kullanılabilir.
+
+**Öğretmen panosu:** Menüdeki "Öğretmen panosu" düğmesi; ilk girişte cihaz için 4–8 haneli PIN belirlenir (localStorage `kayipOlcu.ogretmenPin`, özet olarak). PIN yalnızca öğrencilerin kazara girmesini önler, gerçek güvenlik değildir; unutulursa tarayıcının geliştirici araçlarından bu anahtar silinir. Isı haritası ölçütleri: doğru cevap oranı (keşif tahminleri dahil), bölümü bitiren oranı, öğrenci başına ipucu. Defter onayı yalnızca o cihazda oynayan öğrenciler içindir.
+
+**Ayarlar (menü):** görsel kalite, hareketi azalt, yazı tipi (OpenDyslexic yalnızca okuma metinlerine uygulanır: yönerge, konuşmalar, altyazı, defter; düğme ve tablolar sabit genişlikli olduğu için sistem yazı tipinde kalır), altyazı boyutu, sesli okuma (açık / yalnızca ara sahneler / kapalı; pencerenin altında cihazdaki Türkçe sesler ve "Sesleri dene"), müzik, ses efektleri, zor mod.
 
 **Gizlilik:** Öğrenci adı yerine sınıf kodu + takma ad kullanılır, kişisel veri toplanmaz. Araştırma için veli onay formu gerekir.
 
@@ -671,7 +686,8 @@ kayip-olcu/
 - [x] Canvas modunda (WebGL'siz) efektsiz çalıştığını doğrula (`?cizici=canvas`)
 - [ ] Gerçek akıllı tahtada FPS ve ilk açılış süresini ölç
 - [x] `CutsceneScene` + `scenes.json`: Giriş (`G`) sahnesini kodla çizilmiş panellerle oynat (görsel stilin ilk kanıtı)
-- [ ] Giriş sahnesine ses ve seslendirme
+- [x] Giriş sahnesine ses (kodla üretilen müzik ve efektler)
+- [x] Seslendirme: tarayıcı sesiyle (ara sahneler + bölüm içi ARGE/Elif konuşmaları)
 
 ### Aşama 2 — Dikey dilim: Bölüm 4 Kenetlenme (2–3. hafta)
 - [x] `VectorMath.js` (toplama, çıkarma, büyüklük, açı, bileşenlere ayırma) + Vitest testleri (`npm test`)
@@ -691,15 +707,17 @@ kayip-olcu/
 - [x] Bölüm 3 Römorkör (aynı doğrultuda kuvvetler, tahmin → test) + 3A/3K ara sahneleri
 - [x] Bölüm 5 Dört Kuvvet (eşleştirme + menzil/şiddet panosu) + 5A/5K ara sahneleri
 - [x] Bölüm 6 Kim Hareket Ediyor? (üç gözlemci görünümü, veri tablosu, tanım kurma, gizemin çözülmesi) + 6A/6K ara sahneleri
-- [ ] Bölüm 7 Son Onarım (hareket türü sınıflama + final manevrası)
-- [ ] Giriş (G) ve Final (F) ara sahneleri
-- [ ] Gözlem Defteri PDF dışa aktarım
-- [ ] Zor mod (açı + sin/cos)
+- [x] Bölüm 7 Son Onarım (hareket türü sınıflama + final manevrası) + 7A ara sahnesi
+- [x] Giriş (G) ve Final (F) ara sahneleri (F: itici ateşi ve bileşke oku, yörünge diyagramı ve duran geri sayım, istasyonun aydınlanması, ARGE'nin oyuncuya adıyla seslenmesi, kurtarma aracının yanaşması, yedi rozet ve kariyer kartı)
+- [x] Gözlem Defteri: bölüm sekmeleri, onay durumu, ara sahneleri tekrar izleme (haritadan), ARGE'ye mektup, PDF dışa aktarım
+- [x] Zor mod (açı + sin/cos): Bölüm 4 bileşenler, Bölüm 7 hasarlı itici; ayarlardan açılır
+- [ ] Zor mod: süre baskılı bonus görevler (içerik tasarımı gerekiyor)
 
 ### Aşama 4 — Öğretmen panosu ve son rötuşlar (10–11. hafta)
-- [ ] `TeacherScene` (PIN korumalı): ısı haritası, en yaygın 3 yanılgı, defter onaylama, CSV dışa aktarım
-- [ ] Erişilebilirlik: disleksiye uygun yazı tipi, altyazı boyutu, renk körlüğü kontrolü
-- [ ] Ses ve seslendirme entegrasyonu
+- [x] `TeacherScene` (PIN korumalı): ısı haritası, en yaygın 3 yanılgı, defter onaylama, CSV dışa/içe aktarım
+- [x] Erişilebilirlik: disleksiye uygun yazı tipi, altyazı boyutu, renk körlüğü kontrolü (pedagojik renkler üç körlük türünde ΔE ≥ 20 ve desenle ayrışıyor)
+- [x] Ses entegrasyonu: müzik `guc` ile katmanlanır, geri sayım yaklaştıkça nabız hızlanır; fiziksel efektler (uzayda ses yok kuralına uygun)
+- [ ] Akıllı tahtalarda (Android/Pardus) hangi Türkçe seslerin bulunduğunu kontrol et (Ayarlar → Sesleri dene)
 - [ ] Akıllı tahtada performans testi (hedef: 60 fps, ilk açılış < 5 sn)
 
 ### Aşama 5 — Pilot ve uygulama

@@ -727,5 +727,156 @@
         "olaylar": [{"ms": 300, "hedef": "ekran", "olay": "ac"}]
       }
     ]
+  },
+  {
+    "id": "7A",
+    "ad": "Son Onarım · açılış",
+    "paneller": [
+      {
+        "sahne": "istasyonDis",
+        "sureMs": 15000,
+        "kamera": {"hareket": "zoom", "zoom": [1, 1.08]},
+        "ekKatmanlar": [
+          {"id": "atmosfer", "tip": "atmosferParlama", "sabit": true, "ayar": {"y": 200}},
+          {"id": "sayac", "tip": "geriSayim", "sabit": true, "ayar": {"x": 400, "y": -180, "saniye": 600}}
+        ],
+        "basliklar": [{"metin": "BÖLÜM 7 · SON ONARIM", "ms": 500, "sureMs": 2600}],
+        "altyazilar": [
+          {
+            "konusan": "ARGE",
+            "metin": "İrtifa 398 kilometre. Üst atmosfer istasyonu yavaşlatıyor.",
+            "ms": 3600,
+            "sureMs": 4200
+          },
+          {
+            "konusan": "Elif",
+            "metin": "On dakikamız var. Gövdedeki hareketli parçaları sabitle, sonra iticileri ateşleyeceğiz.",
+            "ms": 8400,
+            "sureMs": 5800
+          }
+        ],
+        "olaylar": [{"ms": 1600, "hedef": "sayac", "olay": "goster"}]
+      }
+    ]
+  },
+  {
+    "id": "F",
+    "ad": "Final",
+    "paneller": [
+      {
+        "sahne": "istasyonDis",
+        "sureMs": 10000,
+        "kamera": {"hareket": "zoom", "zoom": [1, 1.05]},
+        "ekKatmanlar": [
+          {
+            "id": "itici",
+            "tip": "iticiAtesi",
+            "derinlik": 0.5,
+            "ayar": {"x": -290, "y": -60, "olcek": 0.82, "okY": -170, "okUzunluk": 170, "etiket": "6 kN ileri"}
+          }
+        ],
+        "altyazilar": [
+          {
+            "konusan": "ARGE",
+            "metin": "Ateşleme! Bileşke kuvvet: 6 kilonewton, ileri.",
+            "ms": 1400,
+            "sureMs": 4600
+          }
+        ],
+        "olaylar": [
+          {"ms": 800, "hedef": "itici", "olay": "atesle"},
+          {"ms": 800, "fx": "sars", "sure": 1500, "siddet": 0.004}
+        ]
+      },
+      {
+        "sahne": "yorungeDiyagrami",
+        "gecis": "crossDissolve",
+        "sureMs": 10000,
+        "altyazilar": [
+          {"konusan": "ARGE", "metin": "İrtifa yükseliyor… 405… 412 kilometre.", "ms": 2400, "sureMs": 3600},
+          {"konusan": "Elif", "metin": "Güvenli yörüngedeyiz. Geri sayım durdu.", "ms": 6400, "sureMs": 3400}
+        ],
+        "olaylar": [
+          {"ms": 200, "hedef": "sayac", "olay": "goster"},
+          {"ms": 2000, "hedef": "diyagram", "olay": "duzelt"},
+          {"ms": 5800, "hedef": "sayac", "olay": "durdur"}
+        ]
+      },
+      {
+        "sahne": "istasyonDis",
+        "gecis": "fadeBlack",
+        "sureMs": 15000,
+        "kamera": {"hareket": "dolly", "yon": "sol", "mesafe": 160, "zoom": [1, 1.08]},
+        "altyazilar": [
+          {
+            "konusan": "ARGE",
+            "metin": "Bütün sistemler çevrimiçi. Halka dönüyor, ışıklar yanıyor. Güneş doğuyor.",
+            "ms": 3000,
+            "sureMs": 6000
+          }
+        ],
+        "olaylar": [{"ms": 9000, "hedef": "gunes", "olay": "parla"}]
+      },
+      {
+        "sahne": "argeYakin",
+        "gecis": "crossDissolve",
+        "sureMs": 15000,
+        "kamera": {"hareket": "zoom", "zoom": [1, 1.06]},
+        "altyazilar": [
+          {"konusan": "ARGE", "metin": "Belleğim tamamlandı.", "ms": 1800, "sureMs": 3000},
+          {
+            "konusan": "ARGE",
+            "metin": "Teşekkür ederim, {ad}. Artık bir kilogramın uzunluğu olmadığını biliyorum.",
+            "ms": 5600,
+            "sureMs": 7600
+          }
+        ]
+      },
+      {
+        "sahne": "kenetlenmePortu",
+        "gecis": "fadeBlack",
+        "sureMs": 12000,
+        "katmanAyar": {"kapsul": {"sizinti": false, "yalpa": false, "etiket": "KURTARMA ARACI"}},
+        "altyazilar": [
+          {
+            "konusan": "Elif",
+            "metin": "Kurtarma ekibi yanaşıyor. Hepsini sen başardın, {ad}.",
+            "ms": 1200,
+            "sureMs": 4400
+          },
+          {
+            "konusan": "Kerem",
+            "metin": "Ben demiştim, başarırsın! Bir de sürat ile hızı karıştırmıyorum artık.",
+            "ms": 6200,
+            "sureMs": 5200
+          }
+        ],
+        "olaylar": [
+          {"ms": 300, "hedef": "kapsul", "olay": "yanas", "dx": 699, "sure": 6000},
+          {"ms": 6400, "hedef": "kapsul", "olay": "kilitle"}
+        ]
+      },
+      {
+        "sahne": "yorungeGece",
+        "gecis": "fadeBlack",
+        "sureMs": 13000,
+        "ekKatmanlar": [
+          {
+            "id": "rozetler",
+            "tip": "rozetler",
+            "sabit": true,
+            "ayar": {
+              "y": -40,
+              "kariyer": "Göktürk-7'yi kurtarırken bir mühendis, bir fizikçi ve bir veri analisti gibi çalıştın.\nUzay sistemleri mühendisliği, astrofizik, uydu haberleşmesi, robotik… Türkiye Uzay Ajansı ve TÜBİTAK gibi kurumlarda bu alanlarda çalışan insanlar var. Hangisi sana göre? Araştır!"
+            }
+          }
+        ],
+        "basliklar": [{"metin": "GÖKTÜRK-7 GÜVENDE", "ms": 400, "sureMs": 3000}],
+        "olaylar": [
+          {"ms": 1200, "hedef": "rozetler", "olay": "goster"},
+          {"ms": 5000, "hedef": "rozetler", "olay": "kariyer"}
+        ]
+      }
+    ]
   }
 ]

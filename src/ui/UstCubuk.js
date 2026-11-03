@@ -27,8 +27,9 @@ export function ustCubuk(sahne, { menuye, menuEtiketi = 'Menü' } = {}) {
 
   kap.guncelle = (oyuncu) => {
     const n = oyuncu ? oyuncu.sistemler.length : 0;
-    // Her acilan sistem hikayede yaklasik 9 saat surer
-    sayac.setText(`${String(72 - n * 9).padStart(2, '0')}:00:00`);
+    // Hikayedeki geri sayim: 72 saatten son onarimdaki 10 dakikaya; yedi sistem acilinca durur
+    const KALAN = ['72:00:00', '60:00:00', '48:00:00', '36:00:00', '24:00:00', '12:00:00', '00:10:00'];
+    sayac.setText(n >= 7 ? 'GÜVENDE' : KALAN[n]);
     sayac.setColor(n >= 7 ? '#5FE3E8' : '#FF6B6B');
 
     const yuzde = Math.min(100, 30 + n * 10);

@@ -1,0 +1,143 @@
+{
+  "bolum": 7,
+  "cikti": "FİZ.9.2.7",
+  "giris": [
+    { "kim": "ARGE", "metin": "Gövdede dört parça hareket ediyor. Onarım için hepsinin nasıl hareket ettiğini bilmeliyim." },
+    { "kim": "Elif", "metin": "On dakikamız var. Bir parçaya dokun, izini aç ve üç soruyu yanıtla." }
+  ],
+  "sorular": [
+    "Bir yerden başka bir yere ilerliyor mu?",
+    "Bir eksen etrafında dönüyor mu?",
+    "Bir denge konumu etrafında gidip geliyor mu?"
+  ],
+  "kesif": {
+    "baslik": "KEŞİF · GÖVDEDEKİ HAREKETLER",
+    "yonerge": "Bir parçaya dokun, İZ'i açıp izle ve üç soruyu yanıtla. Beyaz iz parçanın merkezini, camgöbeği iz üzerindeki bir noktayı gösterir.",
+    "parcalar": [
+      { "id": "kargo", "ad": "Raylarda kayan kargo", "cevap": [true, false, false] },
+      { "id": "halka", "ad": "Dönen halka", "cevap": [false, true, false] },
+      { "id": "anten", "ad": "Yaylı bağlantıda titreşen anten", "cevap": [false, false, true] },
+      {
+        "id": "tekerlek", "ad": "Tamir robotunun tekerleği", "cevap": [true, true, false],
+        "kerem": "Kerem: \"Tekerlek dönüyor, o kadar. Bir cisim aynı anda iki hareket yapamaz ki!\""
+      }
+    ],
+    "yanlis": "{ad} için şu soruya bir daha bak: {soru} İzleri karşılaştır.",
+    "tekTur": "Tekerleğin merkezi düz bir çizgi çiziyor, yani ilerliyor. Üzerindeki nokta da merkez çevresinde dönüyor. İki hareket aynı anda!",
+    "dogru": "{ad} kaydedildi.",
+    "kapanis": "Üç temel hareket türü var. Bilim insanları ilerlemeye öteleme, eksen etrafında dönmeye dönme, denge konumu etrafında gidip gelmeye titreşim der. Tekerlek ikisini birden yapıyor!",
+    "ipuclari": [
+      "Beyaz ize bak: merkez yer değiştiriyor mu? Camgöbeği ize bak: nokta merkezin çevresinde dönüyor mu?",
+      "Yerinde dönen bir atlıkarınca ilerlemez; salıncak bir noktanın iki yanında gidip gelir; tren raylarda ilerler.",
+      "Tekerlekte iki iz birbirinden farklı: merkez düz gidiyor (ilerliyor), nokta dönüyor (dönüyor). İki soruya da evet."
+    ]
+  },
+  "genelleme": {
+    "baslik": "GÖZLEM DEFTERİ · KURALINI YAZ",
+    "yonerge": "Tablona bak ve hareket türleri için bir kural yaz.",
+    "parcalar": ["Cisim bir yerden başka bir yere ilerliyorsa öteleme,", "bir eksen etrafında dönüyorsa dönme,", "bir denge konumu etrafında gidip geliyorsa titreşim hareketi yapar;", "bir cisim bunlardan birkaçını aynı anda yapabilir."],
+    "celdiriciler": ["bir cisim aynı anda yalnızca bir tür hareket yapar.", "hızlı giden her cisim titreşir;"],
+    "kabul": [["Cisim bir yerden başka bir yere ilerliyorsa öteleme,", "bir eksen etrafında dönüyorsa dönme,", "bir denge konumu etrafında gidip geliyorsa titreşim hareketi yapar;", "bir cisim bunlardan birkaçını aynı anda yapabilir."]],
+    "serbestAnahtarlar": [["öteleme"], ["dönme"], ["titreşim"]],
+    "tekTur": "Aynı anda yalnızca bir tür mü? Ama tekerlek hem ilerledi hem döndü.",
+    "hizli": "Hız titreşimi belirlemez. Anten yavaşça gidip geliyordu ama yine de titreşiyordu.",
+    "eksik": "Kuralın yarım kalmış gibi… Üç türü de, birlikte olabileceklerini de anlat.",
+    "serbestEksik": "Kuralında \"öteleme\", \"dönme\" ve \"titreşim\" geçsin.",
+    "kabulMesaji": "\"{kural7}\" Anladım! Onarım modüllerini bu kurala göre seçeceğim.",
+    "ipuclari": [
+      "Tablodaki üç soru ile üç hareket türü arasında bir eşleşme var.",
+      "İlerleme öteleme, eksen etrafında dönme dönme, gidip gelme titreşim. Tekerlek hangi iki soruya evet dedi?",
+      "Cümleye \"Cisim bir yerden başka bir yere ilerliyorsa öteleme,\" ile başla."
+    ]
+  },
+  "gorev": {
+    "baslik": "GÖREV · ONARIM MODÜLLERİ",
+    "yonerge": "Her parçanın hareket türünü seç; her tür bir onarım modülü takar. Birleşik harekette birden çok tür seç. Sonra MODÜLLERİ TAK.",
+    "turler": [
+      { "id": "oteleme", "ad": "ÖTELEME", "modul": "Ray kilidi" },
+      { "id": "donme", "ad": "DÖNME", "modul": "Döner yatak freni" },
+      { "id": "titresim", "ad": "TİTREŞİM", "modul": "Sönümleyici" }
+    ],
+    "parcalar": [
+      { "id": "kapak", "ad": "Sürgülü kenetlenme kapağı", "tur": ["oteleme"] },
+      { "id": "panelMotoru", "ad": "Panel yönlendirme motoru", "tur": ["donme"] },
+      { "id": "radyator", "ad": "Gevşek radyatör plakası", "tur": ["titresim"] },
+      { "id": "reaksiyon", "ad": "Reaksiyon tekerleği", "tur": ["donme"] },
+      { "id": "civata", "ad": "Dönerek uzaklaşan cıvata", "tur": ["oteleme", "donme"] },
+      { "id": "yay", "ad": "Yaya asılı alet kutusu", "tur": ["titresim"] }
+    ],
+    "eksik": "{sayi} parçanın modülü seçilmedi.",
+    "hatali": "{liste}: modül tutmadı, parça hâlâ hareket ediyor.",
+    "tekTur": "{ad} hem ilerliyor hem dönüyor. Tek bir modül hareketi durduramaz.",
+    "basari": "Bütün parçalar sabitlendi! Gövde ateşlemeye hazır.",
+    "ipuclari": [
+      "Parçanın merkezi ilerliyor mu, yerinde mi dönüyor, yoksa gidip mi geliyor?",
+      "Keşifteki tekerleği hatırla: bazı parçalar iki hareketi birden yapar.",
+      "Kapak öteleme; panel motoru ve reaksiyon tekerleği dönme; radyatör ve yay titreşim; cıvata öteleme + dönme."
+    ]
+  },
+  "final": {
+    "baslik": "FİNAL · YÖRÜNGE DÜZELTMESİ",
+    "yonerge": "Son kontrol listesi. Sonra iticileri ayarla ve ateşle.",
+    "kontroller": [
+      {
+        "soru": "Yer kontrol: \"Düzeltme için 6 kN gerekli.\" kN hangi niceliğin birimi?",
+        "secenekler": [
+          { "metin": "Kuvvetin: türetilmiş bir nicelik (1 kN = 1000 kg·m/s²)", "dogru": true },
+          { "metin": "Kütlenin: temel bir nicelik", "dogru": false, "yanilgi": "M_BIRIM_NICELIK" }
+        ],
+        "dogru": "Kuvvet! Bölüm 1'den: türetilmiş nicelik.",
+        "yanlis": "kN, kilonewton: kuvvet birimi. Kütle kilogramla ölçülür."
+      },
+      {
+        "soru": "\"6 kN\" bilgisi iticileri ayarlamaya yeter mi?",
+        "secenekler": [
+          { "metin": "Yeter: büyüklük belli", "dogru": false, "yanilgi": "M_YON_ONEMSIZ" },
+          { "metin": "Yetmez: kuvvet vektöreldir, yönü de gerekir", "dogru": true }
+        ],
+        "dogru": "Bölüm 2'den: kuvvet vektöreldir. Yer kontrol yönü de gönderdi: yörünge yönünde, ileri.",
+        "yanlis": "Kerem'i 500 km/h ile bulamamıştık! Yön de gerekir. Yer kontrol yönü gönderdi: yörünge yönünde, ileri."
+      },
+      {
+        "soru": "Ateşlemeden sonra istasyonu Dünya'nın çevresinde yörüngede tutan kuvvet hangisi?",
+        "secenekler": [
+          { "metin": "Kütle çekimi", "dogru": true },
+          { "metin": "Hiçbiri: uzayda yerçekimi yoktur", "dogru": false, "yanilgi": "M_UZAY_YERCEKIMI_YOK" }
+        ],
+        "dogru": "Kütle çekimi. Bölüm 5'ten: istasyon sürekli düşüyor ama Dünya'yı hep ıskalıyor.",
+        "yanlis": "Bölüm 5'i hatırla: 400 km'de kütle çekimi yerdekinin yaklaşık %90'ı. İstasyonu yörüngede tutan o."
+      },
+      {
+        "soru": "İticilerin açıları neye göre ayarlanmalı?",
+        "secenekler": [
+          { "metin": "Dönen halkaya göre", "dogru": false, "yanilgi": "M_HAREKET_MUTLAK" },
+          { "metin": "İticilerin bağlı olduğu, dönmeyen merkez modüle göre", "dogru": true }
+        ],
+        "dogru": "Bölüm 6'nın dersi: iticiler merkez modülde, açılar da ona göre.",
+        "yanlis": "Fırtına uyarısındaki hatayı tekrarlamayalım! İticiler dönmeyen merkez modülde; açılar ona göre."
+      }
+    ],
+    "iticiYonerge": "Hasarlı yan itici kapanmıyor: 2 kN ileri + 2 kN yukarı itiyor. Ana itici (ileri-geri) ve dikey itici (yukarı-aşağı) ile bileşkeyi tam 6 kN ileri yap, sonra ATEŞLE.",
+    "hasarli": [2, 2],
+    "hedef": [6, 0],
+    "sapma": "Bileşkenin dikey bileşeni sıfır değil: istasyon yörünge düzleminden sapar. Dikey kuvvetleri dengele (Bölüm 3).",
+    "fazla": "Bileşke 6 kN'den büyük: istasyon gereğinden yükseğe çıkar. Ana iticiyi azalt.",
+    "az": "Bileşke 6 kN'den küçük: yörünge yeterince yükselmez.",
+    "basari": "Bileşke tam 6 kN ileri. Ateşleme başarılı!",
+    "ipuclari": [
+      "Hasarlı itici zaten 2 kN ileri ve 2 kN yukarı itiyor. Gerisini sen tamamlamalısın.",
+      "Bölüm 4: bileşenleri ayrı ayrı topla. İleri: 2 + ana itici = 6. Dikey: 2 + dikey itici = 0.",
+      "Ana itici 4 kN ileri, dikey itici 2 kN aşağı."
+    ],
+    "zorMod": {
+      "buyukluk": "2,8",
+      "aci": 45,
+      "iticiYonerge": "Hasarlı yan itici kapanmıyor: yaklaşık 2,8 kN, ileri yönle yukarı doğru 45° açı yaparak itiyor (sin 45° = cos 45° ≈ 0,71). Önce bileşenlerini hesapla, sonra ana ve dikey iticiyle bileşkeyi tam 6 kN ileri yap ve ATEŞLE.",
+      "ipuclari": [
+        "Hasarlı iticinin ileri ve yukarı bileşenleri ayrı ayrı ne kadar? Bölüm 4'teki sızıntıyı hatırla.",
+        "İleri bileşen = 2,8 · cos 45°, yukarı bileşen = 2,8 · sin 45°. Açı 45° olunca ikisi eşit.",
+        "2,8 · 0,71 ≈ 2 kN. İleri: 2 + ana itici = 6. Dikey: 2 + dikey itici = 0."
+      ]
+    }
+  }
+}

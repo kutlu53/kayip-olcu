@@ -5,11 +5,14 @@ import { ustCubuk, UST_YUKSEKLIK } from '../../ui/UstCubuk.js';
 import { diyalogPaneli } from '../../ui/DiyalogPaneli.js';
 import { defterSimgesi } from '../../ui/Defter.js';
 import { dugme } from '../../ui/Dugme.js';
-import { YAZI, MONO, aralikli } from '../../ui/tipografi.js';
+import { YAZI, MONO, OKUMA, okumaBoyutu, aralikli } from '../../ui/tipografi.js';
 import { aktifOyuncu, aktifiKaydet, guc } from '../../systems/SaveSystem.js';
 import { olayKaydet } from '../../systems/Telemetry.js';
 import { IpucuSistemi } from '../../systems/HintSystem.js';
 import { Diyalog } from '../../systems/DialogueSystem.js';
+import { ayarlar } from '../../config/settings.js';
+import { efekt, muzikBaslat } from '../../systems/Ses.js';
+import { durdur as okumaDurdur } from '../../systems/SesliOkuma.js';
 
 // Butun bolumlerin ortak iskeleti (CLAUDE.md §6 ekran duzeni ve §9 telemetri):
 // ust cubuk, sag panel (ARGE + Elif + ipucu), defter simgesi, adim basligi, adim nesnelerinin temizligi
@@ -43,8 +46,11 @@ export default class BolumTemel extends Phaser.Scene {
     this.baslikYazi = this.add.text(36, UST_YUKSEKLIK + 14, '', { fontFamily: MONO, fontSize: '14px', color: '#5FE3E8' }).setDepth(300);
     this.ilerleme = this.add.graphics().setDepth(300);
 
+    muzikBaslat(guc(this.oyuncu));
+    okumaDurdur();
     this.bolumBaslangic = this.time.now;
-    olayKaydet('bolumBasla', { bolum: this.bolumNo, cikti: this.cikti });
+    // Zor modda oynanan bolum ogretmen verisinde ayirt edilebilsin
+    olayKaydet('bolumBasla', { bolum: this.bolumNo, cikti: this.cikti, ayrinti: ayarlar.zorMod ? 'zor mod' : null });
     this.cameras.main.fadeIn(600, 0, 0, 0);
     this.basla(veri.adim);
   }
@@ -84,7 +90,7 @@ export default class BolumTemel extends Phaser.Scene {
   yonerge(metin) {
     if (this.yonergeYazi) this.yonergeYazi.destroy();
     this.yonergeYazi = this.ekle(
-      this.add.text(36, UST_YUKSEKLIK + 40, metin, { fontFamily: YAZI, fontSize: '18px', color: '#D8F6FF', wordWrap: { width: 880 }, lineSpacing: 3 }).setDepth(300)
+      this.add.text(36, UST_YUKSEKLIK + 40, metin, { fontFamily: OKUMA, fontSize: okumaBoyutu(18), color: '#D8F6FF', wordWrap: { width: 880 }, lineSpacing: 3 }).setDepth(300)
     );
     return this.yonergeYazi;
   }
@@ -110,6 +116,7 @@ export default class BolumTemel extends Phaser.Scene {
       sureSn: Math.round((this.time.now - this.adimBaslangic) / 1000),
       ayrinti
     });
+    efekt(dogru ? 'dogru' : 'yanlis');
     if (dogru) this.ipucu.dogru();
     else this.ipucu.hata();
   }
@@ -131,6 +138,7 @@ export default class BolumTemel extends Phaser.Scene {
     const eski = o.bolumler[this.bolumNo];
     o.bolumler[this.bolumNo] = { tamamlandi: true, yildiz: Math.max(yildiz, eski ? eski.yildiz : 0), sureSn };
     aktifiKaydet();
+    efekt('basari');
     olayKaydet('bolumBitir', { bolum: this.bolumNo, cikti: this.cikti, sureSn, ayrinti: `${yildiz} yıldız` });
     const kapanis = this.tanim.kapanisSahnesi;
     this.git(kapanis ? 'CutsceneScene' : 'HubScene', kapanis ? { id: kapanis, donus: 'HubScene' } : undefined);

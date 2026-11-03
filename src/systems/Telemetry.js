@@ -1,4 +1,5 @@
-import { aktifOyuncu, tumu, yaz } from './SaveSystem.js';
+import { aktifOyuncu, tumu, yaz, topluEkle } from './SaveSystem.js';
+import { olayAnahtari } from './Rapor.js';
 
 // Olay semasi: CLAUDE.md §11 "Telemetri olay semasi"
 export const ALANLAR = ['ogrenci', 'zaman', 'bolum', 'cikti', 'olay', 'dogru', 'deneme', 'yanilgi', 'ipucuKademesi', 'sureSn', 'ayrinti'];
@@ -24,22 +25,40 @@ function csvHucre(deger) {
   return /[;"\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
-export async function csvOlustur() {
-  const olaylar = await tumu('olaylar');
-  const satirlar = [ALANLAR.join(';'), ...olaylar.map((o) => ALANLAR.map((a) => csvHucre(o[a])).join(';'))];
-  return { metin: '﻿' + satirlar.join('\r\n'), adet: olaylar.length };
-}
+export const csvMetni = (alanlar, kayitlar) =>
+  '﻿' + [alanlar.join(';'), ...kayitlar.map((k) => alanlar.map((a) => csvHucre(k[a])).join(';'))].join('\r\n');
 
-export async function csvIndir() {
-  const { metin, adet } = await csvOlustur();
-  const tarih = new Date().toISOString().slice(0, 10);
-  const url = URL.createObjectURL(new Blob([metin], { type: 'text/csv;charset=utf-8' }));
+export function dosyaIndir(ad, metin, tur = 'text/csv;charset=utf-8') {
+  const url = URL.createObjectURL(metin instanceof Blob ? metin : new Blob([metin], { type: tur }));
   const a = document.createElement('a');
   a.href = url;
-  a.download = `kayip-olcu-veriler-${tarih}.csv`;
+  a.download = ad;
   document.body.appendChild(a);
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  return adet;
+}
+
+export const bugun = () => new Date().toISOString().slice(0, 10);
+
+export async function csvIndir() {
+  const olaylar = await tumu('olaylar');
+  dosyaIndir(`kayip-olcu-veriler-${bugun()}.csv`, csvMetni(ALANLAR, olaylar));
+  return olaylar.length;
+}
+
+// Baska cihazlardan gelen olaylar; daha once yuklenmis olanlar atlanir
+export async function olaylariEkle(gelen) {
+  const anahtarlar = new Set((await tumu('olaylar')).map(olayAnahtari));
+  const yeni = [];
+  for (const o of gelen) {
+    const a = olayAnahtari(o);
+    if (anahtarlar.has(a)) continue;
+    anahtarlar.add(a);
+    const kayit = {};
+    for (const alan of ALANLAR) kayit[alan] = alan in o ? o[alan] : null;
+    yeni.push(kayit);
+  }
+  if (yeni.length) await topluEkle('olaylar', yeni);
+  return { eklenen: yeni.length, tekrar: gelen.length - yeni.length };
 }

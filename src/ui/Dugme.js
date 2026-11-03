@@ -1,4 +1,5 @@
 import { YAZI } from './tipografi.js';
+import { efekt } from '../systems/Ses.js';
 
 // Hologram cam dugme. Dokunma hedefi en az 48 px (CLAUDE.md §0)
 export function dugme(sahne, x, y, metin, tiklama, secenek = {}) {
@@ -30,7 +31,10 @@ export function dugme(sahne, x, y, metin, tiklama, secenek = {}) {
   kap.setInteractive({ useHandCursor: true });
   kap.on('pointerover', () => ciz(true));
   kap.on('pointerout', () => ciz(false));
-  kap.on('pointerup', () => tiklama());
+  kap.on('pointerup', () => {
+    efekt('tik');
+    tiklama();
+  });
   kap.yaziAyarla = (m) => yazi.setText(m);
   return kap;
 }

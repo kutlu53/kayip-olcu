@@ -4,10 +4,10 @@ import { dunyaDokusu } from '../art/Earth.js';
 import { Arge } from '../art/Arge.js';
 import { dugme } from '../ui/Dugme.js';
 import { YAZI, aralikli } from '../ui/tipografi.js';
-import { ayarlar, kaydet } from '../config/settings.js';
-import { KADEMELER, kademeAdi, sonrakiKademe } from '../fx/Quality.js';
+import { ayarlarAc } from '../ui/Ayarlar.js';
+import { muzikBaslat } from '../systems/Ses.js';
+import { durdur as okumaDurdur, sesleriYukle } from '../systems/SesliOkuma.js';
 import { oyuncuAc, sonOyuncu, aktifAyarla } from '../systems/SaveSystem.js';
-import { csvIndir } from '../systems/Telemetry.js';
 
 // Kisisel veri toplanmaz: takma ad + sinif kodu (CLAUDE.md §0)
 const FORM = `
@@ -46,6 +46,9 @@ export default class MenuScene extends Phaser.Scene {
       .setAlpha(0.85);
 
     this.ayarSatiri();
+    muzikBaslat(null);
+    okumaDurdur();
+    sesleriYukle();
     this.icerik = this.add.container(0, 0);
     sonOyuncu().then((o) => (o ? this.devamGoster(o) : this.formGoster()));
     this.cameras.main.fadeIn(800, 0, 0, 0);
@@ -90,35 +93,25 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   ayarSatiri() {
-    const hareket = dugme(this, 330, 650, '', () => {
-      ayarlar.hareketiAzalt = !ayarlar.hareketiAzalt;
-      kaydet();
-      yaz();
-    }, { genislik: 280, yukseklik: 50, boyut: 16 });
-    const kalite = dugme(this, 640, 650, '', () => {
-      sonrakiKademe();
-      yaz();
-    }, { genislik: 280, yukseklik: 50, boyut: 16 });
-    const bilgi = this.add.text(950, 688, '', { fontFamily: YAZI, fontSize: '13px', color: '#8A96A6' }).setOrigin(0.5);
-    dugme(this, 950, 650, 'Öğretmen: verileri indir', async () => {
-      const adet = await csvIndir();
-      bilgi.setText(adet ? `${adet} kayıt indirildi (CSV)` : 'Bu cihazda henüz kayıt yok');
-    }, { genislik: 280, yukseklik: 50, boyut: 16 });
-    const yaz = () => {
-      hareket.yaziAyarla(`Hareketi azalt: ${ayarlar.hareketiAzalt ? 'Açık' : 'Kapalı'}`);
-      kalite.yaziAyarla(`Görsel kalite: ${KADEMELER[kademeAdi()].ad}`);
-    };
-    yaz();
+    // DOM formu Phaser penceresinin ustunde kalir: ayarlar acikken gizlenir
+    dugme(this, 480, 650, '⚙  Ayarlar', () => {
+      if (this.form) this.form.setVisible(false);
+      const { kap } = ayarlarAc(this);
+      kap.once('destroy', () => this.form && this.form.active && this.form.setVisible(true));
+    }, { genislik: 280, yukseklik: 52, boyut: 17 });
+    // Ogretmen panosu PIN korumali; CSV disa/ice aktarim orada (CLAUDE.md §9)
+    dugme(this, 800, 650, 'Öğretmen panosu', () => this.git('TeacherScene'), { genislik: 280, yukseklik: 52, boyut: 17 });
   }
 
   oyunaGir(oyuncu) {
+    this.git(oyuncu.girisIzlendi ? 'HubScene' : 'CutsceneScene', oyuncu.girisIzlendi ? undefined : { id: 'G', donus: 'HubScene' });
+  }
+
+  git(sahne, veri) {
     if (this.giriliyor) return;
     this.giriliyor = true;
     this.cameras.main.fadeOut(600, 0, 0, 0);
-    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-      if (oyuncu.girisIzlendi) this.scene.start('HubScene');
-      else this.scene.start('CutsceneScene', { id: 'G', donus: 'HubScene' });
-    });
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => this.scene.start(sahne, veri));
   }
 
   update(zaman) {

@@ -1,4 +1,5 @@
 import { YAZI } from './tipografi.js';
+import { efekt } from '../systems/Ses.js';
 
 const RENKLER = {
   normal: { dolgu: 0x0b1426, kenar: 0x5fe3e8, kenarAlfa: 0.6, yazi: '#E6F7FA' },
@@ -24,9 +25,16 @@ export function cip(sahne, x, y, metin, tiklama, { genislik = 96, yukseklik = 52
     yazi.setColor(r.yazi);
     return kap;
   };
-  kap.yaziAyarla = (m) => yazi.setText(m);
+  kap.yaziAyarla = (m) => {
+    yazi.setText(m);
+    return kap;
+  };
   kap.durumAyarla('normal');
   kap.setSize(genislik, yukseklik).setInteractive({ useHandCursor: true });
-  kap.on('pointerup', () => kap.durum !== 'pasif' && tiklama && tiklama(kap));
+  kap.on('pointerup', () => {
+    if (kap.durum === 'pasif' || !tiklama) return;
+    efekt('tik');
+    tiklama(kap);
+  });
   return kap;
 }

@@ -9,17 +9,24 @@ export function geriSayimOlustur(sahne, ayar = {}) {
     .setOrigin(0.5)
     .setAlpha(0.75);
   const sayi = sahne.add
-    .text(0, 0, '72:00:00', { fontFamily: MONO, fontSize: '54px', fontStyle: 'bold', color: '#FF5A5A', padding: { x: 30, y: 24 } })
+    .text(0, 0, '', { fontFamily: MONO, fontSize: '54px', fontStyle: 'bold', color: '#FF5A5A', padding: { x: 30, y: 24 } })
     .setOrigin(0.5)
     .setShadow(0, 0, '#ff3030', 18, false, true);
   kap.add([etiket, sayi]);
 
-  let kalan = (ayar.saat || 72) * 3600;
+  let kalan = ayar.saniye !== undefined ? ayar.saniye : (ayar.saat || 72) * 3600;
   let son = 0;
   let aktif = false;
   const bicim = (s) => [Math.floor(s / 3600), Math.floor((s % 3600) / 60), s % 60].map((n) => String(n).padStart(2, '0')).join(':');
+  sayi.setText(bicim(kalan));
 
   kap.olay = (ad) => {
+    if (ad === 'durdur') {
+      aktif = false;
+      sayi.setColor('#5FE3E8').setShadow(0, 0, '#5fe3e8', 18, false, true);
+      etiket.setText('YÖRÜNGE GÜVENLİ');
+      return;
+    }
     if (ad !== 'goster') return;
     sahne.tweens.add({ targets: kap, alpha: 1, duration: 800 });
     aktif = true;

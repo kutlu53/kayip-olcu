@@ -72,6 +72,13 @@ export async function yaz(depo, kayit) {
   yedekYaz(depo, liste);
 }
 
+// Cok kaydi tek islemde ekler (ogretmen panosunda CSV ice aktarimi)
+export async function topluEkle(depo, kayitlar) {
+  const d = await db();
+  if (d) return islem(d, depo, 'readwrite', (s) => kayitlar.forEach((k) => s.put(k)));
+  yedekYaz(depo, [...yedekOku(depo), ...kayitlar]);
+}
+
 // ---------- Oyuncu ----------
 export const oyuncuKimligi = (takmaAd, sinifKodu) => `${takmaAd}#${sinifKodu}`;
 
@@ -118,6 +125,13 @@ export async function aktifiKaydet() {
   if (!aktif) return;
   aktif.guncelleme = new Date().toISOString();
   await yaz('oyuncular', aktif);
+}
+
+// Baska bir oyuncunun kaydini gunceller (ogretmen onayi). Aktif oyuncuysa bellekteki kopya da guncellenir,
+// yoksa sonraki aktifiKaydet onayi ezerdi
+export async function oyuncuKaydet(oyuncu) {
+  if (aktif && aktif.id === oyuncu.id && aktif !== oyuncu) Object.assign(aktif, oyuncu);
+  await yaz('oyuncular', oyuncu);
 }
 
 // Acilan sistem sayisi = guc (0-7): istasyonun aydinlanmasi ve ARGE'nin durumu (CLAUDE.md §10.3)

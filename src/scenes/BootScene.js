@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { parcacikDokulari } from '../fx/Particles.js';
 import { kaliteOlc } from '../fx/Quality.js';
 import { Arge } from '../art/Arge.js';
-import { YAZI, aralikli } from '../ui/tipografi.js';
+import { YAZI, aralikli, yaziTipiYukle } from '../ui/tipografi.js';
 import bolumler from '../data/levels.json';
 import { sonOyuncu, aktifAyarla, oyuncuAc } from '../systems/SaveSystem.js';
 
@@ -26,8 +26,13 @@ export default class BootScene extends Phaser.Scene {
     const dogrudan = url.get('sahne');
     const bolum = bolumler.find((b) => String(b.bolum) === url.get('bolum') && b.hazir);
     const enAz = new Promise((coz) => this.time.delayedCall(dogrudan || bolum ? 0 : 2400, coz));
-    Promise.all([kaliteOlc(this, 2400), enAz]).then(async () => {
-      if (dogrudan) return this.scene.start('CutsceneScene', { id: dogrudan, panel: Number(url.get('panel') || 0) });
+    Promise.all([kaliteOlc(this, 2400), enAz, yaziTipiYukle()]).then(async () => {
+      if (dogrudan) {
+        // Ara sahnelerdeki {ad} ve {kuralN} icin son oyuncu yuklenir
+        const son = await sonOyuncu();
+        if (son) aktifAyarla(son);
+        return this.scene.start('CutsceneScene', { id: dogrudan, panel: Number(url.get('panel') || 0) });
+      }
       if (bolum) {
         const son = await sonOyuncu();
         if (son) aktifAyarla(son);
