@@ -530,6 +530,7 @@ kayip-olcu/
 │  │  ├─ Rapor.js             ← öğretmen panosu hesapları (saf fonksiyonlar)
 │  │  ├─ Ses.js               ← kodla üretilen müzik ve efektler (WebAudio), seslendirme dosyası oynatma
 │  │  ├─ SesliOkuma.js        ← tarayıcı sesiyle okuma: karakter → ses eşlemesi, birimlerin okunuşu
+│  │  ├─ EkranUyumu.js        ← telefon/tablet: dikeyde "yan çevir", telefonda tam ekran, dokunma yardımı
 │  │  └─ SaveSystem.js        ← IndexedDB
 │  ├─ art/                    ← kodla çizim (prosedürel görseller)
 │  │  ├─ Katmanlar.js         ← scenes.json'daki "tip" adlarını çizim fonksiyonlarına bağlayan kayıt
@@ -668,6 +669,8 @@ kayip-olcu/
 **Konuşma zamanlaması (seslerin üst üste binmemesi):** Gecikmeli replik `this.time.delayedCall` ile değil `this.diyalog.sonra(ms, kim, metin)` ile yazılır: aynı konuşanın önceki cümlesi okunup bitince gelir, adım değişince iptal edilir (yoksa bir sonraki adıma sızar). Kendinden önceki cümleyi kesmemesi gereken replik `soyle(kim, metin, true)` ile sıraya eklenir. `diyalog.oynat` replikleri arasındaki bekleme tahmini okuma süresinden (`okumaSuresi`) kısa olamaz. Elif'in "Zorlanıyor musun?" önerisi bölümün o cevaba verdiği tepkiden sonra, konuşmalar susunca gelir; arada doğru cevap verilirse ya da ipucu istenirse hiç gelmez. Ara sahnede panel elle geçilince konuşma durur; altyazı en hızlı okumada bile panel süresine sığmıyorsa (ör. öğrencinin uzun kuralı) panel konuşma bitene kadar uzar. Son panelde dokunuş/tuşla sahneyi bitirmek `sahneAtla` sayılır. Bölüm içindeki "Harita" düğmesi onay sorar (bölüm ilerlemesi kaydedilmez).
 
 **Öğretmen panosu:** Menüdeki "Öğretmen panosu" düğmesi; ilk girişte cihaz için 4–8 haneli PIN belirlenir (localStorage `kayipOlcu.ogretmenPin`, özet olarak). PIN yalnızca öğrencilerin kazara girmesini önler, gerçek güvenlik değildir; unutulursa tarayıcının geliştirici araçlarından bu anahtar silinir. Isı haritası ölçütleri: doğru cevap oranı (keşif tahminleri dahil), bölümü bitiren oranı, öğrenci başına ipucu. Defter onayı yalnızca o cihazda oynayan öğrenciler içindir.
+
+**Telefon ve tablet (karar, 3 Kasım 2026: yatay öncelikli):** Oyun 1280×720 yatay çizilir ve FIT ile ölçeklenir; dikey için ayrı yerleşim yoktur (`EkranUyumu.js`). Dikey tutulan dokunmatik telefonda (kısa kenar < 600 px) "Cihazını yan çevir" ekranı çıkar ve oyun (zamanlayıcılar, müzik, konuşma) durur; yataya dönünce kaldığı yerden sürer. Dikey tablette aynı ekran "Böyle devam et" düğmesiyle çıkar (ölçek ≈0,64, oynanabilir). Masaüstünde dar pencere oyunu durdurmaz. Telefonda ilk dokunuşta tam ekrana geçilir ve yön yataya kilitlenir (Android; iPhone'da tarayıcı izin vermez, ana ekrana eklenen PWA zaten tam ekran ve yataydır). Ölçek 0,75'in altındayken (telefon yatay ≈0,54) bir düğmenin en fazla ~14 CSS px yanına yapılan dokunuş o düğmeye gider (yalnızca `pointerup` dinleyen nesneler; sürükleme tutamakları etkilenmez). Telefonda altyazı boyutu varsayılanı "Büyük"tür.
 
 **Ayarlar (menü):** görsel kalite, hareketi azalt, yazı tipi (OpenDyslexic yalnızca okuma metinlerine uygulanır: yönerge, konuşmalar, altyazı, defter; düğme ve tablolar sabit genişlikli olduğu için sistem yazı tipinde kalır), altyazı boyutu, sesli okuma (açık / yalnızca ara sahneler / kapalı; pencerenin altında cihazdaki Türkçe sesler ve "Sesleri dene"), müzik, ses efektleri, zor mod.
 

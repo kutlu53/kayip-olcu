@@ -25,6 +25,13 @@ function baglam() {
   return ctx;
 }
 
+// Oyun duraklayinca (or. telefon dikey tutuldu) muzik ve efektler de durur
+export function sesDuraklat(durakla) {
+  if (!ctx) return;
+  if (durakla && ctx.state === 'running') ctx.suspend();
+  else if (!durakla && ctx.state === 'suspended') ctx.resume();
+}
+
 // Tarayicilar sesi ilk dokunustan once baslatmaz: ilk dokunusta baglam acilir
 export function sesKilidiAc() {
   if (typeof document === 'undefined') return;

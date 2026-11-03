@@ -28,6 +28,30 @@
       color: #E6F7FA; background: rgba(95, 227, 232, 0.2); border: 2px solid #5FE3E8; border-radius: 10px; cursor: pointer;
     }
     .giris button:hover { background: rgba(95, 227, 232, 0.32); }
+    /* Dikey tutulan telefon/tablet: "yan cevir" ekrani (src/systems/EkranUyumu.js) */
+    #yanCevir {
+      position: fixed; inset: 0; z-index: 50; display: none; flex-direction: column; align-items: center; justify-content: center;
+      gap: 18px; padding: 24px; box-sizing: border-box; text-align: center; background: #05070D;
+      font-family: "Segoe UI", "Noto Sans", Arial, sans-serif; color: #D8F6FF;
+    }
+    #yanCevir.acik { display: flex; }
+    #yanCevir .cihaz {
+      width: 62px; height: 108px; border: 3px solid #5FE3E8; border-radius: 12px; position: relative; margin-bottom: 12px;
+      animation: yanCevir 2.4s ease-in-out infinite;
+    }
+    #yanCevir .ekran { position: absolute; inset: 8px 6px; border-radius: 4px; background: rgba(95, 227, 232, 0.18); }
+    @keyframes yanCevir { 0%, 25% { transform: rotate(0deg); } 55%, 85% { transform: rotate(-90deg); } 100% { transform: rotate(0deg); } }
+    #yanCevir .baslik { font-size: 24px; font-weight: bold; letter-spacing: 1px; }
+    #yanCevir .aciklama { font-size: 17px; line-height: 1.45; color: #9FB3C4; max-width: 340px; }
+    #yanCevir .devam {
+      display: none; min-height: 52px; padding: 0 28px; margin-top: 6px; font-size: 18px; color: #E6F7FA;
+      background: rgba(95, 227, 232, 0.12); border: 2px solid rgba(95, 227, 232, 0.6); border-radius: 10px;
+    }
+    #yanCevir.tablet .devam { display: block; }
+    #yanCevir .devam { font-family: inherit; }
+    #yanCevir .tablette, #yanCevir.tablet .telefonda { display: none; }
+    #yanCevir.tablet .tablette { display: block; }
+    @media (prefers-reduced-motion: reduce) { #yanCevir .cihaz { animation: none; transform: rotate(-90deg); } }
     /* Disleksiye uygun yazi tipi ayari (tipografi.js govdeye "disleksi" sinifini ekler) */
     .disleksi .giris, .disleksi .giris input, .disleksi .giris button, .disleksi .giris textarea { font-family: "OpenDyslexic", "Segoe UI", "Noto Sans", Arial, sans-serif; }
   </style>

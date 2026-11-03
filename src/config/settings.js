@@ -11,10 +11,14 @@ function oku() {
 const sistemHareketiAzalt =
   typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Telefonda oyun ~0,5 olcekte gorunur: konusmalar ve altyazilar varsayilan olarak buyuk yazilir
+const telefon =
+  typeof window !== 'undefined' && Math.min(window.innerWidth, window.innerHeight) < 600 && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
 export const ayarlar = Object.assign(
   // yaziTipi: 'sistem' | 'disleksi' (OpenDyslexic), altyazi: 'normal' | 'buyuk' | 'cokBuyuk' (CLAUDE.md §10.8)
   // sesliOkuma: 'acik' | 'sahneler' (yalnizca ara sahneler) | 'kapali'
-  { kalite: null, hareketiAzalt: sistemHareketiAzalt, zorMod: false, yaziTipi: 'sistem', altyazi: 'normal', muzik: true, efekt: true, sesliOkuma: 'acik' },
+  { kalite: null, hareketiAzalt: sistemHareketiAzalt, zorMod: false, yaziTipi: 'sistem', altyazi: telefon ? 'buyuk' : 'normal', muzik: true, efekt: true, sesliOkuma: 'acik' },
   oku()
 );
 

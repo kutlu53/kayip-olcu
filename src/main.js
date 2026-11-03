@@ -18,6 +18,7 @@ import TeacherScene from './scenes/TeacherScene.js';
 import { renkKorluguSuzgeci } from './config/renkKorlugu.js';
 import { sesKilidiAc } from './systems/Ses.js';
 import { sesleriYukle } from './systems/SesliOkuma.js';
+import { ekranUyumuKur } from './systems/EkranUyumu.js';
 
 // Test icin cizici secimi: ?cizici=canvas (WebGL olmayan eski akilli tahtalari taklit eder)
 const cizici = new URLSearchParams(location.search).get('cizici') === 'canvas' ? Phaser.CANVAS : Phaser.AUTO;
@@ -37,6 +38,9 @@ const oyun = new Phaser.Game({
   render: { antialias: true, powerPreference: 'high-performance' },
   scene: [BootScene, MenuScene, HubScene, CutsceneScene, CutsceneOverlay, Level1Uyanis, Level2KorPusula, Level3Romorkor, Level4Kenetlenme, Level5DortKuvvet, Level6KimHareketEdiyor, Level7SonOnarim, TeacherScene]
 });
+
+// Telefon/tablet: dikeyde "yan cevir", telefonda tam ekran, kucuk ekranda dokunma yardimi
+ekranUyumuKur(oyun);
 
 // Ses ilk dokunusta acilir (tarayici otomatik oynatma kurali)
 sesKilidiAc();
